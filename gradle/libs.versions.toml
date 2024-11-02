@@ -33,6 +33,7 @@ uiTextGoogleFonts = "1.7.5"
 
 lottie = "6.5.2"
 appcompat = "1.7.0"
+material = "1.12.0"
 
 
 [libraries]
@@ -74,6 +75,7 @@ androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text
 
 lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 
 [plugins]
