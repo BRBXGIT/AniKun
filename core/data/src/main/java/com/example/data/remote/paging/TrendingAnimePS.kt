@@ -9,7 +9,8 @@ import retrofit2.HttpException
 import java.io.IOException
 
 class TrendingAnimePS(
-    private val apiInstance: AniListApiInstance
+    private val apiInstance: AniListApiInstance,
+    sort: String
 ): PagingSource<Int, Media>() {
 
     private val query = """
@@ -18,7 +19,7 @@ class TrendingAnimePS(
                 pageInfo {
                   hasNextPage
                 }
-                media(sort: TRENDING_DESC, type: ANIME) {
+                media(sort: $sort, type: ANIME) {
                   id
                   title {
                     english
@@ -43,7 +44,7 @@ class TrendingAnimePS(
         val perPage = params.loadSize
 
         return try {
-            val anime = apiInstance.getTrendingAnime(
+            val anime = apiInstance.getAnime(
                 TrendingNowAnimeRequest(
                     query = query,
                     variables = mapOf("page" to startPage, "perPage" to perPage)

@@ -44,6 +44,6 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     //Google fonts
     implementation(libs.androidx.ui.text.google.fonts)
-
+    //Material 3
     implementation(libs.androidx.material3)
 }

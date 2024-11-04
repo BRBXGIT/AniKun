@@ -109,6 +109,6 @@ fun AniListTheme(
     )
 }
 
-val mColor @Composable get() = MaterialTheme.colorScheme
+val mColors @Composable get() = MaterialTheme.colorScheme
 val mTypography @Composable get() = MaterialTheme.typography
 val mShapes @Composable get() = MaterialTheme.shapes

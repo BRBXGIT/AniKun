@@ -1,0 +1,16 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\PRG\KotlinProjects\AniList\feature\anime_screen\src\main\AndroidManifest.xml:2:1-72
+INJECTED from C:\PRG\KotlinProjects\AniList\feature\anime_screen\src\main\AndroidManifest.xml:2:1-72
+	package
+		INJECTED from C:\PRG\KotlinProjects\AniList\feature\anime_screen\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\PRG\KotlinProjects\AniList\feature\anime_screen\src\main\AndroidManifest.xml:2:11-69
+uses-sdk
+INJECTED from C:\PRG\KotlinProjects\AniList\feature\anime_screen\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\PRG\KotlinProjects\AniList\feature\anime_screen\src\main\AndroidManifest.xml
+INJECTED from C:\PRG\KotlinProjects\AniList\feature\anime_screen\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\PRG\KotlinProjects\AniList\feature\anime_screen\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\PRG\KotlinProjects\AniList\feature\anime_screen\src\main\AndroidManifest.xml

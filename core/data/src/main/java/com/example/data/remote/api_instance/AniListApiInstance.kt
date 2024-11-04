@@ -8,7 +8,7 @@ import retrofit2.http.POST
 interface AniListApiInstance {
 
     @POST("graphql.anilist.co")
-    suspend fun getTrendingAnime(
+    suspend fun getAnime(
         @Body body: TrendingNowAnimeRequest
     ): TrendingNowAnimeResponse
 }

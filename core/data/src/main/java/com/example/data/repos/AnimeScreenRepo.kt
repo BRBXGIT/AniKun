@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface AnimeScreenRepo {
 
-    suspend fun getTrendingAnime(): Flow<PagingData<Media>>
+    fun getAnime(sort: String): Flow<PagingData<Media>>
 }

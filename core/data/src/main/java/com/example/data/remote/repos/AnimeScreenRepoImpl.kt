@@ -14,10 +14,10 @@ class AnimeScreenRepoImpl @Inject constructor(
     private val apiInstance: AniListApiInstance
 ): AnimeScreenRepo {
 
-    override suspend fun getTrendingAnime(): Flow<PagingData<Media>> {
+    override fun getAnime(sort: String): Flow<PagingData<Media>> {
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-            pagingSourceFactory = { TrendingAnimePS(apiInstance) }
+            pagingSourceFactory = { TrendingAnimePS(apiInstance, sort) }
         ).flow
     }
 }

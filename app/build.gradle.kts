@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     //Compose
     alias(libs.plugins.compose.compiler)
+    //Nav
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -52,10 +54,14 @@ dependencies {
 
     //Modules
     implementation(project(":core:designsystem"))
+    implementation(project(":feature:navbarscreens"))
 
     //Compose
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
+    //Nav
+    implementation(libs.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
