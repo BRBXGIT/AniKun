@@ -25,7 +25,7 @@ roomKtx = "2.6.1"
 
 coilCompose = "2.6.0"
 
-kspPlugin = "1.9.0-1.0.13"
+kspPlugin = "2.0.0-1.0.22"
 
 pagingCompose = "3.3.2"
 

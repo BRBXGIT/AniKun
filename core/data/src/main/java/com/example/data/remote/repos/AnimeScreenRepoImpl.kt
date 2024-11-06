@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.data.remote.api_instance.AniListApiInstance
-import com.example.data.remote.models.anime_models.trending_now.response.Media
+import com.example.data.remote.models.anime_models.response.Media
 import com.example.data.remote.paging.TrendingAnimePS
 import com.example.data.repos.AnimeScreenRepo
 import kotlinx.coroutines.flow.Flow

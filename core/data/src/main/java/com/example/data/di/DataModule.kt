@@ -20,7 +20,7 @@ object DataModule {
     @Singleton
     fun provideAniListApi(): AniListApiInstance {
         return Retrofit.Builder()
-            .baseUrl("https://")
+            .baseUrl("https://graphql.anilist.co")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create()

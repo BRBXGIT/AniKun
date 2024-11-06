@@ -3,8 +3,8 @@ package com.example.data.remote.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.data.remote.api_instance.AniListApiInstance
-import com.example.data.remote.models.anime_models.trending_now.request.TrendingNowAnimeRequest
-import com.example.data.remote.models.anime_models.trending_now.response.Media
+import com.example.data.remote.models.anime_models.request.TrendingNowAnimeRequest
+import com.example.data.remote.models.anime_models.response.Media
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -43,14 +43,21 @@ class TrendingAnimePS(
         val startPage = params.key ?: 1
         val perPage = params.loadSize
 
+        val variables = """
+            {
+              "page": $startPage,
+              "perPage": $perPage
+            }
+        """.trimIndent()
+
         return try {
             val anime = apiInstance.getAnime(
                 TrendingNowAnimeRequest(
                     query = query,
-                    variables = mapOf("page" to startPage, "perPage" to perPage)
+                    variables = variables
                 )
             )
-            val nextPage = if(!anime.data.page.pageInfo.hasNextPage) null else startPage + 1
+            val nextPage = if(anime.data.page.pageInfo.hasNextPage) (startPage + 1) else null
 
             LoadResult.Page(
                 data = anime.data.page.media,

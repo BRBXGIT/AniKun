@@ -1,9 +1,9 @@
 package com.example.navbarscreens.navbar
 
-import android.util.Log
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
@@ -52,6 +52,9 @@ fun NavBar(
                         painter = painterResource(id = if(chosen) navItem.iconChosen else navItem.iconDefault),
                         contentDescription = null
                     )
+                },
+                label = {
+                    Text(navItem.label)
                 }
             )
         }

@@ -46,4 +46,6 @@ dependencies {
     implementation(libs.androidx.ui.text.google.fonts)
     //Material 3
     implementation(libs.androidx.material3)
+    //Coil
+    implementation(libs.coil.compose)
 }

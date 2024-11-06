@@ -1,4 +1,4 @@
-package com.example.data.remote.models.anime_models.trending_now.response
+package com.example.data.remote.models.anime_models.response
 
 import com.google.gson.annotations.SerializedName
 
