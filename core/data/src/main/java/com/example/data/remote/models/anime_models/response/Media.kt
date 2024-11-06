@@ -6,5 +6,6 @@ data class Media(
     val description: String,
     val genres: List<String>,
     val id: Int,
+    val episodes: Int,
     val title: Title
 )

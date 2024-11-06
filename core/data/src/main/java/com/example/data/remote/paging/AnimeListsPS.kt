@@ -8,7 +8,7 @@ import com.example.data.remote.models.anime_models.response.Media
 import retrofit2.HttpException
 import java.io.IOException
 
-class TrendingAnimePS(
+class AnimeListsPS(
     private val apiInstance: AniListApiInstance,
     sort: String
 ): PagingSource<Int, Media>() {
@@ -21,8 +21,10 @@ class TrendingAnimePS(
                 }
                 media(sort: $sort, type: ANIME) {
                   id
+                  episodes
                   title {
                     english
+                    romaji
                   }
                   coverImage {
                     large
@@ -51,7 +53,7 @@ class TrendingAnimePS(
         """.trimIndent()
 
         return try {
-            val anime = apiInstance.getAnime(
+            val anime = apiInstance.getAnimeList(
                 TrendingNowAnimeRequest(
                     query = query,
                     variables = variables

@@ -1,12 +1,10 @@
 package com.example.navbarscreens.anime_screen.sections
 
-import android.util.Log
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.paging.compose.LazyPagingItems
 import com.example.data.remote.models.anime_models.response.Media
+import com.example.designsystem.anime_card.AnimeCard
 
 @Composable
 fun AnimeLCSection(
@@ -17,7 +15,13 @@ fun AnimeLCSection(
             val currentAnime = anime[index]
 
             currentAnime?.let {
-                Text(currentAnime.title.english.toString())
+                AnimeCard(
+                    posterPath = currentAnime.coverImage.large,
+                    title = if(currentAnime.title.english == null) currentAnime.title.romaji else currentAnime.title.english!!,
+                    description = currentAnime.description,
+                    episodes = currentAnime.episodes,
+                    averageScore = currentAnime.averageScore.toString()
+                )
             }
         }
     }

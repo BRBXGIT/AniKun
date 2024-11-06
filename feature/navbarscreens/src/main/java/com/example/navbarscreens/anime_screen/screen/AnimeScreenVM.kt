@@ -11,6 +11,6 @@ import javax.inject.Inject
 class AnimeScreenVM @Inject constructor(
     repository: AnimeScreenRepoImpl
 ): ViewModel() {
-    val trendingAnime = repository.getAnime("TRENDING_DESC").cachedIn(viewModelScope)
+    val trendingAnime = repository.getAnimeList("TRENDING_DESC").cachedIn(viewModelScope)
 
 }
