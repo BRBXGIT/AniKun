@@ -40,22 +40,12 @@ class AnimeListsPS(
     """.trimIndent()
 
     private val seasonQuery = """
-        query (
-                ${"$"}page: Int,
-                ${"$"}perPage: Int,
-                ${"$"}season: MediaSeason,
-                ${"$"}seasonYear: Int
-              ) {
+        query (${"$"}page: Int, ${"$"}perPage: Int, ${"$"}season: MediaSeason, ${"$"}seasonYear: Int) {
               Page(page: ${"$"}page, perPage: ${"$"}perPage) {
                 pageInfo {
                   hasNextPage
                 }
-                media(
-                  sort: $sort,
-                  season: $season,
-                  seasonYear: $seasonYear,
-                  type: ANIME
-                ) {
+                media(sort: $sort, season: $season, seasonYear: $seasonYear, type: ANIME) {
                   id
                   episodes
                   title {

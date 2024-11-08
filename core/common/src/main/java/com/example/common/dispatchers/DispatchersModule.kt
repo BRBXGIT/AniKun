@@ -1,7 +1,5 @@
-package com.example.common.di
+package com.example.common.dispatchers
 
-import com.example.common.AniListDispatchers
-import com.example.common.Dispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

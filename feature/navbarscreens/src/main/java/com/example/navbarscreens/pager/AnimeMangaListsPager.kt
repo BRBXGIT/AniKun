@@ -1,4 +1,4 @@
-package com.example.designsystem.anime_manga_pager
+package com.example.navbarscreens.pager
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -35,12 +35,16 @@ import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
+import androidx.paging.compose.LazyPagingItems
+import com.example.data.remote.models.anime_models.response.Media
 import com.example.designsystem.theme.mColors
+import com.example.navbarscreens.anime_screen.sections.AnimeLCSection
 import kotlinx.coroutines.launch
 
 @Composable
 fun AnimeMangaListsPager(
-    pagerContent: @Composable () -> Unit,
+    trendingAnime: LazyPagingItems<Media>,
+    popularEverAnime: LazyPagingItems<Media>
 ) {
     val animeListsType = listOf(
         "Trending",
@@ -103,8 +107,13 @@ fun AnimeMangaListsPager(
         }
     }
 
-    HorizontalPager(state = pagerState) {
-        pagerContent()
+    HorizontalPager(state = pagerState) { page ->
+        when(page) {
+            0 -> AnimeLCSection(trendingAnime)
+            1 -> AnimeLCSection(popularEverAnime)
+            2 -> AnimeLCSection(trendingAnime)
+            3 -> AnimeLCSection(popularEverAnime)
+        }
     }
 }
 

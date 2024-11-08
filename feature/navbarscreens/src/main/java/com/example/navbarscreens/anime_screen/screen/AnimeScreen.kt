@@ -13,11 +13,10 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.navbarscreens.pager.AnimeMangaListsPager
 import com.example.designsystem.theme.mColors
-import com.example.navbarscreens.anime_screen.sections.AnimeLCSection
-import com.example.designsystem.anime_manga_pager.AnimeMangaListsPager
-import com.example.navbarscreens.topbar.TopBar
 import com.example.navbarscreens.navbar.NavBar
+import com.example.navbarscreens.topbar.TopBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,13 +40,14 @@ fun AnimeScreen(
                 .padding(innerPadding)
         ) {
             val trendingAnime = viewModel.trendingAnime.collectAsLazyPagingItems()
+            val thisSeasonAnime = viewModel.thisSeasonAnime.collectAsLazyPagingItems()
+            val nextSeasonAnime = viewModel.nextSeasonAnime.collectAsLazyPagingItems()
             val allTimePopularAnime = viewModel.allTimePopularAnime.collectAsLazyPagingItems()
 
-            AnimeMangaListsPager {
-                AnimeLCSection(trendingAnime)
-            }
-
-            AnimeLCSection(trendingAnime)
+            AnimeMangaListsPager(
+                trendingAnime,
+                allTimePopularAnime
+            )
         }
     }
 }

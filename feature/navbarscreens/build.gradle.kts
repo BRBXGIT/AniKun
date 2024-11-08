@@ -44,6 +44,7 @@ dependencies {
 
     //Modules
     implementation(project(":core:designsystem"))
+    implementation(project(":core:common"))
     implementation(project(":core:data"))
 
     //Material 3
