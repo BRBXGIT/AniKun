@@ -1,10 +1,12 @@
 package com.example.data.remote.paging
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.data.remote.api_instance.AniListApiInstance
 import com.example.data.remote.models.anime_models.request.TrendingNowAnimeRequest
 import com.example.data.remote.models.anime_models.response.Media
+import com.google.gson.Gson
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -69,29 +71,23 @@ class AnimeListsPS(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Media> {
         val startPage = params.key ?: 1
-        val perPage = params.loadSize
+        val perPage = 20
 
-        val variables = """
-            {
-              "page": $startPage,
-              "perPage": $perPage
-            }
-        """.trimIndent()
+        val variables = mutableMapOf(
+            "page" to startPage,
+            "perPage" to perPage,
+            "season" to season,
+            "seasonYear" to seasonYear
+        )
 
-        val seasonVariables = """
-            {
-              "page": $startPage,
-              "perPage": $perPage,
-              "season": $season,
-              "seasonYear": $seasonYear
-            }
-        """.trimIndent()
+        val jsonVariables = Gson().toJson(variables)
 
         return try {
+            Log.d("CCCC", variables.toString())
             val anime = apiInstance.getAnimeList(
                 TrendingNowAnimeRequest(
                     query = if(season != null) seasonQuery else query,
-                    variables = if(season != null) seasonVariables else variables
+                    variables = jsonVariables
                 )
             )
             val nextPage = if(anime.data.page.pageInfo.hasNextPage) (startPage + 1) else null

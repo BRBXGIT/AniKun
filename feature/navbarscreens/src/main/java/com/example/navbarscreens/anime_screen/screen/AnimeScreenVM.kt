@@ -13,8 +13,8 @@ import javax.inject.Inject
 class AnimeScreenVM @Inject constructor(
     repository: AnimeScreenRepoImpl
 ): ViewModel() {
-    val trendingAnime = repository.getAnimeList(Utils.TRENDING_TYPE).cachedIn(viewModelScope)
-    val allTimePopularAnime = repository.getAnimeList(Utils.POPULARITY_TYPE).cachedIn(viewModelScope)
+    val trendingAnime = repository.getAnimeList(Utils.TRENDING_TYPE, null, null).cachedIn(viewModelScope)
+    val allTimePopularAnime = repository.getAnimeList(Utils.POPULARITY_TYPE, null, null).cachedIn(viewModelScope)
 
     private val date = getDate()
     val thisSeasonAnime = repository.getAnimeList(

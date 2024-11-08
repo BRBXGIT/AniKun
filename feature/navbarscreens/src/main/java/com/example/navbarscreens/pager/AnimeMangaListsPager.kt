@@ -43,8 +43,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun AnimeMangaListsPager(
-    trendingAnime: LazyPagingItems<Media>,
-    popularEverAnime: LazyPagingItems<Media>
+    anime: List<LazyPagingItems<Media>>
 ) {
     val animeListsType = listOf(
         "Trending",
@@ -109,10 +108,10 @@ fun AnimeMangaListsPager(
 
     HorizontalPager(state = pagerState) { page ->
         when(page) {
-            0 -> AnimeLCSection(trendingAnime)
-            1 -> AnimeLCSection(popularEverAnime)
-            2 -> AnimeLCSection(trendingAnime)
-            3 -> AnimeLCSection(popularEverAnime)
+            0 -> AnimeLCSection(anime[0])
+            1 -> AnimeLCSection(anime[1])
+            2 -> AnimeLCSection(anime[2])
+            3 -> AnimeLCSection(anime[3])
         }
     }
 }

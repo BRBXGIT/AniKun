@@ -8,7 +8,7 @@ interface AnimeScreenRepo {
 
     fun getAnimeList(
         sort: String,
-        season: String? = null,
-        seasonYear: Int? = null
+        season: String?,
+        seasonYear: Int?
     ): Flow<PagingData<Media>>
 }

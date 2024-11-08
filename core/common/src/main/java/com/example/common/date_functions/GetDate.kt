@@ -16,7 +16,7 @@ fun getDate(): Date {
     val season = when(now.monthValue) {
         in 3..5 -> "SPRING"
         in 6..8 -> "SUMMER"
-        in 9..11 -> "FALL"
+        in 9..12 -> "FALL"
         else -> "WINTER"
     }
     val nextSeason = when(season) {

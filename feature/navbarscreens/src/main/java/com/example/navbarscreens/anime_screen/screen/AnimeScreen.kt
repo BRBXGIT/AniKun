@@ -1,5 +1,6 @@
 package com.example.navbarscreens.anime_screen.screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,11 +9,14 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.common.date_functions.getDate
 import com.example.navbarscreens.pager.AnimeMangaListsPager
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.navbar.NavBar
@@ -45,8 +49,12 @@ fun AnimeScreen(
             val allTimePopularAnime = viewModel.allTimePopularAnime.collectAsLazyPagingItems()
 
             AnimeMangaListsPager(
-                trendingAnime,
-                allTimePopularAnime
+                anime = listOf(
+                    trendingAnime,
+                    thisSeasonAnime,
+                    nextSeasonAnime,
+                    allTimePopularAnime
+                )
             )
         }
     }

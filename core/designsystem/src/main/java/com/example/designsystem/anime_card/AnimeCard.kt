@@ -32,7 +32,7 @@ fun AnimeCard(
     posterPath: String,
     title: String,
     description: String,
-    episodes: Int,
+    episodes: Int?,
     averageScore: String
 ) {
     Row(
