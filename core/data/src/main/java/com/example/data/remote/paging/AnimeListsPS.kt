@@ -10,7 +10,9 @@ import java.io.IOException
 
 class AnimeListsPS(
     private val apiInstance: AniListApiInstance,
-    sort: String
+    private val season: String?,
+    private val seasonYear: Int?,
+    sort: String,
 ): PagingSource<Int, Media>() {
 
     private val query = """
@@ -20,6 +22,40 @@ class AnimeListsPS(
                   hasNextPage
                 }
                 media(sort: $sort, type: ANIME) {
+                  id
+                  episodes
+                  title {
+                    english
+                    romaji
+                  }
+                  coverImage {
+                    large
+                  }
+                  description
+                  genres
+                  averageScore
+                }
+              }
+            }
+    """.trimIndent()
+
+    private val seasonQuery = """
+        query (
+                ${"$"}page: Int,
+                ${"$"}perPage: Int,
+                ${"$"}season: MediaSeason,
+                ${"$"}seasonYear: Int
+              ) {
+              Page(page: ${"$"}page, perPage: ${"$"}perPage) {
+                pageInfo {
+                  hasNextPage
+                }
+                media(
+                  sort: $sort,
+                  season: $season,
+                  seasonYear: $seasonYear,
+                  type: ANIME
+                ) {
                   id
                   episodes
                   title {
@@ -52,11 +88,20 @@ class AnimeListsPS(
             }
         """.trimIndent()
 
+        val seasonVariables = """
+            {
+              "page": $startPage,
+              "perPage": $perPage,
+              "season": $season,
+              "seasonYear": $seasonYear
+            }
+        """.trimIndent()
+
         return try {
             val anime = apiInstance.getAnimeList(
                 TrendingNowAnimeRequest(
-                    query = query,
-                    variables = variables
+                    query = if(season != null) seasonQuery else query,
+                    variables = if(season != null) seasonVariables else variables
                 )
             )
             val nextPage = if(anime.data.page.pageInfo.hasNextPage) (startPage + 1) else null

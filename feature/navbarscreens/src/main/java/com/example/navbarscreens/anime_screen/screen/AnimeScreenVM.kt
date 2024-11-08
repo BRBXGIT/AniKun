@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.example.data.remote.repos.AnimeScreenRepoImpl
+import com.example.navbarscreens.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -11,6 +12,6 @@ import javax.inject.Inject
 class AnimeScreenVM @Inject constructor(
     repository: AnimeScreenRepoImpl
 ): ViewModel() {
-    val trendingAnime = repository.getAnimeList("TRENDING_DESC").cachedIn(viewModelScope)
-
+    val trendingAnime = repository.getAnimeList(Utils.TRENDING_TYPE).cachedIn(viewModelScope)
+    val allTimePopularAnime = repository.getAnimeList(Utils.POPULARITY_EVER_TYPE).cachedIn(viewModelScope)
 }
