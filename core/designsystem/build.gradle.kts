@@ -48,4 +48,6 @@ dependencies {
     implementation(libs.androidx.material3)
     //Coil
     implementation(libs.coil.compose)
+    //Lottie
+    implementation(libs.lottie)
 }

@@ -1,6 +1,5 @@
 package com.example.data.remote.paging
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.data.remote.api_instance.AniListApiInstance
@@ -47,7 +46,7 @@ class AnimeListsPS(
                 pageInfo {
                   hasNextPage
                 }
-                media(sort: $sort, season: $season, seasonYear: $seasonYear, type: ANIME) {
+                media(sort: $sort, season: ${"$"}season, seasonYear: ${"$"}seasonYear, type: ANIME) {
                   id
                   episodes
                   title {
@@ -83,7 +82,6 @@ class AnimeListsPS(
         val jsonVariables = Gson().toJson(variables)
 
         return try {
-            Log.d("CCCC", variables.toString())
             val anime = apiInstance.getAnimeList(
                 TrendingNowAnimeRequest(
                     query = if(season != null) seasonQuery else query,
