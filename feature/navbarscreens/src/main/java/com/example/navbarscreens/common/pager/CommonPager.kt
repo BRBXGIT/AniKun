@@ -36,16 +36,18 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.paging.compose.LazyPagingItems
-import com.example.data.remote.models.anime_models.anime_list_response.Media
+import com.example.data.remote.models.manga_models.manga_list_response.Media as MangaListMedia
+import com.example.data.remote.models.anime_models.anime_list_response.Media as AnimeListMedia
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.anime_screen.sections.AnimeLCSection
 import kotlinx.coroutines.launch
 
 @Composable
 fun CommonPager(
-    anime: List<LazyPagingItems<Media>>,
+    anime: List<LazyPagingItems<AnimeListMedia>>,
+    manga: List<LazyPagingItems<MangaListMedia>>
 ) {
-    val animeListsType = listOf(
+    val listsType = listOf(
         "Trending",
         "This season",
         "Next season",
@@ -53,7 +55,7 @@ fun CommonPager(
     )
     var selectedType by rememberSaveable { mutableIntStateOf(0) }
     val animationScope = rememberCoroutineScope()
-    val pagerState = rememberPagerState(pageCount = { animeListsType.size })
+    val pagerState = rememberPagerState(pageCount = { listsType.size })
 
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
@@ -86,7 +88,7 @@ fun CommonPager(
             }
         }
     ) {
-        animeListsType.forEachIndexed { index, type ->
+        listsType.forEachIndexed { index, type ->
             Tab(
                 selected = index == selectedType,
                 onClick = {

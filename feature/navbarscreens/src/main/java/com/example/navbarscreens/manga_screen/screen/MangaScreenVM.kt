@@ -40,7 +40,7 @@ class MangaScreenVM @Inject constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val animeByQuery = query
+    val mangaByQuery = query
         .flatMapLatest { query ->
             commonRepository.getMediaByQuery(query, Utils.MANGA_TYPE).cachedIn(viewModelScope)
         }

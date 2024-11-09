@@ -21,20 +21,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.paging.LoadState
-import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.LazyPagingItems
+import com.example.data.remote.models.common_models.media_by_query_response.Media as MediaByQueryMedia
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.icons.AniListIcons
-import com.example.navbarscreens.anime_screen.screen.AnimeScreenVM
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavbarScreensSearchBar(
-    viewModel: AnimeScreenVM,
+    onSearchClick: (String) -> Unit,
+    mediaByQuery: LazyPagingItems<MediaByQueryMedia>,
     onExpandChange: () -> Unit,
     placeHolderText: String
 ) {
     var query by rememberSaveable { mutableStateOf("") }
-    val animeByQuery = viewModel.animeByQuery.collectAsLazyPagingItems()
 
     SearchBar(
         inputField = {
@@ -74,7 +74,7 @@ fun NavbarScreensSearchBar(
                     }
                 },
                 keyboardActions = KeyboardActions(
-                    onSearch = { viewModel.setQuery(query) }
+                    onSearch = { onSearchClick(query) }
                 ),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     imeAction = ImeAction.Search
@@ -85,16 +85,16 @@ fun NavbarScreensSearchBar(
         onExpandedChange = { onExpandChange() },
     ) {
         var errorText by rememberSaveable { mutableStateOf("") }
-        LaunchedEffect(animeByQuery.loadState.refresh) {
-            if(animeByQuery.loadState.refresh is LoadState.Error) {
-                errorText = (animeByQuery.loadState.refresh as LoadState.Error).error.message.toString()
+        LaunchedEffect(mediaByQuery.loadState.refresh) {
+            if(mediaByQuery.loadState.refresh is LoadState.Error) {
+                errorText = (mediaByQuery.loadState.refresh as LoadState.Error).error.message.toString()
             }
         }
 
         LazyColumn {
             if(errorText.isBlank()) {
-                items(animeByQuery.itemCount) { index ->
-                    val currentAnime = animeByQuery[index]
+                items(mediaByQuery.itemCount) { index ->
+                    val currentAnime = mediaByQuery[index]
 
                     currentAnime?.let {
                         SearchItem(

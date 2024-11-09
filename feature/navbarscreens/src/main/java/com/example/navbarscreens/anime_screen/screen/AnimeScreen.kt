@@ -46,10 +46,13 @@ fun AnimeScreen(
             .nestedScroll(topBarScrollBehaviour.nestedScrollConnection)
     ) { innerPadding ->
         if(isSearching) {
+            val animeByQuery = viewModel.animeByQuery.collectAsLazyPagingItems()
+
             NavbarScreensSearchBar(
-                viewModel = viewModel,
                 placeHolderText = "Find anime",
                 onExpandChange = { isSearching = false },
+                onSearchClick = { viewModel.setQuery(it) },
+                mediaByQuery = animeByQuery
             )
         }
 
@@ -69,7 +72,8 @@ fun AnimeScreen(
                     thisSeasonAnime,
                     nextSeasonAnime,
                     allTimePopularAnime
-                )
+                ),
+                manga = emptyList()
             )
         }
     }
