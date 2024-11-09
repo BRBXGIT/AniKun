@@ -3,8 +3,8 @@ package com.example.data.remote.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.data.remote.api_instance.AniListApiInstance
-import com.example.data.remote.models.anime_models.request.TrendingNowAnimeRequest
-import com.example.data.remote.models.anime_models.response.Media
+import com.example.data.remote.models.anime_models.anime_list_response.Media as AnimeListMedia
+import com.example.data.remote.models.common_models.common_request.CommonRequest
 import com.google.gson.Gson
 import retrofit2.HttpException
 import java.io.IOException
@@ -14,7 +14,7 @@ class AnimeListsPS(
     private val season: String?,
     private val seasonYear: Int?,
     sort: String,
-): PagingSource<Int, Media>() {
+): PagingSource<Int, AnimeListMedia>() {
 
     private val query = """
         query (${"$"}page: Int, ${"$"}perPage: Int) {
@@ -64,11 +64,11 @@ class AnimeListsPS(
             }
     """.trimIndent()
 
-    override fun getRefreshKey(state: PagingState<Int, Media>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, AnimeListMedia>): Int? {
         return state.anchorPosition
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Media> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, AnimeListMedia> {
         val startPage = params.key ?: 1
         val perPage = 20
 
@@ -83,7 +83,7 @@ class AnimeListsPS(
 
         return try {
             val anime = apiInstance.getAnimeList(
-                TrendingNowAnimeRequest(
+                CommonRequest(
                     query = if(season != null) seasonQuery else query,
                     variables = jsonVariables
                 )

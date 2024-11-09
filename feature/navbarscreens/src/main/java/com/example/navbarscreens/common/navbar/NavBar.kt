@@ -1,4 +1,4 @@
-package com.example.navbarscreens.navbar
+package com.example.navbarscreens.common.navbar
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar

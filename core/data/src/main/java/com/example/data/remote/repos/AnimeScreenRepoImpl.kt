@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.data.remote.api_instance.AniListApiInstance
-import com.example.data.remote.models.anime_models.response.Media
+import com.example.data.remote.models.anime_models.anime_list_response.Media as AnimeListMedia
 import com.example.data.remote.paging.AnimeListsPS
 import com.example.data.repos.AnimeScreenRepo
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +18,7 @@ class AnimeScreenRepoImpl @Inject constructor(
         sort: String,
         season: String?,
         seasonYear: Int?,
-    ): Flow<PagingData<Media>> {
+    ): Flow<PagingData<AnimeListMedia>> {
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = {

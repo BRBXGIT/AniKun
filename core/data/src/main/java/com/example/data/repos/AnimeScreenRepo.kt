@@ -1,7 +1,7 @@
 package com.example.data.repos
 
 import androidx.paging.PagingData
-import com.example.data.remote.models.anime_models.response.Media
+import com.example.data.remote.models.anime_models.anime_list_response.Media
 import kotlinx.coroutines.flow.Flow
 
 interface AnimeScreenRepo {

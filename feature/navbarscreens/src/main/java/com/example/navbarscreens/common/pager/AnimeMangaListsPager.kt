@@ -1,6 +1,5 @@
-package com.example.navbarscreens.pager
+package com.example.navbarscreens.common.pager
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -36,7 +35,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.paging.compose.LazyPagingItems
-import com.example.data.remote.models.anime_models.response.Media
+import com.example.data.remote.models.anime_models.anime_list_response.Media
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.anime_screen.sections.AnimeLCSection
 import kotlinx.coroutines.launch
@@ -80,9 +79,8 @@ fun AnimeMangaListsPager(
                         .height(3.dp)
                         .background(
                             color = mColors.primary,
-                            shape = RoundedCornerShape(topStart = 3.dp, topEnd = 3.dp)
+                            shape = RoundedCornerShape(3.dp)
                         )
-
                 )
             }
         }
@@ -116,7 +114,6 @@ fun AnimeMangaListsPager(
     }
 }
 
-@SuppressLint("UseOfNonLambdaOffsetOverload")
 private fun Modifier.customTabIndicatorOffset(
     currentTabPosition: TabPosition,
     width: Dp
@@ -136,6 +133,6 @@ private fun Modifier.customTabIndicatorOffset(
     )
     fillMaxWidth()
         .wrapContentSize(Alignment.BottomStart)
-        .offset(x = max(0.dp, currentTabWidth - width) / 2 + indicatorOffset)
         .width(width)
+        .offset(x = max(0.dp, currentTabWidth - width) / 2 + indicatorOffset)
 }
