@@ -3,8 +3,10 @@ package com.example.data.di
 import com.example.data.remote.api_instance.AniListApiInstance
 import com.example.data.remote.repos.AnimeScreenRepoImpl
 import com.example.data.remote.repos.CommonRepoImpl
+import com.example.data.remote.repos.MangaScreenRepoImpl
 import com.example.data.repos.AnimeScreenRepo
 import com.example.data.repos.CommonRepo
+import com.example.data.repos.MangaScreenRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,6 +34,12 @@ object DataModule {
     @Singleton
     fun provideAnimeScreenRepo(apiInstance: AniListApiInstance): AnimeScreenRepo {
         return AnimeScreenRepoImpl(apiInstance)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMangaScreenRepo(apiInstance: AniListApiInstance): MangaScreenRepo {
+        return MangaScreenRepoImpl(apiInstance)
     }
 
     @Provides

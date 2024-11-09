@@ -13,6 +13,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavController
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.common.navbar.NavBar
+import com.example.navbarscreens.common.pager.CommonPager
 import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,7 +43,9 @@ fun MangaScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-
+            CommonPager(
+                anime = emptyList()
+            )
         }
     }
 }

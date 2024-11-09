@@ -5,4 +5,5 @@ object Utils {
     const val POPULARITY_TYPE = "POPULARITY_DESC"
 
     const val ANIME_TYPE = "ANIME"
+    const val MANGA_TYPE = "MANGA"
 }
