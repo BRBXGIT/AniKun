@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.data.remote.models.common_models.media_by_query_response.Media as MediaByQueryMedia
 import com.example.designsystem.icons.AniListIcons
@@ -41,7 +42,9 @@ fun SearchItem(
         ) {
             Text(
                 text = if(anime.title.english == null) anime.title.romaji else anime.title.english!!,
-                style = mTypography.labelLarge
+                style = mTypography.labelLarge,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
 
             val genres = anime.genres.take(3).toString().replace("[", "").replace("]", "")
