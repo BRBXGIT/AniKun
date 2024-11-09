@@ -14,7 +14,7 @@ import com.example.designsystem.theme.mColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(
+fun NavBarScreensTopBar(
     text: String,
     scrollBehavior: TopAppBarScrollBehavior,
     onSearchClick: () -> Unit

@@ -22,12 +22,13 @@ import com.example.designsystem.theme.mTypography
 @Composable
 fun SearchItem(
     onExpandChange: () -> Unit,
-    anime: MediaByQueryMedia
+    anime: MediaByQueryMedia,
+    modifier: Modifier
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clickable { onExpandChange() }
             .padding(16.dp)

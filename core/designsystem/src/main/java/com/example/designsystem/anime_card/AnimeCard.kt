@@ -33,7 +33,8 @@ fun AnimeCard(
     title: String,
     description: String,
     episodes: Int?,
-    averageScore: String
+    averageScore: String,
+    index: Int
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -54,7 +55,7 @@ fun AnimeCard(
                 .clip(mShapes.small),
             filterQuality = FilterQuality.Low,
             contentScale = ContentScale.Crop,
-            loading = { AnimatedShimmer(100.dp, 130.dp) }
+            loading = { if(index <= 6) AnimatedShimmer(100.dp, 130.dp) }
         )
 
         Column(

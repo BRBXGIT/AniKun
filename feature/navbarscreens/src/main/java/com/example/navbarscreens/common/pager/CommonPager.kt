@@ -1,5 +1,6 @@
 package com.example.navbarscreens.common.pager
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -41,8 +42,8 @@ import com.example.navbarscreens.anime_screen.sections.AnimeLCSection
 import kotlinx.coroutines.launch
 
 @Composable
-fun AnimeMangaListsPager(
-    anime: List<LazyPagingItems<Media>>
+fun CommonPager(
+    anime: List<LazyPagingItems<Media>>,
 ) {
     val animeListsType = listOf(
         "Trending",
@@ -105,15 +106,18 @@ fun AnimeMangaListsPager(
     }
 
     HorizontalPager(state = pagerState) { page ->
-        when(page) {
-            0 -> AnimeLCSection(anime[0])
-            1 -> AnimeLCSection(anime[1])
-            2 -> AnimeLCSection(anime[2])
-            3 -> AnimeLCSection(anime[3])
+        if(anime.isNotEmpty()) {
+            when(page) {
+                0 -> AnimeLCSection(anime[0])
+                1 -> AnimeLCSection(anime[1])
+                2 -> AnimeLCSection(anime[2])
+                3 -> AnimeLCSection(anime[3])
+            }
         }
     }
 }
 
+@SuppressLint("UseOfNonLambdaOffsetOverload")
 private fun Modifier.customTabIndicatorOffset(
     currentTabPosition: TabPosition,
     width: Dp

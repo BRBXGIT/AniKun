@@ -18,9 +18,9 @@ import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.common.navbar.NavBar
-import com.example.navbarscreens.common.pager.AnimeMangaListsPager
+import com.example.navbarscreens.common.pager.CommonPager
 import com.example.navbarscreens.common.search_bar.NavbarScreensSearchBar
-import com.example.navbarscreens.common.topbar.TopBar
+import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,7 +33,7 @@ fun AnimeScreen(
     var isSearching by rememberSaveable { mutableStateOf(false) }
     Scaffold(
         topBar = {
-            TopBar(
+            NavBarScreensTopBar(
                 text = "Anime",
                 scrollBehavior = topBarScrollBehaviour,
                 onSearchClick = { isSearching = true }
@@ -63,7 +63,7 @@ fun AnimeScreen(
             val nextSeasonAnime = viewModel.nextSeasonAnime.collectAsLazyPagingItems()
             val allTimePopularAnime = viewModel.allTimePopularAnime.collectAsLazyPagingItems()
 
-            AnimeMangaListsPager(
+            CommonPager(
                 anime = listOf(
                     trendingAnime,
                     thisSeasonAnime,

@@ -9,4 +9,6 @@ object AniListIcons {
     val Magnifier = R.drawable.ic_magnifier
     val ArrowLeftFilled = R.drawable.ic_arrow_left_filled
     val BackspaceFilled = R.drawable.ic_backspace_filled
+    val Manga = R.drawable.ic_manga
+    val MangaFilled = R.drawable.ic_manga_filled
 }

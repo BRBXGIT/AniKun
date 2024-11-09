@@ -45,7 +45,8 @@ fun AnimeLCSection(
                             title = if(currentAnime.title.english == null) currentAnime.title.romaji else currentAnime.title.english!!,
                             description = currentAnime.description.toString(),
                             episodes = currentAnime.episodes,
-                            averageScore = currentAnime.averageScore.toString()
+                            averageScore = currentAnime.averageScore.toString(),
+                            index = index
                         )
                     }
                 }

@@ -99,7 +99,8 @@ fun NavbarScreensSearchBar(
                     currentAnime?.let {
                         SearchItem(
                             onExpandChange = { onExpandChange() },
-                            anime = currentAnime
+                            anime = currentAnime,
+                            modifier = Modifier.animateItem()
                         )
                     }
                 }
