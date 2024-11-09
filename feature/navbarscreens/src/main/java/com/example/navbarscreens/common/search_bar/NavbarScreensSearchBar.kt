@@ -1,9 +1,13 @@
 package com.example.navbarscreens.common.search_bar
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -11,15 +15,20 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.icons.AniListIcons
 import com.example.navbarscreens.anime_screen.screen.AnimeScreenVM
 
@@ -75,18 +84,40 @@ fun NavbarScreensSearchBar(
                 ),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     imeAction = ImeAction.Search
-                )
+                ),
             )
         },
         expanded = true,
         onExpandedChange = { onExpandChange() },
     ) {
-        LazyColumn {
-            items(animeByQuery.itemCount) { index ->
-                val currentAnime = animeByQuery[index]
+        var errorText by rememberSaveable { mutableStateOf("") }
+        LaunchedEffect(animeByQuery.loadState.refresh) {
+            if(animeByQuery.loadState.refresh is LoadState.Error) {
+                errorText = (animeByQuery.loadState.refresh as LoadState.Error).error.message.toString()
+            }
+        }
 
-                currentAnime?.let {
-                    Text(currentAnime.title.romaji)
+        PullToRefreshBox(
+            isRefreshing = (animeByQuery.loadState.refresh is LoadState.Loading) && (query.isNotBlank()),
+            onRefresh = { viewModel.setQuery(query) },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            LazyColumn {
+                if(errorText.isBlank()) {
+                    items(animeByQuery.itemCount) { index ->
+                        val currentAnime = animeByQuery[index]
+
+                        currentAnime?.let {
+                            Text(currentAnime.title.romaji)
+                        }
+                    }
+                } else {
+                    item {
+                        ErrorSection(
+                            errorText = errorText,
+                            modifier = Modifier.fillParentMaxSize()
+                        )
+                    }
                 }
             }
         }

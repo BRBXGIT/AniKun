@@ -1,7 +1,7 @@
 package com.example.data.repos
 
 import androidx.paging.PagingData
-import com.example.data.remote.models.anime_models.anime_list_response.Media
+import com.example.data.remote.models.anime_models.anime_list_response.Media as AnimeListMedia
 import kotlinx.coroutines.flow.Flow
 
 interface AnimeScreenRepo {
@@ -10,5 +10,5 @@ interface AnimeScreenRepo {
         sort: String,
         season: String?,
         seasonYear: Int?
-    ): Flow<PagingData<Media>>
+    ): Flow<PagingData<AnimeListMedia>>
 }
