@@ -1,6 +1,5 @@
 package com.example.designsystem.icons
 
-import android.widget.Magnifier
 import com.example.designsystem.R
 
 object AniListIcons {

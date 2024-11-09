@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import com.example.designsystem.icons.AniListIcons
 import com.example.designsystem.theme.mColors
-import com.example.navbarscreens.common.search_bar.NavbarScreensSearchBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

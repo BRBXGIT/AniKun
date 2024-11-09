@@ -1,13 +1,8 @@
 package com.example.navbarscreens.common.search_bar
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -15,7 +10,6 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -97,27 +91,24 @@ fun NavbarScreensSearchBar(
             }
         }
 
-        PullToRefreshBox(
-            isRefreshing = (animeByQuery.loadState.refresh is LoadState.Loading) && (query.isNotBlank()),
-            onRefresh = { viewModel.setQuery(query) },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            LazyColumn {
-                if(errorText.isBlank()) {
-                    items(animeByQuery.itemCount) { index ->
-                        val currentAnime = animeByQuery[index]
+        LazyColumn {
+            if(errorText.isBlank()) {
+                items(animeByQuery.itemCount) { index ->
+                    val currentAnime = animeByQuery[index]
 
-                        currentAnime?.let {
-                            Text(currentAnime.title.romaji)
-                        }
-                    }
-                } else {
-                    item {
-                        ErrorSection(
-                            errorText = errorText,
-                            modifier = Modifier.fillParentMaxSize()
+                    currentAnime?.let {
+                        SearchItem(
+                            onExpandChange = { onExpandChange() },
+                            anime = currentAnime
                         )
                     }
+                }
+            } else {
+                item {
+                    ErrorSection(
+                        errorText = errorText,
+                        modifier = Modifier.fillParentMaxSize()
+                    )
                 }
             }
         }
