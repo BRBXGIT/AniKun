@@ -3,7 +3,6 @@ package com.example.navbarscreens.manga_screen.screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.example.common.date_functions.getDate
 import com.example.data.remote.repos.CommonRepoImpl
 import com.example.data.remote.repos.MangaScreenRepoImpl
 import com.example.navbarscreens.utils.Utils
@@ -18,20 +17,9 @@ class MangaScreenVM @Inject constructor(
     repository: MangaScreenRepoImpl,
     commonRepository: CommonRepoImpl
 ): ViewModel() {
-    val trendingManga = repository.getMangaList(Utils.TRENDING_TYPE, null, null).cachedIn(viewModelScope)
-    val allTimePopularManga = repository.getMangaList(Utils.POPULARITY_TYPE, null, null).cachedIn(viewModelScope)
-
-    private val date = getDate()
-    val thisSeasonManga = repository.getMangaList(
-        sort = Utils.POPULARITY_TYPE,
-        season = date.season,
-        seasonYear = date.year
-    ).cachedIn(viewModelScope)
-    val nextSeasonManga = repository.getMangaList(
-        sort = Utils.POPULARITY_TYPE,
-        season = date.nextSeason,
-        seasonYear = if(date.season == "FALL") date.nextYear else date.year
-    ).cachedIn(viewModelScope)
+    val trendingManga = repository.getMangaList(Utils.TRENDING_TYPE, "JP").cachedIn(viewModelScope)
+    val allTimePopularManga = repository.getMangaList(Utils.POPULARITY_TYPE, "JP").cachedIn(viewModelScope)
+    val popularManhwa = repository.getMangaList(Utils.POPULARITY_TYPE, "KR").cachedIn(viewModelScope)
 
     private val query = MutableStateFlow("")
 

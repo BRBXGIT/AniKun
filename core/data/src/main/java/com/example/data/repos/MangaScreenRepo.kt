@@ -8,7 +8,6 @@ interface MangaScreenRepo {
 
     fun getMangaList(
         sort: String,
-        season: String?,
-        seasonYear: Int?
+        countryOfOrigin: String
     ): Flow<PagingData<MangaListMedia>>
 }

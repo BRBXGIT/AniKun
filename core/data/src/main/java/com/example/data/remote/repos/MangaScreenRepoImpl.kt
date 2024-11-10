@@ -16,17 +16,15 @@ class MangaScreenRepoImpl @Inject constructor(
 
     override fun getMangaList(
         sort: String,
-        season: String?,
-        seasonYear: Int?
+        countryOfOrigin: String
     ): Flow<PagingData<MangaListMedia>> {
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = {
                 MangaListsPS(
                     apiInstance = apiInstance,
-                    season = season,
-                    seasonYear = seasonYear,
-                    sort = sort
+                    sort = sort,
+                    countryOfOrigin = countryOfOrigin
                 )
             }
         ).flow

@@ -48,15 +48,28 @@ fun CommonPager(
     anime: List<LazyPagingItems<AnimeListMedia>>,
     manga: List<LazyPagingItems<MangaListMedia>>
 ) {
-    val listsType = listOf(
+    val animeListsType = listOf(
         "Trending",
         "This season",
         "Next season",
         "All time popular"
     )
+    val mangaListsType = listOf(
+        "Trending",
+        "All time popular",
+        "Popular manhwa"
+    )
     var selectedType by rememberSaveable { mutableIntStateOf(0) }
     val animationScope = rememberCoroutineScope()
-    val pagerState = rememberPagerState(pageCount = { listsType.size })
+    val pagerState = rememberPagerState(
+        pageCount = {
+            if(anime.isEmpty()) {
+                mangaListsType.size
+            } else {
+                animeListsType.size
+            }
+        }
+    )
 
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
@@ -89,22 +102,42 @@ fun CommonPager(
             }
         }
     ) {
-        listsType.forEachIndexed { index, type ->
-            Tab(
-                selected = index == selectedType,
-                onClick = {
-                    selectedType = index
-                    animationScope.launch {
-                        pagerState.animateScrollToPage(index)
+        if(anime.isEmpty()) {
+            mangaListsType.forEachIndexed { index, type ->
+                Tab(
+                    selected = index == selectedType,
+                    onClick = {
+                        selectedType = index
+                        animationScope.launch {
+                            pagerState.animateScrollToPage(index)
+                        }
+                    },
+                    modifier = Modifier.clip(RoundedCornerShape(10.dp)),
+                    text = {
+                        Text(
+                            text = type
+                        )
                     }
-                },
-                modifier = Modifier.clip(RoundedCornerShape(10.dp)),
-                text = {
-                    Text(
-                        text = type
-                    )
-                }
-            )
+                )
+            }
+        } else {
+            animeListsType.forEachIndexed { index, type ->
+                Tab(
+                    selected = index == selectedType,
+                    onClick = {
+                        selectedType = index
+                        animationScope.launch {
+                            pagerState.animateScrollToPage(index)
+                        }
+                    },
+                    modifier = Modifier.clip(RoundedCornerShape(10.dp)),
+                    text = {
+                        Text(
+                            text = type
+                        )
+                    }
+                )
+            }
         }
     }
 
@@ -121,7 +154,6 @@ fun CommonPager(
                 0 -> MangaLVGSection(manga[0])
                 1 -> MangaLVGSection(manga[1])
                 2 -> MangaLVGSection(manga[2])
-                3 -> MangaLVGSection(manga[3])
             }
         }
     }

@@ -42,7 +42,7 @@ fun AnimeCard(
     ) {
         SubcomposeAsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(anime.coverImage)
+                .data(anime.coverImage.large)
                 .crossfade(500)
                 .size(Size.ORIGINAL)
                 .build(),

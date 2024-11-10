@@ -11,40 +11,17 @@ import java.io.IOException
 
 class MangaListsPS(
     private val apiInstance: AniListApiInstance,
-    private val season: String?,
-    private val seasonYear: Int?,
-    sort: String
+    private val countryOfOrigin: String,
+    sort: String,
 ): PagingSource<Int, MangaListMedia>() {
 
     private val query = """
-        query (${"$"}page: Int, ${"$"}perPage: Int) {
+        query (${"$"}page: Int, ${"$"}perPage: Int, ${"$"}countryOfOrigin: CountryCode) {
               Page(page: ${"$"}page, perPage: ${"$"}perPage) {
                 pageInfo {
                   hasNextPage
                 }
-                media(sort: $sort, type: MANGA) {
-                  id
-                  title {
-                    english
-                    romaji
-                  }
-                  coverImage {
-                    large
-                  }
-                  genres
-                  averageScore
-                }
-              }
-            }
-    """.trimIndent()
-
-    private val seasonQuery = """
-        query (${"$"}page: Int, ${"$"}perPage: Int, ${"$"}season: MediaSeason, ${"$"}seasonYear: Int) {
-              Page(page: ${"$"}page, perPage: ${"$"}perPage) {
-                pageInfo {
-                  hasNextPage
-                }
-                media(sort: $sort, season: ${"$"}season, seasonYear: ${"$"}seasonYear, type: MANGA) {
+                media(sort: $sort, type: MANGA, countryOfOrigin: ${"$"}countryOfOrigin) {
                   id
                   title {
                     english
@@ -71,8 +48,7 @@ class MangaListsPS(
         val variables = mutableMapOf(
             "page" to startPage,
             "perPage" to perPage,
-            "season" to season,
-            "seasonYear" to seasonYear
+            "countryOfOrigin" to countryOfOrigin
         )
 
         val jsonVariables = Gson().toJson(variables)
@@ -80,7 +56,7 @@ class MangaListsPS(
         return try {
             val manga = apiInstance.getMangaList(
                 CommonRequest(
-                    query = if(season != null) seasonQuery else query,
+                    query = query,
                     variables = jsonVariables
                 )
             )

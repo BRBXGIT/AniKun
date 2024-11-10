@@ -62,17 +62,15 @@ fun MangaScreen(
                 .padding(innerPadding)
         ) {
             val trendingManga = viewModel.trendingManga.collectAsLazyPagingItems()
-            val thisSeasonManga = viewModel.thisSeasonManga.collectAsLazyPagingItems()
-            val nextSeasonManga = viewModel.nextSeasonManga.collectAsLazyPagingItems()
             val allTimePopularManga = viewModel.allTimePopularManga.collectAsLazyPagingItems()
+            val popularManhwa = viewModel.popularManhwa.collectAsLazyPagingItems()
 
             CommonPager(
                 anime = emptyList(),
                 manga = listOf(
                     trendingManga,
-                    thisSeasonManga,
-                    nextSeasonManga,
-                    allTimePopularManga
+                    allTimePopularManga,
+                    popularManhwa
                 )
             )
         }
