@@ -40,6 +40,7 @@ import com.example.data.remote.models.manga_models.manga_list_response.Media as 
 import com.example.data.remote.models.anime_models.anime_list_response.Media as AnimeListMedia
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.anime_screen.sections.AnimeLCSection
+import com.example.navbarscreens.manga_screen.sections.MangaLVGSection
 import kotlinx.coroutines.launch
 
 @Composable
@@ -114,6 +115,13 @@ fun CommonPager(
                 1 -> AnimeLCSection(anime[1])
                 2 -> AnimeLCSection(anime[2])
                 3 -> AnimeLCSection(anime[3])
+            }
+        } else {
+            when(page) {
+                0 -> MangaLVGSection(manga[0])
+                1 -> MangaLVGSection(manga[1])
+                2 -> MangaLVGSection(manga[2])
+                3 -> MangaLVGSection(manga[3])
             }
         }
     }

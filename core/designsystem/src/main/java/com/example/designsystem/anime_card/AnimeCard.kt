@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
+import com.example.data.remote.models.anime_models.anime_list_response.Media as AnimeListMedia
 import com.example.designsystem.animated_shimmer.AnimatedShimmer
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes
@@ -29,23 +30,19 @@ import com.example.designsystem.theme.mTypography
 
 @Composable
 fun AnimeCard(
-    posterPath: String,
-    title: String,
-    description: String,
-    episodes: Int?,
-    averageScore: String,
+    anime: AnimeListMedia,
     index: Int
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {  }
+            .clickable { }
             .padding(16.dp)
     ) {
         SubcomposeAsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(posterPath)
+                .data(anime.coverImage)
                 .crossfade(500)
                 .size(Size.ORIGINAL)
                 .build(),
@@ -62,7 +59,7 @@ fun AnimeCard(
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             Text(
-                text = title,
+                text = if(anime.title.english == null) anime.title.romaji else anime.title.english!!,
                 style = mTypography.bodyLarge.copy(
                     color = mColors.primary,
                     fontWeight = FontWeight.Bold
@@ -72,7 +69,7 @@ fun AnimeCard(
             )
 
             Text(
-                text = "$episodes Episodes • ${averageScore.take(1)}.${averageScore.takeLast(1)}★",
+                text = "${anime.episodes} Episodes • ${anime.averageScore.toString().take(1)}.${anime.averageScore.toString().takeLast(1)}★",
                 style = mTypography.bodyMedium.copy(
                     color = mColors.secondary,
                 ),
@@ -81,7 +78,7 @@ fun AnimeCard(
             )
 
             Text(
-                text = AnnotatedString.fromHtml(description),
+                text = AnnotatedString.fromHtml(anime.description.toString()),
                 style = mTypography.bodyMedium.copy(
                     color = mColors.tertiary
                 ),

@@ -22,12 +22,12 @@ class MangaScreenVM @Inject constructor(
     val allTimePopularManga = repository.getMangaList(Utils.POPULARITY_TYPE, null, null).cachedIn(viewModelScope)
 
     private val date = getDate()
-    val thisSeasonAnime = repository.getMangaList(
+    val thisSeasonManga = repository.getMangaList(
         sort = Utils.POPULARITY_TYPE,
         season = date.season,
         seasonYear = date.year
     ).cachedIn(viewModelScope)
-    val nextSeasonAnime = repository.getMangaList(
+    val nextSeasonManga = repository.getMangaList(
         sort = Utils.POPULARITY_TYPE,
         season = date.nextSeason,
         seasonYear = if(date.season == "FALL") date.nextYear else date.year

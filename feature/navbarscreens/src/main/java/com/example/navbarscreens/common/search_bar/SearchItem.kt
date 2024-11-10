@@ -22,7 +22,7 @@ import com.example.designsystem.theme.mTypography
 @Composable
 fun SearchItem(
     onExpandChange: () -> Unit,
-    anime: MediaByQueryMedia,
+    media: MediaByQueryMedia,
     modifier: Modifier
 ) {
     Row(
@@ -42,14 +42,14 @@ fun SearchItem(
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
-                text = if(anime.title.english == null) anime.title.romaji else anime.title.english!!,
+                text = if(media.title.english == null) media.title.romaji else media.title.english!!,
                 style = mTypography.labelLarge,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
 
-            val genres = anime.genres.take(3).toString().replace("[", "").replace("]", "")
-            val score = "${anime.averageScore.toString().take(1)}.${anime.averageScore.toString().takeLast(1)}"
+            val genres = media.genres.take(3).toString().replace("[", "").replace("]", "")
+            val score = "${media.averageScore.toString().take(1)}.${media.averageScore.toString().takeLast(1)}"
             Text(
                 text = "$score • ${if(genres == "") "Unspecified" else genres}",
                 style = mTypography.labelMedium.copy(

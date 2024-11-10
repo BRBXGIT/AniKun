@@ -94,15 +94,13 @@ fun NavbarScreensSearchBar(
         LazyColumn {
             if(errorText.isBlank()) {
                 items(mediaByQuery.itemCount) { index ->
-                    val currentAnime = mediaByQuery[index]
+                    val currentMedia = mediaByQuery[index]
 
-                    currentAnime?.let {
-                        SearchItem(
-                            onExpandChange = { onExpandChange() },
-                            anime = currentAnime,
-                            modifier = Modifier.animateItem()
-                        )
-                    }
+                    SearchItem(
+                        onExpandChange = { onExpandChange() },
+                        media = currentMedia!!,
+                        modifier = Modifier.animateItem()
+                    )
                 }
             } else {
                 item {

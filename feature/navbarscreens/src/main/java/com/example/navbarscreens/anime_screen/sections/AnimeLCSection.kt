@@ -13,14 +13,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import com.example.data.remote.models.anime_models.anime_list_response.Media
+import com.example.data.remote.models.anime_models.anime_list_response.Media as AnimeListMedia
 import com.example.designsystem.anime_card.AnimeCard
 import com.example.designsystem.error_section.ErrorSection
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AnimeLCSection(
-    anime: LazyPagingItems<Media>
+    anime: LazyPagingItems<AnimeListMedia>
 ) {
     var errorText by rememberSaveable { mutableStateOf("") }
     LaunchedEffect(anime.loadState.refresh) {
@@ -39,16 +39,10 @@ fun AnimeLCSection(
                 items(anime.itemCount) { index ->
                     val currentAnime = anime[index]
 
-                    currentAnime?.let {
-                        AnimeCard(
-                            posterPath = currentAnime.coverImage.large,
-                            title = if(currentAnime.title.english == null) currentAnime.title.romaji else currentAnime.title.english!!,
-                            description = currentAnime.description.toString(),
-                            episodes = currentAnime.episodes,
-                            averageScore = currentAnime.averageScore.toString(),
-                            index = index
-                        )
-                    }
+                    AnimeCard(
+                        anime = currentAnime!!,
+                        index = index
+                    )
                 }
             } else {
                 item {
