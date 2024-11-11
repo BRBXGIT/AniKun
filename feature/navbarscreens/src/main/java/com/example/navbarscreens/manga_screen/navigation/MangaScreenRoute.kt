@@ -1,9 +1,10 @@
 package com.example.navbarscreens.manga_screen.navigation
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.paging.compose.LazyPagingItems
+import com.example.data.remote.models.manga_models.manga_list_response.Media as MangaListMedia
 import com.example.navbarscreens.manga_screen.screen.MangaScreen
 import com.example.navbarscreens.manga_screen.screen.MangaScreenVM
 import kotlinx.serialization.Serializable
@@ -12,12 +13,17 @@ import kotlinx.serialization.Serializable
 object MangaScreenRoute
 
 fun NavGraphBuilder.mangaScreen(
-    navController: NavController
+    navController: NavController,
+    mangaScreenVM: MangaScreenVM,
+    trendingManga: LazyPagingItems<MangaListMedia>,
+    allTimePopularManga: LazyPagingItems<MangaListMedia>,
+    popularManhwa: LazyPagingItems<MangaListMedia>
 ) = composable<MangaScreenRoute> {
-    val mangaScreenVM = hiltViewModel<MangaScreenVM>()
-
     MangaScreen(
         viewModel = mangaScreenVM,
-        navController = navController
+        navController = navController,
+        trendingManga = trendingManga,
+        allTimePopularManga = allTimePopularManga,
+        popularManhwa = popularManhwa
     )
 }

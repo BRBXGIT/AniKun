@@ -1,5 +1,6 @@
 package com.example.navbarscreens.anime_screen.sections
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,7 +35,9 @@ fun AnimeLCSection(
         onRefresh = { anime.refresh() },
         modifier = Modifier.fillMaxWidth()
     ) {
-        LazyColumn {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize()
+        ) {
             if(errorText.isBlank()) {
                 items(anime.itemCount) { index ->
                     val currentAnime = anime[index]

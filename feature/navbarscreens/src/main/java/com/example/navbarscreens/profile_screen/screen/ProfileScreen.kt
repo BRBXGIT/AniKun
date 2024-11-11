@@ -1,4 +1,4 @@
-package com.example.navbarscreens.manga_screen.screen
+package com.example.navbarscreens.profile_screen.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -15,23 +15,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavController
-import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.data.remote.models.manga_models.manga_list_response.Media as MangaListMedia
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.common.navbar.NavBar
-import com.example.navbarscreens.common.pager.CommonPager
-import com.example.navbarscreens.common.search_bar.NavbarScreensSearchBar
 import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MangaScreen(
-    navController: NavController,
-    viewModel: MangaScreenVM,
-    trendingManga: LazyPagingItems<MangaListMedia>,
-    allTimePopularManga: LazyPagingItems<MangaListMedia>,
-    popularManhwa: LazyPagingItems<MangaListMedia>
+fun ProfileScreen(
+    navController: NavController
 ) {
     val topBarScrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -39,7 +30,7 @@ fun MangaScreen(
     Scaffold(
         topBar = {
             NavBarScreensTopBar(
-                text = "Manga",
+                text = "Profile",
                 scrollBehavior = topBarScrollBehaviour,
                 onSearchClick = { isSearching = true }
             )
@@ -50,30 +41,12 @@ fun MangaScreen(
             .background(mColors.background)
             .nestedScroll(topBarScrollBehaviour.nestedScrollConnection)
     ) { innerPadding ->
-        if(isSearching) {
-            val mangaByQuery = viewModel.mangaByQuery.collectAsLazyPagingItems()
-
-            NavbarScreensSearchBar(
-                placeHolderText = "Find manga",
-                onExpandChange = { isSearching = false },
-                onSearchClick = { viewModel.setQuery(it) },
-                mediaByQuery = mangaByQuery
-            )
-        }
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            CommonPager(
-                anime = emptyList(),
-                manga = listOf(
-                    trendingManga,
-                    allTimePopularManga,
-                    popularManhwa
-                )
-            )
+
         }
     }
 }

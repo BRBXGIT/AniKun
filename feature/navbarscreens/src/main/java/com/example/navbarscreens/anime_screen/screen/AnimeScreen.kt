@@ -15,7 +15,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavController
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.data.remote.models.anime_models.anime_list_response.Media as AnimeListMedia
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.common.navbar.NavBar
 import com.example.navbarscreens.common.pager.CommonPager
@@ -26,7 +28,11 @@ import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
 @Composable
 fun AnimeScreen(
     navController: NavController,
-    viewModel: AnimeScreenVM
+    viewModel: AnimeScreenVM,
+    trendingAnime: LazyPagingItems<AnimeListMedia>,
+    thisSeasonAnime: LazyPagingItems<AnimeListMedia>,
+    nextSeasonAnime: LazyPagingItems<AnimeListMedia>,
+    allTimePopularAnime: LazyPagingItems<AnimeListMedia>
 ) {
     val topBarScrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -61,11 +67,6 @@ fun AnimeScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            val trendingAnime = viewModel.trendingAnime.collectAsLazyPagingItems()
-            val thisSeasonAnime = viewModel.thisSeasonAnime.collectAsLazyPagingItems()
-            val nextSeasonAnime = viewModel.nextSeasonAnime.collectAsLazyPagingItems()
-            val allTimePopularAnime = viewModel.allTimePopularAnime.collectAsLazyPagingItems()
-
             CommonPager(
                 anime = listOf(
                     trendingAnime,

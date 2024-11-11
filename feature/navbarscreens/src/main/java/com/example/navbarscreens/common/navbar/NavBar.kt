@@ -11,6 +11,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.designsystem.icons.AniListIcons
 import com.example.navbarscreens.anime_screen.navigation.AnimeScreenRoute
 import com.example.navbarscreens.manga_screen.navigation.MangaScreenRoute
+import com.example.navbarscreens.profile_screen.navigation.ProfileScreenRoute
 
 data class NavItem(
     val label: String,
@@ -38,6 +39,13 @@ fun NavBar(
             iconChosen = AniListIcons.MangaFilled,
             route = "MangaScreenRoute",
             destination = MangaScreenRoute
+        ),
+        NavItem(
+            label = "Profile",
+            iconDefault = AniListIcons.User,
+            iconChosen = AniListIcons.UserFilled,
+            route = "ProfileScreenRoute",
+            destination = ProfileScreenRoute
         )
     )
 

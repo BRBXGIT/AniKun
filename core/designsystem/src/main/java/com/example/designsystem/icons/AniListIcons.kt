@@ -11,4 +11,6 @@ object AniListIcons {
     val BackspaceFilled = R.drawable.ic_backspace_filled
     val Manga = R.drawable.ic_manga
     val MangaFilled = R.drawable.ic_manga_filled
+    val User = R.drawable.ic_user
+    val UserFilled = R.drawable.ic_user_filled
 }
