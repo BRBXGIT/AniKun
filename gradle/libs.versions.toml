@@ -32,8 +32,12 @@ pagingCompose = "3.3.2"
 uiTextGoogleFonts = "1.7.5"
 
 lottie = "6.5.2"
+
 appcompat = "1.7.0"
+
 material = "1.12.0"
+
+coreSplashscreen = "1.0.1"
 
 
 [libraries]
@@ -74,8 +78,12 @@ androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", v
 androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 
 lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
+
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 
 
 [plugins]

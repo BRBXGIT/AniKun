@@ -41,7 +41,11 @@ dependencies {
     //Modules
     implementation(project(":core:designsystem"))
     implementation(project(":feature:navbarscreens"))
+    implementation(project(":core:data"))
+    implementation(project(":core:common"))
 
+    //Hilt
+    implementation(libs.androidx.hilt.navigation.compose)
     //Compose
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))

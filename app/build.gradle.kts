@@ -74,6 +74,8 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     //Paging
     implementation(libs.androidx.paging.compose)
+    //Splashscreen
+    implementation(libs.androidx.core.splashscreen)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

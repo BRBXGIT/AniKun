@@ -7,7 +7,7 @@ import com.example.navbarscreens.profile_screen.screen.ProfileScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
-object ProfileScreenRoute
+data object ProfileScreenRoute
 
 fun NavGraphBuilder.profileScreen(
     navController: NavController

@@ -10,7 +10,7 @@ import com.example.navbarscreens.manga_screen.screen.MangaScreenVM
 import kotlinx.serialization.Serializable
 
 @Serializable
-object MangaScreenRoute
+data object MangaScreenRoute
 
 fun NavGraphBuilder.mangaScreen(
     navController: NavController,
