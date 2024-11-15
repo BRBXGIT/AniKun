@@ -61,6 +61,7 @@ dependencies {
     //Modules
     implementation(project(":core:designsystem"))
     implementation(project(":feature:navbarscreens"))
+    implementation(project(":feature:auth"))
 
     //Compose
     implementation(libs.androidx.activity.compose)

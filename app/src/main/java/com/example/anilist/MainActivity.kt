@@ -1,5 +1,6 @@
 package com.example.anilist
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,7 +21,9 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AniListTheme {
-                NavGraph()
+                val prefs = this.getPreferences(Context.MODE_PRIVATE)
+
+                NavGraph(prefs)
             }
         }
     }

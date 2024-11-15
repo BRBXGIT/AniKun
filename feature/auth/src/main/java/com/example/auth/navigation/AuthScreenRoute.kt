@@ -1,5 +1,6 @@
 package com.example.auth.navigation
 
+import android.content.SharedPreferences
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLink
@@ -15,13 +16,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object AuthScreenRoute
 
-fun NavGraphBuilder.authScreenRoute(
-    navController: NavController
+fun NavGraphBuilder.authScreen(
+    navController: NavController,
+    prefs: SharedPreferences
 ) = composable<AuthScreenRoute> {
     val authScreenVM = hiltViewModel<AuthScreenVM>()
 
     AuthScreen(
         navController = navController,
-        viewModel = authScreenVM
+        viewModel = authScreenVM,
+        prefs = prefs
     )
 }

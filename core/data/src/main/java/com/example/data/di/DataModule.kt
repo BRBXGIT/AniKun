@@ -9,10 +9,12 @@ import com.example.data.remote.repos.AnimeScreenRepoImpl
 import com.example.data.remote.repos.AuthRepoImpl
 import com.example.data.remote.repos.CommonRepoImpl
 import com.example.data.remote.repos.MangaScreenRepoImpl
+import com.example.data.remote.repos.ProfileScreenRepoImpl
 import com.example.data.repos.AnimeScreenRepo
 import com.example.data.repos.AuthRepo
 import com.example.data.repos.CommonRepo
 import com.example.data.repos.MangaScreenRepo
+import com.example.data.repos.ProfileScreenRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -63,6 +65,12 @@ object DataModule {
     @Singleton
     fun provideMangaScreenRepo(apiInstance: AniListApiInstance): MangaScreenRepo {
         return MangaScreenRepoImpl(apiInstance)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProfileScreenRepo(apiInstance: AniListApiInstance): ProfileScreenRepo {
+        return ProfileScreenRepoImpl(apiInstance)
     }
 
     @Provides

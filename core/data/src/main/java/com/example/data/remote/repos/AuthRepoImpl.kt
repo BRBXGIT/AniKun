@@ -13,8 +13,4 @@ class AuthRepoImpl @Inject constructor(
     override suspend fun upsertUser(user: AniKunUser) {
         userDao.upsertUser(user)
     }
-
-    override fun getUser(): Flow<List<AniKunUser>> {
-        return userDao.getUser()
-    }
 }

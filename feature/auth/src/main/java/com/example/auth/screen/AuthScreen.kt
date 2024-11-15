@@ -1,9 +1,13 @@
 package com.example.auth.screen
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,17 +20,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.data.local.AniKunUser
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes
+import com.example.navbarscreens.common.navigation.NavBarScreensRoute
 
 @Composable
 fun AuthScreen(
     navController: NavController,
-    viewModel: AuthScreenVM
+    viewModel: AuthScreenVM,
+    prefs: SharedPreferences,
+    context: Context = LocalContext.current
 ) {
     Scaffold(
         modifier = Modifier
@@ -41,37 +49,52 @@ fun AuthScreen(
                     bottom = innerPadding.calculateBottomPadding(),
                     start = 16.dp,
                     end = 16.dp
-                )
+                ),
+            contentAlignment = Alignment.Center
         ) {
-            Button(
-                onClick = {
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://anilist.co/api/v2/oauth/authorize?client_id=22328&redirect_uri=null&response_type=code")
-                    )
-                },
-                shape = mShapes.small,
-                modifier = Modifier.fillMaxWidth()
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                Text("Get token")
-            }
+                Button(
+                    onClick = {
+                        context.startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("https://anilist.co/api/v2/oauth/authorize?client_id=22328&response_type=token")
+                            )
+                        )
+                    },
+                    shape = mShapes.small,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Get token")
+                }
 
-            var accessToken by rememberSaveable { mutableStateOf("") }
-            OutlinedTextField(
-                value = accessToken,
-                onValueChange = { accessToken = it },
-                label = { Text("Access token") },
-                modifier = Modifier.fillMaxWidth()
-            )
+                var accessToken by rememberSaveable { mutableStateOf("") }
+                OutlinedTextField(
+                    value = accessToken,
+                    onValueChange = { accessToken = it },
+                    label = { Text("Access token") },
+                    modifier = Modifier.fillMaxWidth(),
+                    maxLines = 1
+                )
 
-            Button(
-                onClick = {
-                    viewModel.upsertUser(AniKunUser(accessToken))
-                },
-                shape = mShapes.small,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Authorize")
+                Button(
+                    onClick = {
+                        if(accessToken.isNotBlank()) {
+                            prefs.edit().apply {
+                                putBoolean("loggedIn", true)
+                                apply()
+                            }
+                            viewModel.upsertUser(accessToken)
+                            navController.navigate(NavBarScreensRoute)
+                        }
+                    },
+                    shape = mShapes.small,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Authorize")
+                }
             }
         }
     }

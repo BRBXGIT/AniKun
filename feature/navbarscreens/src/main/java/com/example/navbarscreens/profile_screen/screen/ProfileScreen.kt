@@ -46,6 +46,10 @@ fun ProfileScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
+            if(isSearching) {
+                TODO()
+            }
+
 
         }
     }

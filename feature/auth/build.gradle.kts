@@ -5,6 +5,10 @@ plugins {
     alias(libs.plugins.compose.compiler)
     //Nav
     alias(libs.plugins.kotlin.serialization)
+    //Hilt
+    alias(libs.plugins.hilt.android)
+    //Ksp
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -43,9 +47,12 @@ dependencies {
     implementation(project(":feature:navbarscreens"))
     implementation(project(":core:data"))
     implementation(project(":core:common"))
+    implementation(project(":feature:navbarscreens"))
 
     //Hilt
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
     //Compose
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))

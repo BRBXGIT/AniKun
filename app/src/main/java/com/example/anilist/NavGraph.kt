@@ -1,11 +1,14 @@
 package com.example.anilist
 
+import android.content.SharedPreferences
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.auth.navigation.AuthScreenRoute
+import com.example.auth.navigation.authScreen
 import com.example.navbarscreens.anime_screen.navigation.AnimeScreenRoute
 import com.example.navbarscreens.anime_screen.navigation.animeScreen
 import com.example.navbarscreens.anime_screen.screen.AnimeScreenVM
@@ -15,7 +18,9 @@ import com.example.navbarscreens.manga_screen.screen.MangaScreenVM
 import com.example.navbarscreens.profile_screen.navigation.profileScreen
 
 @Composable
-fun NavGraph() {
+fun NavGraph(
+    prefs: SharedPreferences
+) {
     val navController = rememberNavController()
 
     //Initialize values here to don't refresh it after screen will be recomposed
@@ -31,9 +36,14 @@ fun NavGraph() {
     val allTimePopularManga = mangaScreenVM.allTimePopularManga.collectAsLazyPagingItems()
     val popularManhwa = mangaScreenVM.popularManhwa.collectAsLazyPagingItems()
 
+    val isUserLoggedIn = prefs.getBoolean("loggedIn", false)
     NavHost(
         navController = navController,
-        startDestination = NavBarScreensRoute
+        startDestination = if(isUserLoggedIn) {
+            NavBarScreensRoute
+        } else {
+            AuthScreenRoute
+        }
     ) {
         navigation<NavBarScreensRoute>(
             startDestination = AnimeScreenRoute
@@ -57,5 +67,10 @@ fun NavGraph() {
 
             profileScreen(navController)
         }
+
+        authScreen(
+            navController = navController,
+            prefs = prefs
+        )
     }
 }

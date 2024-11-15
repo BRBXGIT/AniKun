@@ -17,9 +17,13 @@ class AuthScreenVM @Inject constructor(
     @Dispatcher(AniKunDispatchers.IO) private val dispatcherIo: CoroutineDispatcher
 ): ViewModel() {
 
-    fun upsertUser(user: AniKunUser) {
+    fun upsertUser(accessToken: String) {
         viewModelScope.launch(dispatcherIo) {
-            repository.upsertUser(user)
+            repository.upsertUser(
+                AniKunUser(
+                    accessToken
+                )
+            )
         }
     }
 }
