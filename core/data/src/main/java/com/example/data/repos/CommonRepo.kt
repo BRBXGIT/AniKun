@@ -1,6 +1,7 @@
 package com.example.data.repos
 
 import androidx.paging.PagingData
+import com.example.data.local.AniKunUser
 import com.example.data.remote.models.common_models.media_by_query_response.Media as MediaByQueryMedia
 import kotlinx.coroutines.flow.Flow
 
@@ -10,4 +11,6 @@ interface CommonRepo {
         search: String,
         type: String
     ): Flow<PagingData<MediaByQueryMedia>>
+
+    fun getAniKunUser(): Flow<List<AniKunUser>>
 }

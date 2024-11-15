@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class Data(
     @SerializedName("Viewer")
-    val viewer: Viewer
+    val viewer: Viewer = Viewer()
 )

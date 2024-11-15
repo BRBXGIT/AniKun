@@ -75,7 +75,7 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideCommonRepo(apiInstance: AniListApiInstance): CommonRepo {
-        return CommonRepoImpl(apiInstance)
+    fun provideCommonRepo(apiInstance: AniListApiInstance, userDao: UserDao): CommonRepo {
+        return CommonRepoImpl(apiInstance, userDao)
     }
 }

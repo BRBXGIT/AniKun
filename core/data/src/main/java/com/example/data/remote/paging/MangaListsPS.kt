@@ -45,7 +45,7 @@ class MangaListsPS(
         val startPage = params.key ?: 1
         val perPage = 20
 
-        val variables = mutableMapOf(
+        val variables = mapOf(
             "page" to startPage,
             "perPage" to perPage,
             "countryOfOrigin" to countryOfOrigin

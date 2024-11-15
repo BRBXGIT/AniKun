@@ -1,12 +1,8 @@
 package com.example.data.repos
 
-import com.example.data.remote.models.common_models.common_request.CommonRequest
-import com.example.data.remote.models.profile_models.user_data.UserData
+import com.example.data.remote.models.profile_models.user_data.AniListUser
 
 interface ProfileScreenRepo {
 
-    suspend fun getUser(
-        commonRequest: CommonRequest,
-        accessToken: String
-    ): UserData
+    suspend fun getAniListUser(accessToken: String): AniListUser
 }
