@@ -31,25 +31,6 @@ fun UserSection(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxWidth()
     ) {
-        SubcomposeAsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(user.data.viewer.avatar.large)
-                .crossfade(500)
-                .size(Size.ORIGINAL)
-                .build(),
-            contentDescription = null,
-            modifier = Modifier
-                .size(150.dp)
-                .clip(CircleShape),
-            filterQuality = FilterQuality.Low,
-            contentScale = ContentScale.Crop,
-            loading = { AnimatedShimmer(150.dp, 150.dp) }
-        )
 
-        Text(
-            text = user.data.viewer.name,
-            style = mTypography.displaySmall,
-            textAlign = TextAlign.Center
-        )
     }
 }
