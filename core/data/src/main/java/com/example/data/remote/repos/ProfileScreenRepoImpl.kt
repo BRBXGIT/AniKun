@@ -15,6 +15,9 @@ class ProfileScreenRepoImpl @Inject constructor(
           Viewer {
             id
             name
+            avatar {
+              large
+            }
           }
         }
     """.trimIndent()

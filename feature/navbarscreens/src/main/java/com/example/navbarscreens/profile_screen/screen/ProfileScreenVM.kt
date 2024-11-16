@@ -37,10 +37,10 @@ class ProfileScreenVM @Inject constructor(
                     )
                 )
             }
-        }.stateIn(
-            viewModelScope,
-            SharingStarted.Lazily,
-            AniListUser(exception = "")
-        )
-    }
+        }
+    }.stateIn(
+        viewModelScope,
+        SharingStarted.Lazily,
+        AniListUser()
+    )
 }

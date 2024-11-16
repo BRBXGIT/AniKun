@@ -2,7 +2,6 @@ package com.example.anilist
 
 import android.content.SharedPreferences
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
@@ -41,9 +40,9 @@ fun NavGraph(
     val allTimePopularManga = mangaScreenVM.allTimePopularManga.collectAsLazyPagingItems()
     val popularManhwa = mangaScreenVM.popularManhwa.collectAsLazyPagingItems()
 
-    val aniListUser by profileScreenVM.aniListUser.collectAsStateWithLifecycle(
-        initialValue = AniListUser(exception = "")
-    )
+    val aniListUser = profileScreenVM.aniListUser.collectAsStateWithLifecycle(
+        initialValue = AniListUser()
+    ).value
 
     val isUserLoggedIn = prefs.getBoolean("loggedIn", false)
     NavHost(
