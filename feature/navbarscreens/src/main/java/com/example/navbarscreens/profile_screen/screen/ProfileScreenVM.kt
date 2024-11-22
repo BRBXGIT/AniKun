@@ -2,6 +2,7 @@ package com.example.navbarscreens.profile_screen.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.example.data.remote.models.profile_models.user_data.AniListUser
 import com.example.data.remote.repos.CommonRepoImpl
 import com.example.data.remote.repos.ProfileScreenRepoImpl
@@ -54,5 +55,16 @@ class ProfileScreenVM @Inject constructor(
 
     fun setContentType(contentType: Boolean) {
         _chosenContentType.value = contentType
+    }
+
+    val userCurrentAnime = aniKunUser.flatMapLatest { aniKunUser ->
+        val aniListUser = repository.getAniListUser(
+            accessToken = "Bearer ${aniKunUser[0].accessToken}"
+        )
+        repository.getUserAnimeList(
+            accessToken = "Bearer ${aniKunUser[0].accessToken}",
+            userName = aniListUser.data.viewer.name,
+            status = "CURRENT"
+        ).cachedIn(viewModelScope)
     }
 }
