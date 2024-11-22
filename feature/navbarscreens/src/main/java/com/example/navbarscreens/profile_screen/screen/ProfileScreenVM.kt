@@ -7,6 +7,7 @@ import com.example.data.remote.repos.CommonRepoImpl
 import com.example.data.remote.repos.ProfileScreenRepoImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
@@ -43,4 +44,15 @@ class ProfileScreenVM @Inject constructor(
         SharingStarted.Lazily,
         AniListUser()
     )
+
+    private val _chosenContentType = MutableStateFlow(false)
+    val chosenContentType = _chosenContentType.stateIn(
+        viewModelScope,
+        SharingStarted.Lazily,
+        false
+    )
+
+    fun setContentType(contentType: Boolean) {
+        _chosenContentType.value = contentType
+    }
 }

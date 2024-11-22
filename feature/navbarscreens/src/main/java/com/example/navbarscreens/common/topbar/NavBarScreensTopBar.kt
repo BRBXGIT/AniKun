@@ -38,8 +38,10 @@ fun NavBarScreensTopBar(
     text: String? = null,
     scrollBehavior: TopAppBarScrollBehavior,
     onSearchClick: () -> Unit,
-    userAvatar: String? = null,
-    userName: String? = null
+    userAvatar: String? = null, //Only for profile screen
+    userName: String? = null, //Only for profile screen
+    chosenContent: Boolean = false, //Only for profile screen
+    onContentClick: (contentType: Boolean) -> Unit = {} //Only for profile screen
 ) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
@@ -94,7 +96,6 @@ fun NavBarScreensTopBar(
             if(userName != null) {
                 //ddm is dropDownMenu
                 var ddmOpen by rememberSaveable { mutableStateOf(false) }
-                var chosenContent by rememberSaveable { mutableStateOf(false) }
 
                 IconButton(
                     onClick = { ddmOpen = true }
@@ -108,7 +109,7 @@ fun NavBarScreensTopBar(
                 ContentTypeDDM(
                     expanded = ddmOpen,
                     onDismissRequest = { ddmOpen = false },
-                    onContentClick = { chosenContent = it },
+                    onContentClick = { onContentClick(it) },
                     chosenContent = chosenContent
                 )
             }

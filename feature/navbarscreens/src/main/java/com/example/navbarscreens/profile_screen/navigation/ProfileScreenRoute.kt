@@ -14,11 +14,13 @@ data object ProfileScreenRoute
 fun NavGraphBuilder.profileScreen(
     navController: NavController,
     profileScreenVM: ProfileScreenVM,
-    aniListUser: AniListUser
+    aniListUser: AniListUser,
+    chosenContentType: Boolean
 ) = composable<ProfileScreenRoute> {
     ProfileScreen(
         navController = navController,
         viewModel = profileScreenVM,
-        aniListUser = aniListUser
+        aniListUser = aniListUser,
+        chosenContentType = chosenContentType
     )
 }

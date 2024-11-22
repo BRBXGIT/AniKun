@@ -25,7 +25,8 @@ import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
 fun ProfileScreen(
     navController: NavController,
     viewModel: ProfileScreenVM,
-    aniListUser: AniListUser
+    aniListUser: AniListUser,
+    chosenContentType: Boolean
 ) {
     val topBarScrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -36,7 +37,9 @@ fun ProfileScreen(
                 userName = aniListUser.data.viewer.name,
                 userAvatar = aniListUser.data.viewer.avatar.large,
                 scrollBehavior = topBarScrollBehaviour,
-                onSearchClick = { isSearching = true }
+                onSearchClick = { isSearching = true },
+                chosenContent = chosenContentType,
+                onContentClick = { viewModel.setContentType(it) }
             )
         },
         bottomBar = { NavBar(navController) },

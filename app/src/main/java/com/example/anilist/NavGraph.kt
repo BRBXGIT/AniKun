@@ -31,18 +31,22 @@ fun NavGraph(
     val mangaScreenVM = hiltViewModel<MangaScreenVM>()
     val profileScreenVM = hiltViewModel<ProfileScreenVM>()
 
+    //Anime screen
     val trendingAnime = animeScreenVM.trendingAnime.collectAsLazyPagingItems()
     val thisSeasonAnime = animeScreenVM.thisSeasonAnime.collectAsLazyPagingItems()
     val nextSeasonAnime = animeScreenVM.nextSeasonAnime.collectAsLazyPagingItems()
     val allTimePopularAnime = animeScreenVM.allTimePopularAnime.collectAsLazyPagingItems()
 
+    //Manga screen
     val trendingManga = mangaScreenVM.trendingManga.collectAsLazyPagingItems()
     val allTimePopularManga = mangaScreenVM.allTimePopularManga.collectAsLazyPagingItems()
     val popularManhwa = mangaScreenVM.popularManhwa.collectAsLazyPagingItems()
 
+    //Profile screen
     val aniListUser = profileScreenVM.aniListUser.collectAsStateWithLifecycle(
         initialValue = AniListUser()
     ).value
+    val chosenContentType = profileScreenVM.chosenContentType.collectAsStateWithLifecycle().value
 
     val isUserLoggedIn = prefs.getBoolean("loggedIn", false)
     NavHost(
@@ -76,7 +80,8 @@ fun NavGraph(
             profileScreen(
                 navController = navController,
                 profileScreenVM = profileScreenVM,
-                aniListUser = aniListUser
+                aniListUser = aniListUser,
+                chosenContentType = chosenContentType
             )
         }
 
