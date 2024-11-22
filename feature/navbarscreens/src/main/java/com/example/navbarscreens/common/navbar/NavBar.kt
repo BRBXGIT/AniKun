@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.designsystem.icons.AniListIcons
+import com.example.designsystem.icons.AniKunIcons
 import com.example.navbarscreens.anime_screen.navigation.AnimeScreenRoute
 import com.example.navbarscreens.manga_screen.navigation.MangaScreenRoute
 import com.example.navbarscreens.profile_screen.navigation.ProfileScreenRoute
@@ -28,22 +28,22 @@ fun NavBar(
     val navItems = listOf(
         NavItem(
             label = "Anime",
-            iconDefault = AniListIcons.Cat,
-            iconChosen = AniListIcons.CatFilled,
+            iconDefault = AniKunIcons.Cat,
+            iconChosen = AniKunIcons.CatFilled,
             route = "AnimeScreenRoute",
             destination = AnimeScreenRoute
         ),
         NavItem(
             label = "Manga",
-            iconDefault = AniListIcons.Manga,
-            iconChosen = AniListIcons.MangaFilled,
+            iconDefault = AniKunIcons.Manga,
+            iconChosen = AniKunIcons.MangaFilled,
             route = "MangaScreenRoute",
             destination = MangaScreenRoute
         ),
         NavItem(
             label = "Profile",
-            iconDefault = AniListIcons.User,
-            iconChosen = AniListIcons.UserFilled,
+            iconDefault = AniKunIcons.User,
+            iconChosen = AniKunIcons.UserFilled,
             route = "ProfileScreenRoute",
             destination = ProfileScreenRoute
         )

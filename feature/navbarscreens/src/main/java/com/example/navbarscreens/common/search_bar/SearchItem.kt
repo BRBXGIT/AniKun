@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.data.remote.models.common_models.media_by_query_response.Media as MediaByQueryMedia
-import com.example.designsystem.icons.AniListIcons
+import com.example.designsystem.icons.AniKunIcons
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mTypography
 
@@ -34,7 +34,7 @@ fun SearchItem(
             .padding(16.dp)
     ) {
         Icon(
-            painter = painterResource(id = AniListIcons.Magnifier),
+            painter = painterResource(id = AniKunIcons.Magnifier),
             contentDescription = null
         )
 

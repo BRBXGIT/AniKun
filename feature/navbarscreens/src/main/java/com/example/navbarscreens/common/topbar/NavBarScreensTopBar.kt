@@ -12,6 +12,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,24 +28,25 @@ import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
 import com.example.designsystem.animated_shimmer.AnimatedShimmer
-import com.example.designsystem.icons.AniListIcons
+import com.example.designsystem.icons.AniKunIcons
 import com.example.designsystem.theme.mColors
+import com.example.navbarscreens.profile_screen.sections.ContentTypeDDM
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavBarScreensTopBar(
-    text: String = "",
+    text: String? = null,
     scrollBehavior: TopAppBarScrollBehavior,
     onSearchClick: () -> Unit,
-    userAvatar: String = "",
-    userName: String = ""
+    userAvatar: String? = null,
+    userName: String? = null
 ) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             scrolledContainerColor = mColors.surface
         ),
         title = {
-            if(userName != "") {
+            if(userName != null) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -64,7 +69,7 @@ fun NavBarScreensTopBar(
                     Text(text = userName)
                 }
             } else {
-                Text(text)
+                Text(text!!)
             }
         },
         actions = {
@@ -72,7 +77,7 @@ fun NavBarScreensTopBar(
                 onClick = { onSearchClick() }
             ) {
                 Icon(
-                    painter = painterResource(id = AniListIcons.Magnifier),
+                    painter = painterResource(id = AniKunIcons.Magnifier),
                     contentDescription = null
                 )
             }
@@ -81,8 +86,30 @@ fun NavBarScreensTopBar(
                 onClick = {  }
             ) {
                 Icon(
-                    painter = painterResource(id = AniListIcons.Settings),
+                    painter = painterResource(id = AniKunIcons.Settings),
                     contentDescription = null
+                )
+            }
+
+            if(userName != null) {
+                //ddm is dropDownMenu
+                var ddmOpen by rememberSaveable { mutableStateOf(false) }
+                var chosenContent by rememberSaveable { mutableStateOf(false) }
+
+                IconButton(
+                    onClick = { ddmOpen = true }
+                ) {
+                    Icon(
+                        painter = painterResource(id = AniKunIcons.Menu),
+                        contentDescription = null
+                    )
+                }
+
+                ContentTypeDDM(
+                    expanded = ddmOpen,
+                    onDismissRequest = { ddmOpen = false },
+                    onContentClick = { chosenContent = it },
+                    chosenContent = chosenContent
                 )
             }
         },

@@ -2,7 +2,7 @@ package com.example.designsystem.icons
 
 import com.example.designsystem.R
 
-object AniListIcons {
+object AniKunIcons {
     val Cat = R.drawable.ic_cat
     val CatFilled = R.drawable.ic_cat_filled
     val Settings = R.drawable.ic_settings
@@ -13,4 +13,6 @@ object AniListIcons {
     val MangaFilled = R.drawable.ic_manga_filled
     val User = R.drawable.ic_user
     val UserFilled = R.drawable.ic_user_filled
+    val Menu = R.drawable.ic_menu
+    val Check = R.drawable.ic_check
 }

@@ -24,7 +24,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.example.data.remote.models.common_models.media_by_query_response.Media as MediaByQueryMedia
 import com.example.designsystem.error_section.ErrorSection
-import com.example.designsystem.icons.AniListIcons
+import com.example.designsystem.icons.AniKunIcons
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,7 +56,7 @@ fun NavbarScreensSearchBar(
                         onClick = { onExpandChange() }
                     ) {
                         Icon(
-                            painter = painterResource(id = AniListIcons.ArrowLeftFilled),
+                            painter = painterResource(id = AniKunIcons.ArrowLeftFilled),
                             contentDescription = null
                         )
                     }
@@ -67,7 +67,7 @@ fun NavbarScreensSearchBar(
                             onClick = { query = "" }
                         ) {
                             Icon(
-                                painter = painterResource(id = AniListIcons.BackspaceFilled),
+                                painter = painterResource(id = AniKunIcons.BackspaceFilled),
                                 contentDescription = null
                             )
                         }
