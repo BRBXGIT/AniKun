@@ -15,15 +15,11 @@ data object MangaScreenRoute
 fun NavGraphBuilder.mangaScreen(
     navController: NavController,
     mangaScreenVM: MangaScreenVM,
-    trendingManga: LazyPagingItems<MangaListMedia>,
-    allTimePopularManga: LazyPagingItems<MangaListMedia>,
-    popularManhwa: LazyPagingItems<MangaListMedia>
+    mangaLists: List<LazyPagingItems<MangaListMedia>>
 ) = composable<MangaScreenRoute> {
     MangaScreen(
         viewModel = mangaScreenVM,
         navController = navController,
-        trendingManga = trendingManga,
-        allTimePopularManga = allTimePopularManga,
-        popularManhwa = popularManhwa
+        mangaLists = mangaLists
     )
 }

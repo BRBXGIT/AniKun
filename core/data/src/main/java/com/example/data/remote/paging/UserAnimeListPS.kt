@@ -3,7 +3,7 @@ package com.example.data.remote.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.data.remote.api_instance.AniListApiInstance
-import com.example.data.remote.models.anime_models.user_anime_list_response.Media as UserAnimeListMedia
+import com.example.data.remote.models.profile_models.user_anime_list_response.Media as UserAnimeListMedia
 import com.example.data.remote.models.common_models.common_request.CommonRequest
 import com.google.gson.Gson
 import retrofit2.HttpException

@@ -15,9 +15,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavController
+import androidx.paging.compose.LazyPagingItems
+import com.example.data.remote.models.profile_models.user_anime_list_response.Media as UserAnimeListMedia
 import com.example.data.remote.models.profile_models.user_data.AniListUser
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.common.navbar.NavBar
+import com.example.navbarscreens.common.pager.CommonPager
 import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,7 +29,8 @@ fun ProfileScreen(
     navController: NavController,
     viewModel: ProfileScreenVM,
     aniListUser: AniListUser,
-    chosenContentType: Boolean
+    chosenContentType: Boolean,
+    userAnimeLists: List<LazyPagingItems<UserAnimeListMedia>>
 ) {
     val topBarScrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -53,7 +57,9 @@ fun ProfileScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-
+            CommonPager(
+                userAnime = userAnimeLists
+            )
         }
     }
 }

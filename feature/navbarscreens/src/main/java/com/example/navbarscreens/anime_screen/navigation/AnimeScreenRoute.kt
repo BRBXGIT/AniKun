@@ -14,18 +14,12 @@ data object AnimeScreenRoute
 
 fun NavGraphBuilder.animeScreen(
     navController: NavController,
-    trendingAnime: LazyPagingItems<AnimeListMedia>,
-    thisSeasonAnime: LazyPagingItems<AnimeListMedia>,
-    nextSeasonAnime: LazyPagingItems<AnimeListMedia>,
-    allTimePopularAnime: LazyPagingItems<AnimeListMedia>,
+    animeLists: List<LazyPagingItems<AnimeListMedia>>,
     animeScreenVM: AnimeScreenVM
 ) = composable<AnimeScreenRoute> {
     AnimeScreen(
         navController = navController,
         viewModel = animeScreenVM,
-        trendingAnime = trendingAnime,
-        thisSeasonAnime = thisSeasonAnime,
-        nextSeasonAnime = nextSeasonAnime,
-        allTimePopularAnime = allTimePopularAnime
+        animeLists = animeLists
     )
 }

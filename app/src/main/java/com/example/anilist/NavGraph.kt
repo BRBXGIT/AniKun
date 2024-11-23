@@ -1,6 +1,7 @@
 package com.example.anilist
 
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -47,6 +48,7 @@ fun NavGraph(
         initialValue = AniListUser()
     ).value
     val chosenContentType = profileScreenVM.chosenContentType.collectAsStateWithLifecycle().value
+    val userCurrentAnime = profileScreenVM.userCurrentAnime.collectAsLazyPagingItems()
 
     val isUserLoggedIn = prefs.getBoolean("loggedIn", false)
     NavHost(
@@ -62,26 +64,33 @@ fun NavGraph(
         ) {
             animeScreen(
                 navController = navController,
-                trendingAnime = trendingAnime,
-                thisSeasonAnime = thisSeasonAnime,
-                nextSeasonAnime = nextSeasonAnime,
-                allTimePopularAnime = allTimePopularAnime,
-                animeScreenVM = animeScreenVM
+                animeScreenVM = animeScreenVM,
+                animeLists = listOf(
+                    trendingAnime,
+                    thisSeasonAnime,
+                    nextSeasonAnime,
+                    allTimePopularAnime
+                )
             )
 
             mangaScreen(
                 navController = navController,
                 mangaScreenVM = mangaScreenVM,
-                trendingManga = trendingManga,
-                allTimePopularManga = allTimePopularManga,
-                popularManhwa = popularManhwa
+                mangaLists = listOf(
+                    trendingManga,
+                    allTimePopularManga,
+                    popularManhwa
+                )
             )
 
             profileScreen(
                 navController = navController,
                 profileScreenVM = profileScreenVM,
                 aniListUser = aniListUser,
-                chosenContentType = chosenContentType
+                chosenContentType = chosenContentType,
+                userAnimeLists = listOf(
+                    userCurrentAnime
+                )
             )
         }
 

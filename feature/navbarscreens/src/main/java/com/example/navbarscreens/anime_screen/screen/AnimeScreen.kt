@@ -29,10 +29,7 @@ import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
 fun AnimeScreen(
     navController: NavController,
     viewModel: AnimeScreenVM,
-    trendingAnime: LazyPagingItems<AnimeListMedia>,
-    thisSeasonAnime: LazyPagingItems<AnimeListMedia>,
-    nextSeasonAnime: LazyPagingItems<AnimeListMedia>,
-    allTimePopularAnime: LazyPagingItems<AnimeListMedia>
+    animeLists: List<LazyPagingItems<AnimeListMedia>>
 ) {
     val topBarScrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -68,13 +65,7 @@ fun AnimeScreen(
                 .padding(innerPadding)
         ) {
             CommonPager(
-                anime = listOf(
-                    trendingAnime,
-                    thisSeasonAnime,
-                    nextSeasonAnime,
-                    allTimePopularAnime
-                ),
-                manga = emptyList()
+                anime = animeLists
             )
         }
     }

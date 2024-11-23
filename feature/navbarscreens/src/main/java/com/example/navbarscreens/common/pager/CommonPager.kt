@@ -36,17 +36,20 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.paging.compose.LazyPagingItems
+import com.example.data.remote.models.profile_models.user_anime_list_response.Media as UserAnimeListMedia
 import com.example.data.remote.models.manga_models.manga_list_response.Media as MangaListMedia
 import com.example.data.remote.models.anime_models.anime_list_response.Media as AnimeListMedia
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.anime_screen.sections.AnimeLCSection
 import com.example.navbarscreens.manga_screen.sections.MangaLVGSection
+import com.example.navbarscreens.profile_screen.sections.UserAnimeLCSection
 import kotlinx.coroutines.launch
 
 @Composable
 fun CommonPager(
-    anime: List<LazyPagingItems<AnimeListMedia>>,
-    manga: List<LazyPagingItems<MangaListMedia>>
+    anime: List<LazyPagingItems<AnimeListMedia>>? = null,
+    manga: List<LazyPagingItems<MangaListMedia>>? = null,
+    userAnime:List<LazyPagingItems<UserAnimeListMedia>>? = null
 ) {
     val animeListsType = listOf(
         "Trending",
@@ -59,14 +62,24 @@ fun CommonPager(
         "All time popular",
         "Popular manhwa"
     )
+    val userAnimeListsType = listOf(
+        "Watching",
+        "ReWatching",
+        "Completed",
+        "Paused",
+        "Dropped",
+        "Planning"
+    )
     var selectedType by rememberSaveable { mutableIntStateOf(0) }
     val animationScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(
         pageCount = {
-            if(anime.isEmpty()) {
+            if(anime != null) {
+                animeListsType.size
+            } else if(manga != null) {
                 mangaListsType.size
             } else {
-                animeListsType.size
+                userAnimeListsType.size
             }
         }
     )
@@ -102,7 +115,26 @@ fun CommonPager(
             }
         }
     ) {
-        if(anime.isEmpty()) {
+        if(anime != null) {
+            animeListsType.forEachIndexed { index, type ->
+                Tab(
+                    selected = index == selectedType,
+                    onClick = {
+                        selectedType = index
+                        animationScope.launch {
+                            pagerState.animateScrollToPage(index)
+                        }
+                    },
+                    modifier = Modifier.clip(RoundedCornerShape(10.dp)),
+                    text = {
+                        Text(
+                            text = type
+                        )
+                    }
+                )
+            }
+        }
+        if(manga != null) {
             mangaListsType.forEachIndexed { index, type ->
                 Tab(
                     selected = index == selectedType,
@@ -120,8 +152,9 @@ fun CommonPager(
                     }
                 )
             }
-        } else {
-            animeListsType.forEachIndexed { index, type ->
+        }
+        if(userAnime != null) {
+            userAnimeListsType.forEachIndexed { index, type ->
                 Tab(
                     selected = index == selectedType,
                     onClick = {
@@ -142,18 +175,24 @@ fun CommonPager(
     }
 
     HorizontalPager(state = pagerState) { page ->
-        if(anime.isNotEmpty()) {
+        if(anime != null) {
             when(page) {
                 0 -> AnimeLCSection(anime[0])
                 1 -> AnimeLCSection(anime[1])
                 2 -> AnimeLCSection(anime[2])
                 3 -> AnimeLCSection(anime[3])
             }
-        } else {
+        }
+        if(manga != null) {
             when(page) {
                 0 -> MangaLVGSection(manga[0])
                 1 -> MangaLVGSection(manga[1])
                 2 -> MangaLVGSection(manga[2])
+            }
+        }
+        if(userAnime != null) {
+            when(page) {
+                0 -> UserAnimeLCSection(userAnime[0])
             }
         }
     }

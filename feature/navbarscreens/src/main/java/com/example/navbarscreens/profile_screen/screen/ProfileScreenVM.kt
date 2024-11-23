@@ -57,6 +57,7 @@ class ProfileScreenVM @Inject constructor(
         _chosenContentType.value = contentType
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     val userCurrentAnime = aniKunUser.flatMapLatest { aniKunUser ->
         val aniListUser = repository.getAniListUser(
             accessToken = "Bearer ${aniKunUser[0].accessToken}"

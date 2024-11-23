@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.data.remote.api_instance.AniListApiInstance
-import com.example.data.remote.models.anime_models.user_anime_list_response.Media
+import com.example.data.remote.models.profile_models.user_anime_list_response.Media
 import com.example.data.remote.models.common_models.common_request.CommonRequest
 import com.example.data.remote.models.profile_models.user_data.AniListUser
 import com.example.data.remote.paging.UserAnimeListPS
