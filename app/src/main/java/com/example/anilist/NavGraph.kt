@@ -1,7 +1,6 @@
 package com.example.anilist
 
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -48,7 +47,12 @@ fun NavGraph(
         initialValue = AniListUser()
     ).value
     val chosenContentType = profileScreenVM.chosenContentType.collectAsStateWithLifecycle().value
-    val userCurrentAnime = profileScreenVM.userCurrentAnime.collectAsLazyPagingItems()
+    val userWatchingAnime = profileScreenVM.userWatchingAnime.collectAsLazyPagingItems()
+    val userReWatchingAnime = profileScreenVM.userReWatchingAnime.collectAsLazyPagingItems()
+    val userCompletedAnime = profileScreenVM.userCompletedAnime.collectAsLazyPagingItems()
+    val userPausedAnime = profileScreenVM.userPausedAnime.collectAsLazyPagingItems()
+    val userDroppedAnime = profileScreenVM.userDroppedAnime.collectAsLazyPagingItems()
+    val userPlanningAnime = profileScreenVM.userPlanningAnime.collectAsLazyPagingItems()
 
     val isUserLoggedIn = prefs.getBoolean("loggedIn", false)
     NavHost(
@@ -89,7 +93,12 @@ fun NavGraph(
                 aniListUser = aniListUser,
                 chosenContentType = chosenContentType,
                 userAnimeLists = listOf(
-                    userCurrentAnime
+                    userWatchingAnime,
+                    userReWatchingAnime,
+                    userCompletedAnime,
+                    userPausedAnime,
+                    userDroppedAnime,
+                    userPlanningAnime
                 )
             )
         }

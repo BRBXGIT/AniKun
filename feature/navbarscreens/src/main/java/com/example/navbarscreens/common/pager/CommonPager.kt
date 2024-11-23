@@ -49,7 +49,7 @@ import kotlinx.coroutines.launch
 fun CommonPager(
     anime: List<LazyPagingItems<AnimeListMedia>>? = null,
     manga: List<LazyPagingItems<MangaListMedia>>? = null,
-    userAnime:List<LazyPagingItems<UserAnimeListMedia>>? = null
+    userAnime: List<LazyPagingItems<UserAnimeListMedia>>? = null
 ) {
     val animeListsType = listOf(
         "Trending",
@@ -193,6 +193,11 @@ fun CommonPager(
         if(userAnime != null) {
             when(page) {
                 0 -> UserAnimeLCSection(userAnime[0])
+                1 -> UserAnimeLCSection(userAnime[1])
+                2 -> UserAnimeLCSection(userAnime[2])
+                3 -> UserAnimeLCSection(userAnime[3])
+                4 -> UserAnimeLCSection(userAnime[4])
+                5 -> UserAnimeLCSection(userAnime[5])
             }
         }
     }
