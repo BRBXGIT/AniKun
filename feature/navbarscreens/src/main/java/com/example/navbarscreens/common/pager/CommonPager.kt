@@ -36,6 +36,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.paging.compose.LazyPagingItems
+import com.example.data.remote.paging.UserMangaListPS
+import com.example.data.remote.models.profile_models.user_manga_list_response.Media as UserMangaListMedia
 import com.example.data.remote.models.profile_models.user_anime_list_response.Media as UserAnimeListMedia
 import com.example.data.remote.models.manga_models.manga_list_response.Media as MangaListMedia
 import com.example.data.remote.models.anime_models.anime_list_response.Media as AnimeListMedia
@@ -43,13 +45,15 @@ import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.anime_screen.sections.AnimeLCSection
 import com.example.navbarscreens.manga_screen.sections.MangaLVGSection
 import com.example.navbarscreens.profile_screen.sections.UserAnimeLCSection
+import com.example.navbarscreens.profile_screen.sections.UserMangaLVGSection
 import kotlinx.coroutines.launch
 
 @Composable
 fun CommonPager(
     anime: List<LazyPagingItems<AnimeListMedia>>? = null,
     manga: List<LazyPagingItems<MangaListMedia>>? = null,
-    userAnime: List<LazyPagingItems<UserAnimeListMedia>>? = null
+    userAnime: List<LazyPagingItems<UserAnimeListMedia>>? = null,
+    userManga: List<LazyPagingItems<UserMangaListMedia>>? = null
 ) {
     val animeListsType = listOf(
         "Trending",
@@ -65,6 +69,14 @@ fun CommonPager(
     val userAnimeListsType = listOf(
         "Watching",
         "ReWatching",
+        "Completed",
+        "Paused",
+        "Dropped",
+        "Planning"
+    )
+    val userMangaListsType = listOf(
+        "Reading",
+        "ReReading",
         "Completed",
         "Paused",
         "Dropped",
@@ -172,6 +184,25 @@ fun CommonPager(
                 )
             }
         }
+        if(userManga != null) {
+            userMangaListsType.forEachIndexed { index, type ->
+                Tab(
+                    selected = index == selectedType,
+                    onClick = {
+                        selectedType = index
+                        animationScope.launch {
+                            pagerState.animateScrollToPage(index)
+                        }
+                    },
+                    modifier = Modifier.clip(RoundedCornerShape(10.dp)),
+                    text = {
+                        Text(
+                            text = type
+                        )
+                    }
+                )
+            }
+        }
     }
 
     HorizontalPager(state = pagerState) { page ->
@@ -198,6 +229,16 @@ fun CommonPager(
                 3 -> UserAnimeLCSection(userAnime[3])
                 4 -> UserAnimeLCSection(userAnime[4])
                 5 -> UserAnimeLCSection(userAnime[5])
+            }
+        }
+        if(userManga != null) {
+            when(page) {
+                0 -> UserMangaLVGSection(userManga[0])
+                1 -> UserMangaLVGSection(userManga[1])
+                2 -> UserMangaLVGSection(userManga[2])
+                3 -> UserMangaLVGSection(userManga[3])
+                4 -> UserMangaLVGSection(userManga[4])
+                5 -> UserMangaLVGSection(userManga[5])
             }
         }
     }

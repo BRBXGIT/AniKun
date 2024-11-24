@@ -18,6 +18,7 @@ import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
 import com.example.data.remote.models.profile_models.user_anime_list_response.Media as UserAnimeListMedia
 import com.example.data.remote.models.profile_models.user_data.AniListUser
+import com.example.data.remote.models.profile_models.user_manga_list_response.Media as UserMangaListMedia
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.common.navbar.NavBar
 import com.example.navbarscreens.common.pager.CommonPager
@@ -30,7 +31,8 @@ fun ProfileScreen(
     viewModel: ProfileScreenVM,
     aniListUser: AniListUser,
     chosenContentType: Boolean,
-    userAnimeLists: List<LazyPagingItems<UserAnimeListMedia>>
+    userAnimeLists: List<LazyPagingItems<UserAnimeListMedia>>,
+    userMangaLists: List<LazyPagingItems<UserMangaListMedia>>
 ) {
     val topBarScrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -57,9 +59,15 @@ fun ProfileScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            CommonPager(
-                userAnime = userAnimeLists
-            )
+            if(!chosenContentType) {
+                CommonPager(
+                    userAnime = userAnimeLists
+                )
+            } else {
+                CommonPager(
+                    userManga = userMangaLists
+                )
+            }
         }
     }
 }

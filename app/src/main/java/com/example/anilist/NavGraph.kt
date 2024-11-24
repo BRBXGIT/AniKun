@@ -2,7 +2,6 @@ package com.example.anilist
 
 import android.content.SharedPreferences
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
@@ -16,6 +15,7 @@ import com.example.data.remote.models.profile_models.user_anime_list_response.Me
 import com.example.data.remote.models.manga_models.manga_list_response.Media as MangaListMedia
 import com.example.data.remote.models.anime_models.anime_list_response.Media as AnimeListMedia
 import com.example.data.remote.models.profile_models.user_data.AniListUser
+import com.example.data.remote.models.profile_models.user_manga_list_response.Media as UserMangaListMedia
 import com.example.navbarscreens.anime_screen.navigation.AnimeScreenRoute
 import com.example.navbarscreens.anime_screen.navigation.animeScreen
 import com.example.navbarscreens.anime_screen.screen.AnimeScreenVM
@@ -51,6 +51,11 @@ fun NavGraph(
     } else {
         emptyList()
     }
+    val userMangaList = if(isUserLoggedIn) {
+        getUserMangaList(profileScreenVM)
+    } else {
+        emptyList()
+    }
 
     NavHost(
         navController = navController,
@@ -80,7 +85,8 @@ fun NavGraph(
                 profileScreenVM = profileScreenVM,
                 aniListUser = aniListUser,
                 chosenContentType = chosenContentType,
-                userAnimeLists = userAnimeList
+                userAnimeLists = userAnimeList,
+                userMangaLists = userMangaList
             )
         }
 
@@ -135,5 +141,24 @@ private fun getUserAnimeList(profileScreenVM: ProfileScreenVM): List<LazyPagingI
         userPausedAnime,
         userDroppedAnime,
         userPlanningAnime
+    )
+}
+
+@Composable
+private fun getUserMangaList(profileScreenVM: ProfileScreenVM): List<LazyPagingItems<UserMangaListMedia>> {
+    val userReadingManga = profileScreenVM.userReadingManga.collectAsLazyPagingItems()
+    val userReReadingManga = profileScreenVM.userReReadingManga.collectAsLazyPagingItems()
+    val userCompletedManga = profileScreenVM.userCompletedManga.collectAsLazyPagingItems()
+    val userPausedManga = profileScreenVM.userPausedManga.collectAsLazyPagingItems()
+    val userDroppedManga = profileScreenVM.userDroppedManga.collectAsLazyPagingItems()
+    val userPlanningManga = profileScreenVM.userPlanningManga.collectAsLazyPagingItems()
+
+    return listOf(
+        userReadingManga,
+        userReReadingManga,
+        userCompletedManga,
+        userPausedManga,
+        userDroppedManga,
+        userPlanningManga
     )
 }
