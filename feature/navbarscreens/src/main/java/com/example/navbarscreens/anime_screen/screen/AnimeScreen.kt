@@ -17,7 +17,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.data.remote.models.anime_models.anime_list_response.Media as AnimeListMedia
+import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.common.navbar.NavBar
 import com.example.navbarscreens.common.pager.CommonPager

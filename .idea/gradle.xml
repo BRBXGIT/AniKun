@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/core/designsystem" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/auth" />
+            <option value="$PROJECT_DIR$/feature/mediascreen" />
             <option value="$PROJECT_DIR$/feature/navbarscreens" />
           </set>
         </option>

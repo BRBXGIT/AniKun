@@ -36,11 +36,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.paging.compose.LazyPagingItems
-import com.example.data.remote.paging.UserMangaListPS
 import com.example.data.remote.models.profile_models.user_manga_list_response.Media as UserMangaListMedia
 import com.example.data.remote.models.profile_models.user_anime_list_response.Media as UserAnimeListMedia
-import com.example.data.remote.models.manga_models.manga_list_response.Media as MangaListMedia
-import com.example.data.remote.models.anime_models.anime_list_response.Media as AnimeListMedia
+import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
+import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.anime_screen.sections.AnimeLCSection
 import com.example.navbarscreens.manga_screen.sections.MangaLVGSection

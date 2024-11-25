@@ -14,7 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import com.example.data.remote.models.anime_models.anime_list_response.Media as AnimeListMedia
+import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.designsystem.anime_card.AnimeCard
 import com.example.designsystem.error_section.ErrorSection
 

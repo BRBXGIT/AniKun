@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.data.remote.api_instance.AniListApiInstance
 import com.example.data.remote.models.common_models.common_request.CommonRequest
-import com.example.data.remote.models.manga_models.manga_list_response.Media as MangaListMedia
+import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
 import com.google.gson.Gson
 import retrofit2.HttpException
 import java.io.IOException

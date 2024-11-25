@@ -6,11 +6,13 @@ import androidx.paging.PagingData
 import com.example.data.remote.api_instance.AniListApiInstance
 import com.example.data.remote.models.profile_models.user_anime_list_response.Media as UserAnimeListMedia
 import com.example.data.remote.models.common_models.common_request.CommonRequest
-import com.example.data.remote.models.profile_models.user_data.AniListUser
+import com.example.data.remote.models.profile_models.user_by_query_response.UserByQueryResponse
+import com.example.data.remote.models.profile_models.user_data_response.AniListUser
 import com.example.data.remote.models.profile_models.user_manga_list_response.Media as UserMangaListMedia
 import com.example.data.remote.paging.UserAnimeListPS
 import com.example.data.remote.paging.UserMangaListPS
 import com.example.data.repos.ProfileScreenRepo
+import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -18,21 +20,21 @@ class ProfileScreenRepoImpl @Inject constructor(
     private val apiInstance: AniListApiInstance
 ): ProfileScreenRepo {
 
-    private val userDataQuery = """
-        query {
-          Viewer {
-            id
-            name
-            avatar {
-              large
-            }
-          }
-        }
-    """.trimIndent()
-
-    private val userDataVariables = ""
-
     override suspend fun getAniListUser(accessToken: String): AniListUser {
+        val userDataQuery = """
+            query {
+              Viewer {
+                id
+                name
+                avatar {
+                  large
+                }
+              }
+            }
+        """.trimIndent()
+
+        val userDataVariables = ""
+
         return apiInstance.getAniListUser(
             body = CommonRequest(
                 query = userDataQuery,
@@ -76,5 +78,31 @@ class ProfileScreenRepoImpl @Inject constructor(
                 )
             }
         ).flow
+    }
+
+    override suspend fun getUserByQuery(userName: String): UserByQueryResponse {
+        val userByQueryQuery = """
+           query (${"$"}userName: String) {
+             User(name: ${"$"}userName) {
+               id
+               name
+               avatar {
+                 large
+               }
+             }
+           }
+        """.trimIndent()
+
+        val variables = mapOf(
+            "userName" to userName,
+        )
+        val jsonVariables = Gson().toJson(variables)
+
+        return apiInstance.getUserByQuery(
+            CommonRequest(
+                query = userByQueryQuery,
+                variables = jsonVariables
+            )
+        )
     }
 }

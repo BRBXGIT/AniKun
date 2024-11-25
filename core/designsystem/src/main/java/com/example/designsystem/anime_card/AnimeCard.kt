@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
-import com.example.data.remote.models.anime_models.anime_list_response.Media as AnimeListMedia
+import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.designsystem.animated_shimmer.AnimatedShimmer
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes

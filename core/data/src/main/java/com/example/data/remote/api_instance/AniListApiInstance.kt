@@ -1,11 +1,12 @@
 package com.example.data.remote.api_instance
 
 import com.example.data.remote.models.common_models.common_request.CommonRequest
-import com.example.data.remote.models.anime_models.anime_list_response.AnimeListResponse
+import com.example.data.remote.models.anime_list_response.AnimeListResponse
 import com.example.data.remote.models.profile_models.user_anime_list_response.UserAnimeListResponse
 import com.example.data.remote.models.common_models.media_by_query_response.MediaByQueryResponse
-import com.example.data.remote.models.manga_models.manga_list_response.MangaListsResponse
-import com.example.data.remote.models.profile_models.user_data.AniListUser
+import com.example.data.remote.models.manga_list_response.MangaListsResponse
+import com.example.data.remote.models.profile_models.user_by_query_response.UserByQueryResponse
+import com.example.data.remote.models.profile_models.user_data_response.AniListUser
 import com.example.data.remote.models.profile_models.user_manga_list_response.UserMangaListResponse
 import retrofit2.http.Body
 import retrofit2.http.Header
@@ -45,4 +46,9 @@ interface AniListApiInstance {
         @Body body: CommonRequest,
         @Header("Authorization") accessToken: String
     ): UserMangaListResponse
+
+    @POST(".")
+    suspend fun getUserByQuery(
+        @Body body: CommonRequest
+    ): UserByQueryResponse
 }

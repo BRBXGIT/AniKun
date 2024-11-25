@@ -12,9 +12,9 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.auth.navigation.AuthScreenRoute
 import com.example.auth.navigation.authScreen
 import com.example.data.remote.models.profile_models.user_anime_list_response.Media as UserAnimeListMedia
-import com.example.data.remote.models.manga_models.manga_list_response.Media as MangaListMedia
-import com.example.data.remote.models.anime_models.anime_list_response.Media as AnimeListMedia
-import com.example.data.remote.models.profile_models.user_data.AniListUser
+import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
+import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
+import com.example.data.remote.models.profile_models.user_data_response.AniListUser
 import com.example.data.remote.models.profile_models.user_manga_list_response.Media as UserMangaListMedia
 import com.example.navbarscreens.anime_screen.navigation.AnimeScreenRoute
 import com.example.navbarscreens.anime_screen.navigation.animeScreen
@@ -22,6 +22,7 @@ import com.example.navbarscreens.anime_screen.screen.AnimeScreenVM
 import com.example.navbarscreens.common.navigation.NavBarScreensRoute
 import com.example.navbarscreens.manga_screen.navigation.mangaScreen
 import com.example.navbarscreens.manga_screen.screen.MangaScreenVM
+import com.example.navbarscreens.profile_screen.navigation.ProfileScreenRoute
 import com.example.navbarscreens.profile_screen.navigation.profileScreen
 import com.example.navbarscreens.profile_screen.screen.ProfileScreenVM
 

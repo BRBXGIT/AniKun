@@ -3,7 +3,8 @@ package com.example.navbarscreens.profile_screen.screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.example.data.remote.models.profile_models.user_data.AniListUser
+import com.example.data.remote.models.profile_models.user_by_query_response.UserByQueryResponse
+import com.example.data.remote.models.profile_models.user_data_response.AniListUser
 import com.example.data.remote.repos.CommonRepoImpl
 import com.example.data.remote.repos.ProfileScreenRepoImpl
 import com.example.navbarscreens.utils.Utils
@@ -59,6 +60,31 @@ class ProfileScreenVM @Inject constructor(
         _chosenContentType.value = contentType
     }
 
+    private val query = MutableStateFlow("")
+
+    fun setQuery(searchBarQuery: String) {
+        query.value = searchBarQuery
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val userByQuery = query
+        .flatMapLatest { query ->
+            flow {
+                try {
+                    emit(repository.getUserByQuery(query))
+                } catch(e: Exception) {
+                    emit(
+                        UserByQueryResponse(
+                            exception = e.message.toString()
+                        )
+                    )
+                }
+            }
+        }.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5_000),
+            UserByQueryResponse()
+        )
 
     //User anime lists
     @OptIn(ExperimentalCoroutinesApi::class)

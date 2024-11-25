@@ -24,7 +24,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.manga_card.MangaCard
-import com.example.data.remote.models.manga_models.manga_list_response.Media as MangaListMedia
+import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

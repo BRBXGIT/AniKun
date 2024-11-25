@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.data.remote.api_instance.AniListApiInstance
-import com.example.data.remote.models.manga_models.manga_list_response.Media as MangaListMedia
+import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
 import com.example.data.remote.paging.MangaListsPS
 import com.example.data.repos.MangaScreenRepo
 import kotlinx.coroutines.flow.Flow

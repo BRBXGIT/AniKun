@@ -26,7 +26,7 @@ import com.example.designsystem.animated_shimmer.AnimatedShimmer
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes
 import com.example.designsystem.theme.mTypography
-import com.example.data.remote.models.manga_models.manga_list_response.Media as MangaListMedia
+import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
 
 @Composable
 fun MangaCard(
