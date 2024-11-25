@@ -9,11 +9,13 @@ import com.example.data.remote.repos.AnimeScreenRepoImpl
 import com.example.data.remote.repos.AuthRepoImpl
 import com.example.data.remote.repos.CommonRepoImpl
 import com.example.data.remote.repos.MangaScreenRepoImpl
+import com.example.data.remote.repos.MediaDetailsScreenRepoImpl
 import com.example.data.remote.repos.ProfileScreenRepoImpl
 import com.example.data.repos.AnimeScreenRepo
 import com.example.data.repos.AuthRepo
 import com.example.data.repos.CommonRepo
 import com.example.data.repos.MangaScreenRepo
+import com.example.data.repos.MediaDetailsScreenRepo
 import com.example.data.repos.ProfileScreenRepo
 import dagger.Module
 import dagger.Provides
@@ -77,5 +79,11 @@ object DataModule {
     @Singleton
     fun provideCommonRepo(apiInstance: AniListApiInstance, userDao: UserDao): CommonRepo {
         return CommonRepoImpl(apiInstance, userDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMediaDetailsScreenRepo(apiInstance: AniListApiInstance): MediaDetailsScreenRepo {
+        return MediaDetailsScreenRepoImpl(apiInstance)
     }
 }
