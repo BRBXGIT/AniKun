@@ -31,13 +31,14 @@ import com.example.designsystem.theme.mTypography
 @Composable
 fun AnimeCard(
     anime: AnimeListMedia,
-    index: Int
+    index: Int,
+    onAnimeClick: () -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { }
+            .clickable { onAnimeClick() }
             .padding(16.dp)
     ) {
         SubcomposeAsyncImage(

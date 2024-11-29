@@ -35,6 +35,7 @@ import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
+import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
 import com.example.data.remote.models.profile_models.user_manga_list_response.Media as UserMangaListMedia
 import com.example.data.remote.models.profile_models.user_anime_list_response.Media as UserAnimeListMedia
@@ -52,7 +53,8 @@ fun CommonPager(
     anime: List<LazyPagingItems<AnimeListMedia>>? = null,
     manga: List<LazyPagingItems<MangaListMedia>>? = null,
     userAnime: List<LazyPagingItems<UserAnimeListMedia>>? = null,
-    userManga: List<LazyPagingItems<UserMangaListMedia>>? = null
+    userManga: List<LazyPagingItems<UserMangaListMedia>>? = null,
+    navController: NavController
 ) {
     val animeListsType = listOf(
         "Trending",
@@ -207,37 +209,37 @@ fun CommonPager(
     HorizontalPager(state = pagerState) { page ->
         if(anime != null) {
             when(page) {
-                0 -> AnimeLCSection(anime[0])
-                1 -> AnimeLCSection(anime[1])
-                2 -> AnimeLCSection(anime[2])
-                3 -> AnimeLCSection(anime[3])
+                0 -> AnimeLCSection(anime[0], navController)
+                1 -> AnimeLCSection(anime[1], navController)
+                2 -> AnimeLCSection(anime[2], navController)
+                3 -> AnimeLCSection(anime[3], navController)
             }
         }
         if(manga != null) {
             when(page) {
-                0 -> MangaLVGSection(manga[0])
-                1 -> MangaLVGSection(manga[1])
-                2 -> MangaLVGSection(manga[2])
+                0 -> MangaLVGSection(manga[0], navController)
+                1 -> MangaLVGSection(manga[1], navController)
+                2 -> MangaLVGSection(manga[2], navController)
             }
         }
         if(userAnime != null) {
             when(page) {
-                0 -> UserAnimeLCSection(userAnime[0])
-                1 -> UserAnimeLCSection(userAnime[1])
-                2 -> UserAnimeLCSection(userAnime[2])
-                3 -> UserAnimeLCSection(userAnime[3])
-                4 -> UserAnimeLCSection(userAnime[4])
-                5 -> UserAnimeLCSection(userAnime[5])
+                0 -> UserAnimeLCSection(userAnime[0], navController)
+                1 -> UserAnimeLCSection(userAnime[1], navController)
+                2 -> UserAnimeLCSection(userAnime[2], navController)
+                3 -> UserAnimeLCSection(userAnime[3], navController)
+                4 -> UserAnimeLCSection(userAnime[4], navController)
+                5 -> UserAnimeLCSection(userAnime[5], navController)
             }
         }
         if(userManga != null) {
             when(page) {
-                0 -> UserMangaLVGSection(userManga[0])
-                1 -> UserMangaLVGSection(userManga[1])
-                2 -> UserMangaLVGSection(userManga[2])
-                3 -> UserMangaLVGSection(userManga[3])
-                4 -> UserMangaLVGSection(userManga[4])
-                5 -> UserMangaLVGSection(userManga[5])
+                0 -> UserMangaLVGSection(userManga[0], navController)
+                1 -> UserMangaLVGSection(userManga[1], navController)
+                2 -> UserMangaLVGSection(userManga[2], navController)
+                3 -> UserMangaLVGSection(userManga[3], navController)
+                4 -> UserMangaLVGSection(userManga[4], navController)
+                5 -> UserMangaLVGSection(userManga[5], navController)
             }
         }
     }

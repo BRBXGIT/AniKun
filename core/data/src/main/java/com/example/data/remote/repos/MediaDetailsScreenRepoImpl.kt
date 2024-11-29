@@ -13,8 +13,8 @@ class MediaDetailsScreenRepoImpl @Inject constructor(
 
     override suspend fun getMediaDetailsById(id: Int): MediaDetailsResponse {
         val query = """
-            query ($id: Int) {
-              Media(id: $id, type: ANIME) {
+            query (${"$"}id: Int) {
+              Media(id: ${"$"}id, type: ANIME) {
                 seasonYear
                 format
                 episodes

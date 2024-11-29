@@ -65,7 +65,8 @@ fun MangaScreen(
                 .padding(innerPadding)
         ) {
             CommonPager(
-                manga = mangaLists
+                manga = mangaLists,
+                navController = navController
             )
         }
     }

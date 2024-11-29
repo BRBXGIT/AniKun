@@ -20,16 +20,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.example.data.remote.models.profile_models.user_manga_list_response.Media as UserMangaListMedia
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.manga_card.MangaCard
+import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserMangaLVGSection(
-    manga: LazyPagingItems<UserMangaListMedia>
+    manga: LazyPagingItems<UserMangaListMedia>,
+    navController: NavController
 ) {
     var errorText by rememberSaveable { mutableStateOf("") }
     LaunchedEffect(manga.loadState.refresh) {
@@ -60,7 +63,11 @@ fun UserMangaLVGSection(
                     MangaCard(
                         manga = currentManga!!.media,
                         index = index,
-                        onCardClick = {  }
+                        onCardClick = {
+                            navController.navigate(
+                                MediaDetailsScreenRoute(currentManga.media.id)
+                            )
+                        }
                     )
                 }
             }

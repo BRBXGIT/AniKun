@@ -12,16 +12,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.example.data.remote.models.profile_models.user_anime_list_response.Media as UserAnimeListMedia
 import com.example.designsystem.anime_card.AnimeCard
 import com.example.designsystem.error_section.ErrorSection
+import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserAnimeLCSection(
-    userAnime: LazyPagingItems<UserAnimeListMedia>
+    userAnime: LazyPagingItems<UserAnimeListMedia>,
+    navController: NavController
 ) {
     var errorText by rememberSaveable { mutableStateOf("") }
     LaunchedEffect(userAnime.loadState.refresh) {
@@ -44,7 +47,12 @@ fun UserAnimeLCSection(
 
                     AnimeCard(
                         anime = currentAnime!!.media,
-                        index = index
+                        index = index,
+                        onAnimeClick = {
+                            navController.navigate(
+                                MediaDetailsScreenRoute(currentAnime.media.id)
+                            )
+                        }
                     )
                 }
             } else {

@@ -77,11 +77,13 @@ fun ProfileScreen(
         ) {
             if(!chosenContentType) {
                 CommonPager(
-                    userAnime = userAnimeLists
+                    userAnime = userAnimeLists,
+                    navController = navController
                 )
             } else {
                 CommonPager(
-                    userManga = userMangaLists
+                    userManga = userMangaLists,
+                    navController = navController
                 )
             }
         }

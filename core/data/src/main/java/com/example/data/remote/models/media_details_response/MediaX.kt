@@ -5,5 +5,5 @@ data class MediaX(
     val episodes: Int,
     val format: String,
     val seasonYear: Int,
-    val title: TitleX
+    val title: Title
 )

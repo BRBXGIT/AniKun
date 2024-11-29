@@ -61,6 +61,7 @@ dependencies {
     //Modules
     implementation(project(":core:designsystem"))
     implementation(project(":feature:navbarscreens"))
+    implementation(project(":feature:mediascreen"))
     implementation(project(":feature:auth"))
     implementation(project(":core:data"))
 

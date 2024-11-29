@@ -12,7 +12,7 @@ data class Media(
     val favourites: Int,
     val format: String,
     val genres: List<String>,
-    val nextAiringEpisode: String?,
+    val nextAiringEpisode: NextAiringEpisode,
     val recommendations: Recommendations,
     val season: String,
     val seasonYear: Int,

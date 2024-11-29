@@ -46,6 +46,7 @@ dependencies {
     implementation(project(":core:designsystem"))
     implementation(project(":core:common"))
     implementation(project(":core:data"))
+    implementation(project(":feature:mediascreen"))
 
     //Material 3
     implementation(libs.androidx.material3)

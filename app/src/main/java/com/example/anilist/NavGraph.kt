@@ -15,6 +15,7 @@ import com.example.data.remote.models.profile_models.user_anime_list_response.Me
 import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.data.remote.models.profile_models.user_data_response.AniListUser
+import com.example.media_screen.media_screen.navigation.mediaDetailsScreen
 import com.example.data.remote.models.profile_models.user_manga_list_response.Media as UserMangaListMedia
 import com.example.navbarscreens.anime_screen.navigation.AnimeScreenRoute
 import com.example.navbarscreens.anime_screen.navigation.animeScreen
@@ -22,7 +23,6 @@ import com.example.navbarscreens.anime_screen.screen.AnimeScreenVM
 import com.example.navbarscreens.common.navigation.NavBarScreensRoute
 import com.example.navbarscreens.manga_screen.navigation.mangaScreen
 import com.example.navbarscreens.manga_screen.screen.MangaScreenVM
-import com.example.navbarscreens.profile_screen.navigation.ProfileScreenRoute
 import com.example.navbarscreens.profile_screen.navigation.profileScreen
 import com.example.navbarscreens.profile_screen.screen.ProfileScreenVM
 
@@ -38,7 +38,7 @@ fun NavGraph(
     val profileScreenVM = hiltViewModel<ProfileScreenVM>()
 
     val animeList = getAnimeLists(animeScreenVM)
-    val mangaList = getMangaLists(mangaScreenVM)
+//    val mangaList = getMangaLists(mangaScreenVM)
 
     //Profile screen
     val aniListUser = profileScreenVM.aniListUser.collectAsStateWithLifecycle(
@@ -46,17 +46,17 @@ fun NavGraph(
     ).value
     val chosenContentType = profileScreenVM.chosenContentType.collectAsStateWithLifecycle().value
     val isUserLoggedIn = prefs.getBoolean("loggedIn", false)
-
-    val userAnimeList = if(isUserLoggedIn) {
-        getUserAnimeList(profileScreenVM)
-    } else {
-        emptyList()
-    }
-    val userMangaList = if(isUserLoggedIn) {
-        getUserMangaList(profileScreenVM)
-    } else {
-        emptyList()
-    }
+//
+//    val userAnimeList = if(isUserLoggedIn) {
+//        getUserAnimeList(profileScreenVM)
+//    } else {
+//        emptyList()
+//    }
+//    val userMangaList = if(isUserLoggedIn) {
+//        getUserMangaList(profileScreenVM)
+//    } else {
+//        emptyList()
+//    }
 
     NavHost(
         navController = navController,
@@ -75,26 +75,28 @@ fun NavGraph(
                 animeLists = animeList
             )
 
-            mangaScreen(
-                navController = navController,
-                mangaScreenVM = mangaScreenVM,
-                mangaLists = mangaList
-            )
-
-            profileScreen(
-                navController = navController,
-                profileScreenVM = profileScreenVM,
-                aniListUser = aniListUser,
-                chosenContentType = chosenContentType,
-                userAnimeLists = userAnimeList,
-                userMangaLists = userMangaList
-            )
+//            mangaScreen(
+//                navController = navController,
+//                mangaScreenVM = mangaScreenVM,
+//                mangaLists = mangaList
+//            )
+//
+//            profileScreen(
+//                navController = navController,
+//                profileScreenVM = profileScreenVM,
+//                aniListUser = aniListUser,
+//                chosenContentType = chosenContentType,
+//                userAnimeLists = userAnimeList,
+//                userMangaLists = userMangaList
+//            )
         }
 
         authScreen(
             navController = navController,
             prefs = prefs
         )
+
+        mediaDetailsScreen()
     }
 }
 

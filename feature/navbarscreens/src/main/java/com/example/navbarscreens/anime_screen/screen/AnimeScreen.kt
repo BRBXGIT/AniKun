@@ -65,7 +65,8 @@ fun AnimeScreen(
                 .padding(innerPadding)
         ) {
             CommonPager(
-                anime = animeLists
+                anime = animeLists,
+                navController = navController
             )
         }
     }
