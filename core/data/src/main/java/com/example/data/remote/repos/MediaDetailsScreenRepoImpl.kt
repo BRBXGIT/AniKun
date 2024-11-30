@@ -25,8 +25,10 @@ class MediaDetailsScreenRepoImpl @Inject constructor(
                 coverImage {
                   large
                 }
+                bannerImage
                 nextAiringEpisode {
                   airingAt
+                  episode
                 }
 
                 averageScore

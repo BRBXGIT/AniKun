@@ -96,7 +96,7 @@ fun NavGraph(
             prefs = prefs
         )
 
-        mediaDetailsScreen()
+        mediaDetailsScreen(navController)
     }
 }
 

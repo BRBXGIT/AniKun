@@ -16,6 +16,7 @@ data class Media(
     val recommendations: Recommendations,
     val season: String,
     val seasonYear: Int,
+    val bannerImage: String?,
     val source: String,
     val startDate: StartDate,
     val status: String,

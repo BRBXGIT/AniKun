@@ -15,4 +15,7 @@ object AniKunIcons {
     val UserFilled = R.drawable.ic_user_filled
     val Menu = R.drawable.ic_menu
     val Check = R.drawable.ic_check
+    val Heart = R.drawable.ic_heart
+    val HeartFilled = R.drawable.ic_heart_filled
+    val List = R.drawable.ic_list
 }

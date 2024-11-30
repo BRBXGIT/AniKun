@@ -61,4 +61,6 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     //Coil
     implementation(libs.coil.compose)
+    //Haze
+    implementation(libs.haze.materials)
 }
