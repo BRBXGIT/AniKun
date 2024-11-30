@@ -17,11 +17,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import com.example.data.remote.models.media_details_response.TitleX
 import com.example.designsystem.icons.AniKunIcons
+import com.example.designsystem.theme.mColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,11 +41,11 @@ fun MediaScreenTopBar(
 
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.Transparent
+            containerColor = mColors.surfaceContainer.copy(alpha = 0f)
         ),
         title = {
             AnimatedVisibility(
-                visible = scrollBehavior.state.overlappedFraction >= 0.99f,
+                visible = scrollBehavior.state.contentOffset <= -600f,
                 enter = fadeIn(tween(300)),
                 exit = fadeOut(tween(300))
             ) {

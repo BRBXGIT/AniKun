@@ -3,12 +3,9 @@ package com.example.media_screen.media_screen.screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -17,16 +14,17 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.theme.mColors
+import com.example.media_screen.media_screen.sections.DescriptionSection
+import com.example.media_screen.media_screen.sections.GenresLRSection
 import com.example.media_screen.media_screen.sections.MediaHeader
 import com.example.media_screen.media_screen.sections.MediaScreenTopBar
-import java.time.format.DateTimeFormatter
+import com.example.media_screen.media_screen.sections.UserListTypeSection
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -76,7 +74,7 @@ fun MediaDetailsScreen(
         if(mediaDetails.data != null) {
             mediaDetails.data!!.media.let { media ->
                 LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(24.dp),
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(bottom = innerPadding.calculateBottomPadding())
@@ -92,6 +90,23 @@ fun MediaDetailsScreen(
                             nextAiringEpisode = media.nextAiringEpisode,
                             bannerImage = media.bannerImage,
                         )
+                    }
+
+                    item {
+                        UserListTypeSection(
+                            score = "${media.averageScore.toString().take(1)}.${media.averageScore.toString().takeLast(1)}",
+                            favoritesCount = media.favourites,
+                            userListType = "Watching",
+                            modifier = Modifier.fillParentMaxWidth()
+                        )
+                    }
+
+                    item {
+                        GenresLRSection(media.genres)
+                    }
+
+                    item {
+                        DescriptionSection(media.description)
                     }
 
                     items(100) {

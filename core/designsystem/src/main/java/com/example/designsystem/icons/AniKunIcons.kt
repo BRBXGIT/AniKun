@@ -18,4 +18,6 @@ object AniKunIcons {
     val Heart = R.drawable.ic_heart
     val HeartFilled = R.drawable.ic_heart_filled
     val List = R.drawable.ic_list
+    val ArrowDown = R.drawable.ic_arrow_down
+    val ArrowUp = R.drawable.ic_arrow_up
 }
