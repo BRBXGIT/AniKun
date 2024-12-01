@@ -1,6 +1,7 @@
 package com.example.media_screen.media_screen.sections
 
 import android.icu.text.IDNA.Info
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,11 +10,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.data.remote.models.media_details_response.EndDate
 import com.example.data.remote.models.media_details_response.StartDate
+import com.example.data.remote.models.media_details_response.Studios
 import com.example.data.remote.models.media_details_response.TitleX
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mTypography
@@ -29,7 +34,8 @@ fun InfoSection(
     startDate: StartDate,
     endDate: EndDate,
     season: String,
-    seasonYear: Int
+    seasonYear: Int,
+    studios: Studios
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),
@@ -67,6 +73,33 @@ fun InfoSection(
             InfoRow("Start date", "${formatDate(startDate.day.toString())}.${startDate.month}.${startDate.year}")
             InfoRow("End date", "${formatDate(endDate.day.toString())}.${endDate.month}.${endDate.year}")
             InfoRow("Season", "$season $seasonYear")
+        }
+
+        HorizontalDivider(thickness = 1.dp)
+
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = "Studios",
+                style = mTypography.labelLarge
+            )
+
+            Column(
+                horizontalAlignment = Alignment.End,
+            ) {
+                studios.nodes.forEach { studio ->
+                    Text(
+                        text = studio.name,
+                        style = mTypography.labelLarge.copy(
+                            color = mColors.primary
+                        ),
+                        textAlign = TextAlign.End,
+                        softWrap = true
+                    )
+                }
+            }
         }
     }
 }

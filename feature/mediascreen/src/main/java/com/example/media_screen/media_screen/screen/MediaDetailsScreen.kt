@@ -11,7 +11,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,6 +27,8 @@ import com.example.media_screen.media_screen.sections.GenresLRSection
 import com.example.media_screen.media_screen.sections.InfoSection
 import com.example.media_screen.media_screen.sections.MediaHeader
 import com.example.media_screen.media_screen.sections.MediaScreenTopBar
+import com.example.media_screen.media_screen.sections.RecommendationsLRSection
+import com.example.media_screen.media_screen.sections.TagsSection
 import com.example.media_screen.media_screen.sections.UserListTypeSection
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -78,7 +79,7 @@ fun MediaDetailsScreen(
         if(mediaDetails.data != null) {
             mediaDetails.data!!.media.let { media ->
                 LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(28.dp),
+                    verticalArrangement = Arrangement.spacedBy(32.dp),
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(bottom = innerPadding.calculateBottomPadding())
@@ -114,6 +115,7 @@ fun MediaDetailsScreen(
                         DescriptionSection(media.description)
                     }
 
+                    //TODO fix bug with bottom part move
                     item {
                         CharactersLRSection(media.characters)
                     }
@@ -129,8 +131,17 @@ fun MediaDetailsScreen(
                             startDate = media.startDate,
                             endDate = media.endDate,
                             season = media.season,
-                            seasonYear = media.seasonYear
+                            seasonYear = media.seasonYear,
+                            studios = media.studios
                         )
+                    }
+
+                    item {
+                        TagsSection(media.tags)
+                    }
+
+                    item {
+                        RecommendationsLRSection(media.recommendations)
                     }
 
                     item {

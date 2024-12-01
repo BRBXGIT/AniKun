@@ -76,21 +76,24 @@ class MediaDetailsScreenRepoImpl @Inject constructor(
 
                 tags {
                   name
+                  rank
                 }
 
                 recommendations {
                   nodes {
-                    media {
+                    mediaRecommendation {
+                      averageScore
                       coverImage {
                         large
                       }
-                      format
                       title {
                         english
                         romaji
                       }
-                      episodes
                       seasonYear
+                      format
+                      episodes
+                      favourites
                     }
                   }
                 }
