@@ -20,4 +20,5 @@ object AniKunIcons {
     val List = R.drawable.ic_list
     val ArrowDown = R.drawable.ic_arrow_down
     val ArrowUp = R.drawable.ic_arrow_up
+    val MedalFilled = R.drawable.ic_medal_filled
 }
