@@ -60,7 +60,7 @@ fun RecommendationsLRSection(
                     ) {
                         SubcomposeAsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
-                                .data(recommendation.coverImage.large)
+                                .data(recommendation.mediaRecommendation.coverImage.large)
                                 .crossfade(500)
                                 .size(Size.ORIGINAL)
                                 .build(),
@@ -79,19 +79,19 @@ fun RecommendationsLRSection(
                             )
                         ) {
                             Text(
-                                text = if(recommendation.title.english == null) recommendation.title.romaji else recommendation.title.english!!,
+                                text = if(recommendation.mediaRecommendation.title.english == null) recommendation.mediaRecommendation.title.romaji else recommendation.mediaRecommendation.title.english!!,
                                 style = mTypography.labelLarge.copy(
                                     fontWeight = FontWeight.Bold
                                 )
                             )
 
                             Text(
-                                text = recommendation.seasonYear.toString(),
+                                text = recommendation.mediaRecommendation.seasonYear.toString(),
                                 style = mTypography.labelMedium
                             )
 
                             Text(
-                                text = "${recommendation.format} • ${recommendation.episodes} episodes",
+                                text = "${recommendation.mediaRecommendation.format} • ${recommendation.mediaRecommendation.episodes} episodes",
                                 style = mTypography.labelMedium
                             )
                         }
