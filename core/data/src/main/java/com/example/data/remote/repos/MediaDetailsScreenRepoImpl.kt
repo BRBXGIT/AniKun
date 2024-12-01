@@ -21,6 +21,7 @@ class MediaDetailsScreenRepoImpl @Inject constructor(
                 title {
                   english
                   romaji
+                  native
                 }
                 coverImage {
                   large
@@ -33,6 +34,7 @@ class MediaDetailsScreenRepoImpl @Inject constructor(
 
                 averageScore
                 favourites
+                popularity
 
                 genres
 
@@ -40,6 +42,9 @@ class MediaDetailsScreenRepoImpl @Inject constructor(
 
                 characters {
                   nodes {
+                    image {
+                      large
+                    }
                     name {
                       full
                     }

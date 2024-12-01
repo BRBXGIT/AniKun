@@ -1,6 +1,7 @@
 package com.example.data.remote.models.media_details_response
 
 data class Media(
+    val popularity: Int,
     val averageScore: Int,
     val characters: Characters,
     val coverImage: CoverImage,

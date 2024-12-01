@@ -3,7 +3,9 @@ package com.example.media_screen.media_screen.screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
@@ -20,8 +22,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.theme.mColors
+import com.example.media_screen.media_screen.sections.CharactersLRSection
 import com.example.media_screen.media_screen.sections.DescriptionSection
 import com.example.media_screen.media_screen.sections.GenresLRSection
+import com.example.media_screen.media_screen.sections.InfoSection
 import com.example.media_screen.media_screen.sections.MediaHeader
 import com.example.media_screen.media_screen.sections.MediaScreenTopBar
 import com.example.media_screen.media_screen.sections.UserListTypeSection
@@ -74,7 +78,7 @@ fun MediaDetailsScreen(
         if(mediaDetails.data != null) {
             mediaDetails.data!!.media.let { media ->
                 LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(24.dp),
+                    verticalArrangement = Arrangement.spacedBy(28.dp),
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(bottom = innerPadding.calculateBottomPadding())
@@ -97,6 +101,7 @@ fun MediaDetailsScreen(
                             score = "${media.averageScore.toString().take(1)}.${media.averageScore.toString().takeLast(1)}",
                             favoritesCount = media.favourites,
                             userListType = "Watching",
+                            popularityCount = media.popularity,
                             modifier = Modifier.fillParentMaxWidth()
                         )
                     }
@@ -109,8 +114,27 @@ fun MediaDetailsScreen(
                         DescriptionSection(media.description)
                     }
 
-                    items(100) {
-                        Text(it.toString())
+                    item {
+                        CharactersLRSection(media.characters)
+                    }
+
+                    item {
+                        InfoSection(
+                            title = media.title,
+                            format = media.format,
+                            episodes = media.episodes,
+                            episodeDuration = media.duration,
+                            source = media.source,
+                            status = media.status,
+                            startDate = media.startDate,
+                            endDate = media.endDate,
+                            season = media.season,
+                            seasonYear = media.seasonYear
+                        )
+                    }
+
+                    item {
+                        Spacer(modifier = Modifier.height(0.dp))
                     }
                 }
             }

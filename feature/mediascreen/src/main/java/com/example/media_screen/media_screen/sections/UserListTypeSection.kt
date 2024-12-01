@@ -5,14 +5,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.designsystem.theme.mColors
@@ -24,7 +21,8 @@ fun UserListTypeSection(
     score: String,
     favoritesCount: Int,
     userListType: String,
-    modifier: Modifier
+    popularityCount: Int,
+    modifier: Modifier,
 ) {
     Box(
         modifier = modifier,
@@ -32,7 +30,7 @@ fun UserListTypeSection(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(24.dp),
             modifier = Modifier.padding(horizontal = 16.dp)
         ) {
             Column(
@@ -51,8 +49,6 @@ fun UserListTypeSection(
                 )
             }
 
-            VerticalDivider(thickness = 1.dp)
-
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -69,7 +65,21 @@ fun UserListTypeSection(
                 )
             }
 
-            VerticalDivider(thickness = 1.dp)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Text(
+                    text = popularityCount.toString(),
+                    style = mTypography.labelMedium.copy(
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+
+                Text(
+                    text = "Popularity",
+                    style = mTypography.labelMedium
+                )
+            }
 
             Box(
                 modifier = Modifier.border(
