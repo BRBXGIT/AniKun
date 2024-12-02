@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.common.dispatchers.AniKunDispatchers
 import com.example.common.dispatchers.Dispatcher
-import com.example.data.remote.models.media_details_models.ani_list_user_response.AniListUserResponse
 import com.example.data.remote.models.media_details_models.media_details_response.MediaDetailsResponse
 import com.example.data.remote.models.media_details_models.user_media_lists_response.UserMediaListsResponse
 import com.example.data.remote.repos.CommonRepoImpl
@@ -13,7 +12,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -46,39 +44,6 @@ class MediaScreenVM @Inject constructor(
                 _mediaDetails.value = repository.getMediaDetailsById(mediaId)
             } catch(e: Exception) {
                 _mediaDetails.value = MediaDetailsResponse(
-                    data = null,
-                    exception = e.message.toString()
-                )
-            }
-        }
-    }
-
-    private val _aniListUserId = MutableStateFlow(
-        AniListUserResponse(
-            data = null,
-            exception = null
-        )
-    )
-    val aniListUserId = _aniListUserId.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(5_000),
-        AniListUserResponse(
-            data = null,
-            exception = null
-        )
-    )
-
-    fun fetchAniListUserId() {
-        viewModelScope.launch(dispatcherIo) {
-            try {
-                commonRepository.getAniKunUser().collect { aniKunUser ->
-                    _aniListUserId.value = AniListUserResponse(
-                        data = repository.getAniListUser("Bearer ${aniKunUser[0].accessToken}").data,
-                        exception = null
-                    )
-                }
-            } catch(e: Exception) {
-                _aniListUserId.value = AniListUserResponse(
                     data = null,
                     exception = e.message.toString()
                 )

@@ -1,12 +1,9 @@
 package com.example.data.remote.repos
 
-import androidx.room.util.query
 import com.example.data.remote.api_instance.AniListApiInstance
 import com.example.data.remote.models.common_models.common_request.CommonRequest
-import com.example.data.remote.models.media_details_models.ani_list_user_response.AniListUserResponse
 import com.example.data.remote.models.media_details_models.media_details_response.MediaDetailsResponse
 import com.example.data.remote.models.media_details_models.user_media_lists_response.UserMediaListsResponse
-import com.example.data.remote.models.profile_models.user_data_response.AniListUser
 import com.example.data.repos.MediaDetailsScreenRepo
 import com.google.gson.Gson
 import javax.inject.Inject
@@ -128,24 +125,6 @@ class MediaDetailsScreenRepoImpl @Inject constructor(
                 query = query,
                 variables = jsonVariables
             )
-        )
-    }
-
-    override suspend fun getAniListUser(accessToken: String): AniListUserResponse {
-        val query = """
-            query {
-              Viewer {
-                name
-              }
-            }
-        """.trimIndent()
-
-        return apiInstance.getAniListUserId(
-            body = CommonRequest(
-                query = query,
-                variables = ""
-            ),
-            accessToken = accessToken
         )
     }
 

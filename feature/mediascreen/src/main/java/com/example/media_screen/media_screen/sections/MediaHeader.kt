@@ -142,13 +142,20 @@ fun MediaHeader(
                     overflow = TextOverflow.Ellipsis
                 )
 
-                Text(
-                    text = year.toString(),
-                    style = mTypography.bodyMedium
-                )
+                if(year != 0) {
+                    Text(
+                        text = year.toString(),
+                        style = mTypography.bodyMedium
+                    )
+                }
 
+                val formatString = if(episodes != 0) {
+                    "$format • $episodes episodes"
+                } else {
+                    format
+                }
                 Text(
-                    text = "$format • $episodes episodes",
+                    text = formatString,
                     style = mTypography.bodyMedium
                 )
 

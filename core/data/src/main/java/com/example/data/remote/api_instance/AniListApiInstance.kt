@@ -5,7 +5,6 @@ import com.example.data.remote.models.anime_list_response.AnimeListResponse
 import com.example.data.remote.models.profile_models.user_anime_list_response.UserAnimeListResponse
 import com.example.data.remote.models.common_models.media_by_query_response.MediaByQueryResponse
 import com.example.data.remote.models.manga_list_response.MangaListsResponse
-import com.example.data.remote.models.media_details_models.ani_list_user_response.AniListUserResponse
 import com.example.data.remote.models.media_details_models.media_details_response.MediaDetailsResponse
 import com.example.data.remote.models.media_details_models.user_media_lists_response.UserMediaListsResponse
 import com.example.data.remote.models.profile_models.user_by_query_response.UserByQueryResponse
@@ -64,10 +63,4 @@ interface AniListApiInstance {
     suspend fun getUserMediaLists(
         @Body body: CommonRequest
     ): UserMediaListsResponse
-
-    @POST(".")
-    suspend fun getAniListUserId(
-        @Body body: CommonRequest,
-        @Header("Authorization") accessToken: String
-    ): AniListUserResponse
 }

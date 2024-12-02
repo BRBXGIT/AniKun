@@ -46,7 +46,7 @@ fun NavGraph(
     ).value
     val chosenContentType = profileScreenVM.chosenContentType.collectAsStateWithLifecycle().value
     val isUserLoggedIn = prefs.getBoolean("loggedIn", false)
-//
+
 //    val userAnimeList = if(isUserLoggedIn) {
 //        getUserAnimeList(profileScreenVM)
 //    } else {
@@ -96,7 +96,10 @@ fun NavGraph(
             prefs = prefs
         )
 
-        mediaDetailsScreen(navController)
+        mediaDetailsScreen(
+            navController = navController,
+            aniListUser = aniListUser
+        )
     }
 }
 

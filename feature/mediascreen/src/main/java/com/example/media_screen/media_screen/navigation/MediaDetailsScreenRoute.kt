@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.example.data.remote.models.profile_models.user_data_response.AniListUser
 import com.example.media_screen.media_screen.screen.MediaDetailsScreen
 import com.example.media_screen.media_screen.screen.MediaScreenVM
 import kotlinx.serialization.Serializable
@@ -15,7 +16,8 @@ data class MediaDetailsScreenRoute(
 )
 
 fun NavGraphBuilder.mediaDetailsScreen(
-    navController: NavController
+    navController: NavController,
+    aniListUser: AniListUser
 ) = composable<MediaDetailsScreenRoute> {
     val mediaId = it.toRoute<MediaDetailsScreenRoute>().mediaId
     val mediaScreenVM = hiltViewModel<MediaScreenVM>()
@@ -23,6 +25,7 @@ fun NavGraphBuilder.mediaDetailsScreen(
     MediaDetailsScreen(
         mediaId = mediaId,
         viewModel = mediaScreenVM,
-        navController = navController
+        navController = navController,
+        aniListUser = aniListUser
     )
 }

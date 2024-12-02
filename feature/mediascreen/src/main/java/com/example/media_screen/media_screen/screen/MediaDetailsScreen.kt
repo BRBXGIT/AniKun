@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.data.remote.models.media_details_models.user_media_lists_response.UserMediaListsResponse
+import com.example.data.remote.models.profile_models.user_data_response.AniListUser
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.theme.mColors
 import com.example.media_screen.media_screen.sections.CharactersLRSection
@@ -41,19 +42,17 @@ import com.example.media_screen.media_screen.sections.UserListTypeSection
 fun MediaDetailsScreen(
     mediaId: Int,
     viewModel: MediaScreenVM,
-    navController: NavController
+    navController: NavController,
+    aniListUser: AniListUser
 ) {
     //Get and collect media details
     viewModel.fetchMediaDetailsById(mediaId)
     val mediaDetails = viewModel.mediaDetails.collectAsStateWithLifecycle().value
-    //Get and collect AniList user data
-    viewModel.fetchAniListUserId()
-    val aniListUser = viewModel.aniListUserId.collectAsStateWithLifecycle().value
     //Get and collect user media lists
     val userLists = viewModel.userMediaLists.collectAsStateWithLifecycle().value
-    if((mediaDetails.data != null) && (aniListUser.data != null)) {
+    if(mediaDetails.data != null) {
         viewModel.fetchUserMediaLists(
-            userName = aniListUser.data!!.viewer.name,
+            userName = aniListUser.data.viewer.name,
             type = mediaDetails.data!!.media.type
         )
     }
