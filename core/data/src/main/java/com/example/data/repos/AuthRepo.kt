@@ -1,6 +1,6 @@
 package com.example.data.repos
 
-import com.example.data.local.AniKunUser
+import com.example.data.local.user_db.AniKunUser
 
 interface AuthRepo {
 

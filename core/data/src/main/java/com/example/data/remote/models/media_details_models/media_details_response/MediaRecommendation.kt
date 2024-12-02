@@ -1,6 +1,7 @@
 package com.example.data.remote.models.media_details_models.media_details_response
 
 data class MediaRecommendation(
+    val id: Int,
     val startDate: StartDate,
     val averageScore: Int,
     val coverImage: CoverImage,

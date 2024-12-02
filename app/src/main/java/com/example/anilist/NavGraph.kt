@@ -38,7 +38,7 @@ fun NavGraph(
     val profileScreenVM = hiltViewModel<ProfileScreenVM>()
 
     val animeList = getAnimeLists(animeScreenVM)
-    val mangaList = getMangaLists(mangaScreenVM)
+//    val mangaList = getMangaLists(mangaScreenVM)
 
     //Profile screen
     val aniListUser = profileScreenVM.aniListUser.collectAsStateWithLifecycle(
@@ -75,11 +75,11 @@ fun NavGraph(
                 animeLists = animeList
             )
 
-            mangaScreen(
-                navController = navController,
-                mangaScreenVM = mangaScreenVM,
-                mangaLists = mangaList
-            )
+//            mangaScreen(
+//                navController = navController,
+//                mangaScreenVM = mangaScreenVM,
+//                mangaLists = mangaList
+//            )
 //
 //            profileScreen(
 //                navController = navController,

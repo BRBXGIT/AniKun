@@ -85,6 +85,7 @@ class MediaDetailsScreenRepoImpl @Inject constructor(
                 recommendations {
                   nodes {
                     mediaRecommendation {
+                      id
                       startDate {
                         year
                         month

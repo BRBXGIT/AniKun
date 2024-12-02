@@ -13,6 +13,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -77,8 +78,7 @@ fun MediaDetailsScreen(
             .background(mColors.background)
             .nestedScroll(topBarScrollBehavior.nestedScrollConnection)
     ) { innerPadding ->
-        //TODO fix progress indicator bug
-        if(mediaDetails.data == null) {
+        if((mediaDetails.data == null) && (mediaDetails.exception == null)) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -161,7 +161,10 @@ fun MediaDetailsScreen(
                     }
 
                     item {
-                        RecommendationsLRSection(media.recommendations)
+                        RecommendationsLRSection(
+                            recommendations = media.recommendations,
+                            navController = navController
+                        )
                     }
 
                     item {

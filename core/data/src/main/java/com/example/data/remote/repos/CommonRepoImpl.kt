@@ -3,8 +3,8 @@ package com.example.data.remote.repos
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.example.data.local.AniKunUser
-import com.example.data.local.UserDao
+import com.example.data.local.user_db.AniKunUser
+import com.example.data.local.user_db.UserDao
 import com.example.data.remote.api_instance.AniListApiInstance
 import com.example.data.remote.models.common_models.media_by_query_response.Media as MediaByQueryMedia
 import com.example.data.remote.paging.MediaByQueryPS

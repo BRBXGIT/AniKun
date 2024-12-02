@@ -2,8 +2,8 @@ package com.example.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.data.local.UserDao
-import com.example.data.local.UserDb
+import com.example.data.local.user_db.UserDao
+import com.example.data.local.user_db.UserDb
 import com.example.data.remote.api_instance.AniListApiInstance
 import com.example.data.remote.repos.AnimeScreenRepoImpl
 import com.example.data.remote.repos.AuthRepoImpl

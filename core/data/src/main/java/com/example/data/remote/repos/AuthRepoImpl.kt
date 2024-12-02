@@ -1,9 +1,8 @@
 package com.example.data.remote.repos
 
-import com.example.data.local.AniKunUser
-import com.example.data.local.UserDao
+import com.example.data.local.user_db.AniKunUser
+import com.example.data.local.user_db.UserDao
 import com.example.data.repos.AuthRepo
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class AuthRepoImpl @Inject constructor(
