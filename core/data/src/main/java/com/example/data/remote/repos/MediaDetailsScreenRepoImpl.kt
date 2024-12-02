@@ -14,10 +14,11 @@ class MediaDetailsScreenRepoImpl @Inject constructor(
     override suspend fun getMediaDetailsById(id: Int): MediaDetailsResponse {
         val query = """
             query (${"$"}id: Int) {
-              Media(id: ${"$"}id, type: ANIME) {
+              Media(id: ${"$"}id) {
                 seasonYear
                 format
                 episodes
+                chapters
                 title {
                   english
                   romaji
@@ -82,6 +83,11 @@ class MediaDetailsScreenRepoImpl @Inject constructor(
                 recommendations {
                   nodes {
                     mediaRecommendation {
+                      startDate {
+                        year
+                        month
+                        day
+                      }
                       averageScore
                       coverImage {
                         large
@@ -90,7 +96,6 @@ class MediaDetailsScreenRepoImpl @Inject constructor(
                         english
                         romaji
                       }
-                      seasonYear
                       format
                       episodes
                       favourites

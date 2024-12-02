@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
-import com.example.data.remote.models.media_details_response.MediaRecommendation
 import com.example.data.remote.models.media_details_response.NodeX
 import com.example.designsystem.animated_shimmer.AnimatedShimmer
 import com.example.designsystem.icons.AniKunIcons
@@ -85,12 +84,19 @@ fun RecommendationCard(
                     )
 
                     Text(
-                        text = recommendation.mediaRecommendation.seasonYear.toString(),
+                        text = recommendation.mediaRecommendation.startDate.year.toString(),
                         style = mTypography.labelMedium
                     )
 
+                    val mediaFormat = recommendation.mediaRecommendation.format
+                    val mediaEpisodes = if((mediaFormat == "MANGA") or (mediaFormat == "ONE_SHOT")) {
+                        recommendation.mediaRecommendation.format
+                    } else {
+                        "${recommendation.mediaRecommendation.format} • ${recommendation.mediaRecommendation.episodes}"
+                    }
+
                     Text(
-                        text = "${recommendation.mediaRecommendation.format} • ${recommendation.mediaRecommendation.episodes} episodes",
+                        text = mediaEpisodes,
                         style = mTypography.labelMedium
                     )
                 }

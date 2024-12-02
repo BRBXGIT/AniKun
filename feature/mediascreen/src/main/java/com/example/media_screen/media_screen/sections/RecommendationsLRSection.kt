@@ -18,7 +18,7 @@ import com.example.designsystem.theme.mTypography
 
 @Composable
 fun RecommendationsLRSection(
-    recommendations: Recommendations
+    recommendations: Recommendations,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),

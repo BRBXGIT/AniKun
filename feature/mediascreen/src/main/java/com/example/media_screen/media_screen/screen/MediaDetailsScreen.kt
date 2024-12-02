@@ -58,7 +58,8 @@ fun MediaDetailsScreen(
             .background(mColors.background)
             .nestedScroll(topBarScrollBehavior.nestedScrollConnection)
     ) { innerPadding ->
-        if((mediaDetails.data == null) && (mediaDetails.exception != null)) {
+        //TODO fix progress indicator bug
+        if(mediaDetails.data == null) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -115,7 +116,6 @@ fun MediaDetailsScreen(
                         DescriptionSection(media.description)
                     }
 
-                    //TODO fix bug with bottom part move
                     item {
                         CharactersLRSection(media.characters)
                     }
@@ -125,6 +125,7 @@ fun MediaDetailsScreen(
                             title = media.title,
                             format = media.format,
                             episodes = media.episodes,
+                            chapters = media.chapters,
                             episodeDuration = media.duration,
                             source = media.source,
                             status = media.status,

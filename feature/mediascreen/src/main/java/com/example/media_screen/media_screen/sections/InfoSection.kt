@@ -28,12 +28,13 @@ fun InfoSection(
     title: TitleX,
     format: String,
     episodes: Int,
+    chapters: Int?,
     episodeDuration: Int,
     source: String,
     status: String,
     startDate: StartDate,
     endDate: EndDate,
-    season: String,
+    season: String?,
     seasonYear: Int,
     studios: Studios
 ) {
@@ -66,13 +67,27 @@ fun InfoSection(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             InfoRow("Format", format)
-            InfoRow("Episodes", episodes.toString())
-            InfoRow("Episode duration", episodeDuration.toString())
+            if(format != "MANGA") {
+                InfoRow("Episodes", episodes.toString())
+            }
+            if(format == "MANGA") {
+                InfoRow("Chapters", chapters?.toString() ?: "?")
+            }
+            if(format != "MANGA") {
+                InfoRow("Episode duration", episodeDuration.toString())
+            }
             InfoRow("Source", source)
             InfoRow("Status", status)
             InfoRow("Start date", "${formatDate(startDate.day.toString())}.${startDate.month}.${startDate.year}")
-            InfoRow("End date", "${formatDate(endDate.day.toString())}.${endDate.month}.${endDate.year}")
-            InfoRow("Season", "$season $seasonYear")
+            val formattedEndDate = "${formatDate(endDate.day.toString())}.${endDate.month}.${endDate.year}"
+            if(formattedEndDate == "00.0.0") {
+                InfoRow("End date", "?")
+            } else {
+                InfoRow("End date", formattedEndDate)
+            }
+            if(season != null) {
+                InfoRow("Season", "$season $seasonYear")
+            }
         }
 
         HorizontalDivider(thickness = 1.dp)
@@ -121,10 +136,13 @@ private fun InfoRow(
 
         Text(
             text = info,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
             style = mTypography.labelLarge.copy(
                 color = if(useTint) mColors.primary else mColors.onBackground,
                 fontWeight = FontWeight.Bold
-            )
+            ),
+            modifier = Modifier.padding(start = 16.dp)
         )
     }
 }
