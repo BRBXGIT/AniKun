@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
-import com.example.data.remote.models.media_details_response.NextAiringEpisode
+import com.example.data.remote.models.media_details_models.media_details_response.NextAiringEpisode
 import com.example.designsystem.animated_shimmer.AnimatedShimmer
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes
@@ -52,7 +52,7 @@ fun MediaHeader(
     episodes: Int,
     nextAiringEpisode: NextAiringEpisode?,
     bannerImage: String?,
-    topPadding: Dp,
+    topPadding: Dp
 ) {
     val hazeState = remember { HazeState() }
 

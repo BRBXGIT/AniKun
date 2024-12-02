@@ -1,7 +1,5 @@
 package com.example.media_screen.media_screen.sections
 
-import android.icu.text.IDNA.Info
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,10 +14,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.data.remote.models.media_details_response.EndDate
-import com.example.data.remote.models.media_details_response.StartDate
-import com.example.data.remote.models.media_details_response.Studios
-import com.example.data.remote.models.media_details_response.TitleX
+import com.example.data.remote.models.media_details_models.media_details_response.EndDate
+import com.example.data.remote.models.media_details_models.media_details_response.StartDate
+import com.example.data.remote.models.media_details_models.media_details_response.Studios
+import com.example.data.remote.models.media_details_models.media_details_response.TitleX
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mTypography
 

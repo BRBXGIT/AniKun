@@ -1,6 +1,0 @@
-package com.example.data.remote.models.media_details_response
-
-data class NodeXX(
-    val id: Int,
-    val name: String
-)

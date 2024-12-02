@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
-import com.example.data.remote.models.media_details_response.Characters
+import com.example.data.remote.models.media_details_models.media_details_response.Characters
 import com.example.designsystem.animated_shimmer.AnimatedShimmer
 import com.example.designsystem.theme.mTypography
 

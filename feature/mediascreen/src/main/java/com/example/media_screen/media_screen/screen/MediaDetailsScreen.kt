@@ -13,12 +13,17 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.example.data.remote.models.media_details_models.user_media_lists_response.UserMediaListsResponse
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.theme.mColors
 import com.example.media_screen.media_screen.sections.CharactersLRSection
@@ -41,6 +46,21 @@ fun MediaDetailsScreen(
     //Get and collect media details
     viewModel.fetchMediaDetailsById(mediaId)
     val mediaDetails = viewModel.mediaDetails.collectAsStateWithLifecycle().value
+    //Get and collect AniList user data
+    viewModel.fetchAniListUserId()
+    val aniListUser = viewModel.aniListUserId.collectAsStateWithLifecycle().value
+    //Get and collect user media lists
+    val userLists = viewModel.userMediaLists.collectAsStateWithLifecycle().value
+    if((mediaDetails.data != null) && (aniListUser.data != null)) {
+        viewModel.fetchUserMediaLists(
+            userName = aniListUser.data!!.viewer.name,
+            type = mediaDetails.data!!.media.type
+        )
+    }
+    var userListType by rememberSaveable { mutableStateOf("") }
+    if(userLists.data != null) {
+        userListType = checkIsMediaInUserList(userLists, mediaId)
+    }
 
     val topBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
@@ -102,7 +122,7 @@ fun MediaDetailsScreen(
                         UserListTypeSection(
                             score = "${media.averageScore.toString().take(1)}.${media.averageScore.toString().takeLast(1)}",
                             favoritesCount = media.favourites,
-                            userListType = "Watching",
+                            userListType = userListType,
                             popularityCount = media.popularity,
                             modifier = Modifier.fillParentMaxWidth()
                         )
@@ -152,4 +172,18 @@ fun MediaDetailsScreen(
             }
         }
     }
+}
+
+private fun checkIsMediaInUserList(
+    userList: UserMediaListsResponse,
+    mediaId: Int
+): String {
+    userList.data!!.mediaListCollection.lists.forEach { list ->
+        list.entries.forEach { entry ->
+            if(mediaId == entry.media.id) {
+                return list.name
+            }
+        }
+    }
+    return "Not in list"
 }

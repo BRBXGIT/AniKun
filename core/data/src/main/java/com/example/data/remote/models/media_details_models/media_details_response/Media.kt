@@ -1,4 +1,4 @@
-package com.example.data.remote.models.media_details_response
+package com.example.data.remote.models.media_details_models.media_details_response
 
 data class Media(
     val popularity: Int,
@@ -24,5 +24,6 @@ data class Media(
     val status: String,
     val studios: Studios,
     val tags: List<Tag>,
-    val title: TitleX
+    val title: TitleX,
+    val type: String
 )

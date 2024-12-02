@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.data.remote.models.media_details_response.Tag
+import com.example.data.remote.models.media_details_models.media_details_response.Tag
 import com.example.designsystem.custom_modifiers.noRippleClickable
 import com.example.designsystem.icons.AniKunIcons
 import com.example.designsystem.theme.mTypography

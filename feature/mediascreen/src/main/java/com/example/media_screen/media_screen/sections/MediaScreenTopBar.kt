@@ -19,7 +19,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
-import com.example.data.remote.models.media_details_response.TitleX
+import com.example.data.remote.models.media_details_models.media_details_response.TitleX
 import com.example.designsystem.icons.AniKunIcons
 import com.example.designsystem.theme.mColors
 
