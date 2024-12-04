@@ -3,6 +3,10 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     //Compose
     alias(libs.plugins.compose.compiler)
+    //Ksp
+    alias(libs.plugins.ksp)
+    //Hilt
+    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -39,11 +43,17 @@ android {
 
 dependencies {
 
+    //Modules
     implementation(project(":core:data"))
+    implementation(project(":core:common"))
 
     //Compose
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
+    //Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
     //Google fonts
     implementation(libs.androidx.ui.text.google.fonts)
     //Material 3

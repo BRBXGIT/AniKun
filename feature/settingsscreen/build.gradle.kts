@@ -7,12 +7,10 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     //Ksp
     alias(libs.plugins.ksp)
-    //Hilt
-    alias(libs.plugins.hilt.android)
 }
 
 android {
-    namespace = "com.example.navbarscreens"
+    namespace = "com.example.settingsscreen"
     compileSdk = 35
 
     defaultConfig {
@@ -45,9 +43,6 @@ dependencies {
     //Modules
     implementation(project(":core:designsystem"))
     implementation(project(":core:common"))
-    implementation(project(":core:data"))
-    implementation(project(":feature:mediascreen"))
-    implementation(project(":feature:settingsscreen"))
 
     //Material 3
     implementation(libs.androidx.material3)
@@ -57,11 +52,4 @@ dependencies {
     //Nav
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
-    //Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
-    //Paging impl
-    implementation(libs.androidx.paging.compose)
-    //Coil
-    implementation(libs.coil.compose)
 }

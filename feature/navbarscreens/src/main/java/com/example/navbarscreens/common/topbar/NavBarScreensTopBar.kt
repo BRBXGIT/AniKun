@@ -38,6 +38,7 @@ fun NavBarScreensTopBar(
     text: String? = null,
     scrollBehavior: TopAppBarScrollBehavior,
     onSearchClick: () -> Unit,
+    onSettingsClick: () -> Unit,
     userAvatar: String? = null, //Only for profile screen
     userName: String? = null, //Only for profile screen
     chosenContent: Boolean = false, //Only for profile screen
@@ -85,7 +86,7 @@ fun NavBarScreensTopBar(
             }
 
             IconButton(
-                onClick = {  }
+                onClick = { onSettingsClick() }
             ) {
                 Icon(
                     painter = painterResource(id = AniKunIcons.Settings),

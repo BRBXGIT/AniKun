@@ -64,6 +64,7 @@ dependencies {
     implementation(project(":feature:mediascreen"))
     implementation(project(":feature:auth"))
     implementation(project(":core:data"))
+    implementation(project(":feature:settingsscreen"))
 
     //Compose
     implementation(libs.androidx.activity.compose)

@@ -15,6 +15,7 @@ import com.example.data.remote.models.profile_models.user_anime_list_response.Me
 import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.data.remote.models.profile_models.user_data_response.AniListUser
+import com.example.designsystem.theme.AppSettingsVM
 import com.example.media_screen.media_screen.navigation.mediaDetailsScreen
 import com.example.data.remote.models.profile_models.user_manga_list_response.Media as UserMangaListMedia
 import com.example.navbarscreens.anime_screen.navigation.AnimeScreenRoute
@@ -25,10 +26,12 @@ import com.example.navbarscreens.manga_screen.navigation.mangaScreen
 import com.example.navbarscreens.manga_screen.screen.MangaScreenVM
 import com.example.navbarscreens.profile_screen.navigation.profileScreen
 import com.example.navbarscreens.profile_screen.screen.ProfileScreenVM
+import com.example.settingsscreen.settings_screen.navigation.settingsScreen
 
 @Composable
 fun NavGraph(
-    prefs: SharedPreferences
+    prefs: SharedPreferences,
+    appSettingsVM: AppSettingsVM
 ) {
     val navController = rememberNavController()
 
@@ -99,6 +102,11 @@ fun NavGraph(
         mediaDetailsScreen(
             navController = navController,
             aniListUser = aniListUser
+        )
+
+        settingsScreen(
+            appSettingsVM = appSettingsVM,
+            navController = navController
         )
     }
 }

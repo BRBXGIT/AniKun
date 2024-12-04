@@ -2,6 +2,7 @@ package com.example.data.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.data.local.data_store.AppDataStore
 import com.example.data.local.user_db.UserDao
 import com.example.data.local.user_db.UserDb
 import com.example.data.remote.api_instance.AniListApiInstance
@@ -49,6 +50,12 @@ object DataModule {
             klass = UserDb::class.java,
             name = "UserDb"
         ).build().userDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideThemeDataStore(@ApplicationContext context: Context): AppDataStore {
+        return AppDataStore(context)
     }
 
     @Provides

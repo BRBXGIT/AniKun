@@ -23,6 +23,7 @@ import com.example.navbarscreens.common.navbar.NavBar
 import com.example.navbarscreens.common.pager.CommonPager
 import com.example.navbarscreens.common.search_bar.NavbarScreensSearchBar
 import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
+import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,7 +40,8 @@ fun MangaScreen(
             NavBarScreensTopBar(
                 text = "Manga",
                 scrollBehavior = topBarScrollBehaviour,
-                onSearchClick = { isSearching = true }
+                onSearchClick = { isSearching = true },
+                onSettingsClick = { navController.navigate(SettingsScreenRoute) }
             )
         },
         bottomBar = { NavBar(navController) },
