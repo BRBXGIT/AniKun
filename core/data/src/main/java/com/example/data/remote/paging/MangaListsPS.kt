@@ -10,18 +10,16 @@ import retrofit2.HttpException
 import java.io.IOException
 
 class MangaListsPS(
-    private val apiInstance: AniListApiInstance,
-    private val countryOfOrigin: String,
-    sort: String,
+    private val apiInstance: AniListApiInstance
 ): PagingSource<Int, MangaListMedia>() {
 
     private val query = """
-        query (${"$"}page: Int, ${"$"}perPage: Int, ${"$"}countryOfOrigin: CountryCode) {
+        query (${"$"}page: Int, ${"$"}perPage: Int) {
               Page(page: ${"$"}page, perPage: ${"$"}perPage) {
                 pageInfo {
                   hasNextPage
                 }
-                media(sort: $sort, type: MANGA, countryOfOrigin: ${"$"}countryOfOrigin) {
+                media(sort: TRENDING_DESC, type: MANGA) {
                   id
                   title {
                     english
@@ -48,7 +46,6 @@ class MangaListsPS(
         val variables = mapOf(
             "page" to startPage,
             "perPage" to perPage,
-            "countryOfOrigin" to countryOfOrigin
         )
 
         val jsonVariables = Gson().toJson(variables)

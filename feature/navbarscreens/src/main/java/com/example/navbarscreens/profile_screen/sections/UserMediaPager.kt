@@ -1,4 +1,4 @@
-package com.example.navbarscreens.common.pager
+package com.example.navbarscreens.profile_screen.sections
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -37,36 +37,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
-import com.example.data.remote.models.profile_models.user_manga_list_response.Media as UserMangaListMedia
-import com.example.data.remote.models.profile_models.user_anime_list_response.Media as UserAnimeListMedia
-import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
-import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.designsystem.theme.mColors
-import com.example.navbarscreens.anime_screen.sections.AnimeLCSection
-import com.example.navbarscreens.manga_screen.sections.MangaLVGSection
-import com.example.navbarscreens.profile_screen.sections.UserAnimeLCSection
-import com.example.navbarscreens.profile_screen.sections.UserMangaLVGSection
 import kotlinx.coroutines.launch
+import com.example.data.remote.models.profile_models.user_anime_list_response.Media as UserAnimeListMedia
+import com.example.data.remote.models.profile_models.user_manga_list_response.Media as UserMangaListMedia
 
 @Composable
-fun CommonPager(
-    anime: List<LazyPagingItems<AnimeListMedia>>? = null,
-    manga: List<LazyPagingItems<MangaListMedia>>? = null,
+fun UserMediaPager(
     userAnime: List<LazyPagingItems<UserAnimeListMedia>>? = null,
     userManga: List<LazyPagingItems<UserMangaListMedia>>? = null,
     navController: NavController
 ) {
-    val animeListsType = listOf(
-        "Trending",
-        "This season",
-        "Next season",
-        "All time popular"
-    )
-    val mangaListsType = listOf(
-        "Trending",
-        "All time popular",
-        "Popular manhwa"
-    )
     val userAnimeListsType = listOf(
         "Watching",
         "ReWatching",
@@ -86,15 +67,7 @@ fun CommonPager(
     var selectedType by rememberSaveable { mutableIntStateOf(0) }
     val animationScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(
-        pageCount = {
-            if(anime != null) {
-                animeListsType.size
-            } else if(manga != null) {
-                mangaListsType.size
-            } else {
-                userAnimeListsType.size
-            }
-        }
+        pageCount = { userAnimeListsType.size }
     )
 
     LaunchedEffect(pagerState) {
@@ -128,44 +101,6 @@ fun CommonPager(
             }
         }
     ) {
-        if(anime != null) {
-            animeListsType.forEachIndexed { index, type ->
-                Tab(
-                    selected = index == selectedType,
-                    onClick = {
-                        selectedType = index
-                        animationScope.launch {
-                            pagerState.animateScrollToPage(index)
-                        }
-                    },
-                    modifier = Modifier.clip(RoundedCornerShape(10.dp)),
-                    text = {
-                        Text(
-                            text = type
-                        )
-                    }
-                )
-            }
-        }
-        if(manga != null) {
-            mangaListsType.forEachIndexed { index, type ->
-                Tab(
-                    selected = index == selectedType,
-                    onClick = {
-                        selectedType = index
-                        animationScope.launch {
-                            pagerState.animateScrollToPage(index)
-                        }
-                    },
-                    modifier = Modifier.clip(RoundedCornerShape(10.dp)),
-                    text = {
-                        Text(
-                            text = type
-                        )
-                    }
-                )
-            }
-        }
         if(userAnime != null) {
             userAnimeListsType.forEachIndexed { index, type ->
                 Tab(
@@ -207,21 +142,6 @@ fun CommonPager(
     }
 
     HorizontalPager(state = pagerState) { page ->
-        if(anime != null) {
-            when(page) {
-                0 -> AnimeLCSection(anime[0], navController)
-                1 -> AnimeLCSection(anime[1], navController)
-                2 -> AnimeLCSection(anime[2], navController)
-                3 -> AnimeLCSection(anime[3], navController)
-            }
-        }
-        if(manga != null) {
-            when(page) {
-                0 -> MangaLVGSection(manga[0], navController)
-                1 -> MangaLVGSection(manga[1], navController)
-                2 -> MangaLVGSection(manga[2], navController)
-            }
-        }
         if(userAnime != null) {
             when(page) {
                 0 -> UserAnimeLCSection(userAnime[0], navController)

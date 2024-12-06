@@ -10,10 +10,7 @@ import retrofit2.HttpException
 import java.io.IOException
 
 class AnimeListsPS(
-    private val apiInstance: AniListApiInstance,
-    private val season: String?,
-    private val seasonYear: Int?,
-    sort: String,
+    private val apiInstance: AniListApiInstance
 ): PagingSource<Int, AnimeListMedia>() {
 
     private val query = """
@@ -22,31 +19,7 @@ class AnimeListsPS(
                 pageInfo {
                   hasNextPage
                 }
-                media(sort: $sort, type: ANIME) {
-                  id
-                  episodes
-                  title {
-                    english
-                    romaji
-                  }
-                  coverImage {
-                    large
-                  }
-                  description
-                  genres
-                  averageScore
-                }
-              }
-            }
-    """.trimIndent()
-
-    private val seasonQuery = """
-        query (${"$"}page: Int, ${"$"}perPage: Int, ${"$"}season: MediaSeason, ${"$"}seasonYear: Int) {
-              Page(page: ${"$"}page, perPage: ${"$"}perPage) {
-                pageInfo {
-                  hasNextPage
-                }
-                media(sort: $sort, season: ${"$"}season, seasonYear: ${"$"}seasonYear, type: ANIME) {
+                media(sort: TRENDING_DESC, type: ANIME) {
                   id
                   episodes
                   title {
@@ -74,9 +47,7 @@ class AnimeListsPS(
 
         val variables = mapOf(
             "page" to startPage,
-            "perPage" to perPage,
-            "season" to season,
-            "seasonYear" to seasonYear
+            "perPage" to perPage
         )
 
         val jsonVariables = Gson().toJson(variables)
@@ -84,7 +55,7 @@ class AnimeListsPS(
         return try {
             val anime = apiInstance.getAnimeList(
                 CommonRequest(
-                    query = if(season != null) seasonQuery else query,
+                    query = query,
                     variables = jsonVariables
                 )
             )

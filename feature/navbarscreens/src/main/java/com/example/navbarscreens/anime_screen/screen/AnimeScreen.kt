@@ -17,28 +17,28 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.designsystem.theme.mColors
+import com.example.navbarscreens.anime_screen.sections.AnimeLCSection
 import com.example.navbarscreens.common.navbar.NavBar
-import com.example.navbarscreens.common.pager.CommonPager
 import com.example.navbarscreens.common.search_bar.NavbarScreensSearchBar
 import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
 import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute
+import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AnimeScreen(
     navController: NavController,
     viewModel: AnimeScreenVM,
-    animeLists: List<LazyPagingItems<AnimeListMedia>>
+    trendingAnime: LazyPagingItems<AnimeListMedia>
 ) {
-    val topBarScrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val topBarScrollBehaviour = TopAppBarDefaults.pinnedScrollBehavior()
 
     var isSearching by rememberSaveable { mutableStateOf(false) }
     Scaffold(
         topBar = {
             NavBarScreensTopBar(
-                text = "Anime",
+                text = "Trending anime",
                 scrollBehavior = topBarScrollBehaviour,
                 onSearchClick = { isSearching = true },
                 onSettingsClick = { navController.navigate(SettingsScreenRoute) }
@@ -66,8 +66,8 @@ fun AnimeScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            CommonPager(
-                anime = animeLists,
+            AnimeLCSection(
+                anime = trendingAnime,
                 navController = navController
             )
         }

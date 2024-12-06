@@ -100,9 +100,7 @@ fun MediaDetailsScreen(
             mediaDetails.data!!.media.let { media ->
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(32.dp),
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(bottom = innerPadding.calculateBottomPadding())
+                    modifier = Modifier.fillMaxSize()
                 ) {
                     item {
                         MediaHeader(
@@ -168,7 +166,13 @@ fun MediaDetailsScreen(
                     }
 
                     item {
-                        Spacer(modifier = Modifier.height(0.dp))
+                        Spacer(
+                            modifier = Modifier
+                                .height(0.dp)
+                                .padding(
+                                    bottom = innerPadding.calculateBottomPadding()
+                                )
+                        )
                     }
                 }
             }

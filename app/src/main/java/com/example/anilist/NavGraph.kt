@@ -11,13 +11,9 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.auth.navigation.AuthScreenRoute
 import com.example.auth.navigation.authScreen
-import com.example.data.remote.models.profile_models.user_anime_list_response.Media as UserAnimeListMedia
-import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
-import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.data.remote.models.profile_models.user_data_response.AniListUser
 import com.example.designsystem.theme.AppSettingsVM
 import com.example.media_screen.media_screen.navigation.mediaDetailsScreen
-import com.example.data.remote.models.profile_models.user_manga_list_response.Media as UserMangaListMedia
 import com.example.navbarscreens.anime_screen.navigation.AnimeScreenRoute
 import com.example.navbarscreens.anime_screen.navigation.animeScreen
 import com.example.navbarscreens.anime_screen.screen.AnimeScreenVM
@@ -27,6 +23,8 @@ import com.example.navbarscreens.manga_screen.screen.MangaScreenVM
 import com.example.navbarscreens.profile_screen.navigation.profileScreen
 import com.example.navbarscreens.profile_screen.screen.ProfileScreenVM
 import com.example.settingsscreen.settings_screen.navigation.settingsScreen
+import com.example.data.remote.models.profile_models.user_anime_list_response.Media as UserAnimeListMedia
+import com.example.data.remote.models.profile_models.user_manga_list_response.Media as UserMangaListMedia
 
 @Composable
 fun NavGraph(
@@ -40,8 +38,8 @@ fun NavGraph(
     val mangaScreenVM = hiltViewModel<MangaScreenVM>()
     val profileScreenVM = hiltViewModel<ProfileScreenVM>()
 
-    val animeList = getAnimeLists(animeScreenVM)
-//    val mangaList = getMangaLists(mangaScreenVM)
+    val trendingAnime = animeScreenVM.trendingAnime.collectAsLazyPagingItems()
+    val trendingManga = mangaScreenVM.trendingManga.collectAsLazyPagingItems()
 
     //Profile screen
     val aniListUser = profileScreenVM.aniListUser.collectAsStateWithLifecycle(
@@ -50,16 +48,16 @@ fun NavGraph(
     val chosenContentType = profileScreenVM.chosenContentType.collectAsStateWithLifecycle().value
     val isUserLoggedIn = prefs.getBoolean("loggedIn", false)
 
-//    val userAnimeList = if(isUserLoggedIn) {
-//        getUserAnimeList(profileScreenVM)
-//    } else {
-//        emptyList()
-//    }
-//    val userMangaList = if(isUserLoggedIn) {
-//        getUserMangaList(profileScreenVM)
-//    } else {
-//        emptyList()
-//    }
+    val userAnimeList = if(isUserLoggedIn) {
+        getUserAnimeList(profileScreenVM)
+    } else {
+        emptyList()
+    }
+    val userMangaList = if(isUserLoggedIn) {
+        getUserMangaList(profileScreenVM)
+    } else {
+        emptyList()
+    }
 
     NavHost(
         navController = navController,
@@ -75,23 +73,23 @@ fun NavGraph(
             animeScreen(
                 navController = navController,
                 animeScreenVM = animeScreenVM,
-                animeLists = animeList
+                trendingAnime = trendingAnime
             )
 
-//            mangaScreen(
-//                navController = navController,
-//                mangaScreenVM = mangaScreenVM,
-//                mangaLists = mangaList
-//            )
-//
-//            profileScreen(
-//                navController = navController,
-//                profileScreenVM = profileScreenVM,
-//                aniListUser = aniListUser,
-//                chosenContentType = chosenContentType,
-//                userAnimeLists = userAnimeList,
-//                userMangaLists = userMangaList
-//            )
+            mangaScreen(
+                navController = navController,
+                mangaScreenVM = mangaScreenVM,
+                trendingManga = trendingManga
+            )
+
+            profileScreen(
+                navController = navController,
+                profileScreenVM = profileScreenVM,
+                aniListUser = aniListUser,
+                chosenContentType = chosenContentType,
+                userAnimeLists = userAnimeList,
+                userMangaLists = userMangaList
+            )
         }
 
         authScreen(
@@ -109,34 +107,6 @@ fun NavGraph(
             navController = navController
         )
     }
-}
-
-@Composable
-private fun getAnimeLists(animeScreenVM: AnimeScreenVM): List<LazyPagingItems<AnimeListMedia>> {
-    val trendingAnime = animeScreenVM.trendingAnime.collectAsLazyPagingItems()
-    val thisSeasonAnime = animeScreenVM.thisSeasonAnime.collectAsLazyPagingItems()
-    val nextSeasonAnime = animeScreenVM.nextSeasonAnime.collectAsLazyPagingItems()
-    val allTimePopularAnime = animeScreenVM.allTimePopularAnime.collectAsLazyPagingItems()
-
-    return listOf(
-        trendingAnime,
-        thisSeasonAnime,
-        nextSeasonAnime,
-        allTimePopularAnime
-    )
-}
-
-@Composable
-private fun getMangaLists(mangaScreenVM: MangaScreenVM): List<LazyPagingItems<MangaListMedia>> {
-    val trendingManga = mangaScreenVM.trendingManga.collectAsLazyPagingItems()
-    val allTimePopularManga = mangaScreenVM.allTimePopularManga.collectAsLazyPagingItems()
-    val popularManhwa = mangaScreenVM.popularManhwa.collectAsLazyPagingItems()
-
-    return listOf(
-        trendingManga,
-        allTimePopularManga,
-        popularManhwa
-    )
 }
 
 @Composable

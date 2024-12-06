@@ -8,7 +8,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -18,14 +17,12 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.data.remote.models.profile_models.user_by_query_response.UserByQueryResponse
 import com.example.data.remote.models.profile_models.user_anime_list_response.Media as UserAnimeListMedia
 import com.example.data.remote.models.profile_models.user_data_response.AniListUser
 import com.example.data.remote.models.profile_models.user_manga_list_response.Media as UserMangaListMedia
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.common.navbar.NavBar
-import com.example.navbarscreens.common.pager.CommonPager
+import com.example.navbarscreens.profile_screen.sections.UserMediaPager
 import com.example.navbarscreens.common.search_bar.NavbarScreensSearchBar
 import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
 import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute
@@ -78,12 +75,12 @@ fun ProfileScreen(
                 .padding(innerPadding)
         ) {
             if(!chosenContentType) {
-                CommonPager(
+                UserMediaPager(
                     userAnime = userAnimeLists,
                     navController = navController
                 )
             } else {
-                CommonPager(
+                UserMediaPager(
                     userManga = userMangaLists,
                     navController = navController
                 )

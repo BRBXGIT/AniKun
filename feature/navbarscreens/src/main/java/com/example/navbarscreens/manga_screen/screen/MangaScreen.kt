@@ -20,9 +20,9 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.common.navbar.NavBar
-import com.example.navbarscreens.common.pager.CommonPager
 import com.example.navbarscreens.common.search_bar.NavbarScreensSearchBar
 import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
+import com.example.navbarscreens.manga_screen.sections.MangaLVGSection
 import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,15 +30,15 @@ import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute
 fun MangaScreen(
     navController: NavController,
     viewModel: MangaScreenVM,
-    mangaLists: List<LazyPagingItems<MangaListMedia>>
+    trendingManga: LazyPagingItems<MangaListMedia>
 ) {
-    val topBarScrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val topBarScrollBehaviour = TopAppBarDefaults.pinnedScrollBehavior()
 
     var isSearching by rememberSaveable { mutableStateOf(false) }
     Scaffold(
         topBar = {
             NavBarScreensTopBar(
-                text = "Manga",
+                text = "Trending manga",
                 scrollBehavior = topBarScrollBehaviour,
                 onSearchClick = { isSearching = true },
                 onSettingsClick = { navController.navigate(SettingsScreenRoute) }
@@ -66,8 +66,8 @@ fun MangaScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            CommonPager(
-                manga = mangaLists,
+            MangaLVGSection(
+                manga = trendingManga,
                 navController = navController
             )
         }
