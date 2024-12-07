@@ -50,33 +50,4 @@ class MediaScreenVM @Inject constructor(
             }
         }
     }
-
-    private val _userMediaLists = MutableStateFlow(
-        UserMediaListsResponse(
-            data = null,
-            exception = null
-        )
-    )
-
-    val userMediaLists = _userMediaLists.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(5_000),
-        UserMediaListsResponse(
-            data = null,
-            exception = null
-        )
-    )
-
-    fun fetchUserMediaLists(userName: String, type: String) {
-        viewModelScope.launch(dispatcherIo) {
-            try {
-                _userMediaLists.value = repository.getUserMediaLists(userName, type)
-            } catch(e: Exception) {
-                _userMediaLists.value = UserMediaListsResponse(
-                    data = null,
-                    exception = e.message.toString()
-                )
-            }
-        }
-    }
 }

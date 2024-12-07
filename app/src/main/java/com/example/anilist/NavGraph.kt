@@ -95,7 +95,8 @@ fun NavGraph(
 
         mediaDetailsScreen(
             navController = navController,
-            aniListUser = aniListUser
+            userMangaLists = if(userMangaLists.data != null) userMangaLists.data!!.mediaListCollection.lists else null,
+            userAnimeLists = if(userAnimeLists.data != null) userAnimeLists.data!!.mediaListCollection.lists else null
         )
 
         settingsScreen(

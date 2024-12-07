@@ -56,9 +56,4 @@ interface AniListApiInstance {
     suspend fun getMediaDetailsById(
         @Body body: CommonRequest
     ): MediaDetailsResponse
-
-    @POST(".")
-    suspend fun getUserMediaLists(
-        @Body body: CommonRequest
-    ): UserMediaListsResponse
 }

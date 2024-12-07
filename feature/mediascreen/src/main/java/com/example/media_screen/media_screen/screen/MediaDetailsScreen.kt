@@ -13,7 +13,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -24,8 +23,8 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.example.data.remote.models.media_details_models.user_media_lists_response.UserMediaListsResponse
-import com.example.data.remote.models.profile_models.user_data_response.AniListUser
+import com.example.data.remote.models.profile_models.user_anime_list_response.Lists as UserAnimeLists
+import com.example.data.remote.models.profile_models.user_manga_list_response.Lists as UserMangaLists
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.theme.mColors
 import com.example.media_screen.media_screen.sections.CharactersLRSection
@@ -44,22 +43,17 @@ fun MediaDetailsScreen(
     mediaId: Int,
     viewModel: MediaScreenVM,
     navController: NavController,
-    aniListUser: AniListUser
+    userMangaLists: List<UserMangaLists>?,
+    userAnimeLists: List<UserAnimeLists>?
 ) {
     //Get and collect media details
     viewModel.fetchMediaDetailsById(mediaId)
     val mediaDetails = viewModel.mediaDetails.collectAsStateWithLifecycle().value
-    //Get and collect user media lists
-    val userLists = viewModel.userMediaLists.collectAsStateWithLifecycle().value
-    if(mediaDetails.data != null) {
-        viewModel.fetchUserMediaLists(
-            userName = aniListUser.data.viewer.name,
-            type = mediaDetails.data!!.media.type
-        )
-    }
     var userListType by rememberSaveable { mutableStateOf("") }
-    if(userLists.data != null) {
-        userListType = checkIsMediaInUserList(userLists, mediaId)
+    userListType = if((userAnimeLists != null) and (userMangaLists != null)) {
+        checkIsMediaInUserList(userMangaLists!!, userAnimeLists!!, mediaId)
+    } else {
+        "Error :)"
     }
 
     val topBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -181,15 +175,25 @@ fun MediaDetailsScreen(
 }
 
 private fun checkIsMediaInUserList(
-    userList: UserMediaListsResponse,
+    userMangaLists: List<UserMangaLists>,
+    userAnimeLists: List<UserAnimeLists>,
     mediaId: Int
 ): String {
-    userList.data!!.mediaListCollection.lists.forEach { list ->
+    userAnimeLists.forEach { list ->
         list.entries.forEach { entry ->
-            if(mediaId == entry.media.id) {
+            if(entry.media.id == mediaId) {
                 return list.name
             }
         }
     }
+
+    userMangaLists.forEach { list ->
+        list.entries.forEach { entry ->
+            if(entry.media.id == mediaId) {
+                return list.name
+            }
+        }
+    }
+
     return "Not in list"
 }

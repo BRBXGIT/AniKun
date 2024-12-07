@@ -128,37 +128,4 @@ class MediaDetailsScreenRepoImpl @Inject constructor(
             )
         )
     }
-
-    override suspend fun getUserMediaLists(
-        userName: String,
-        type: String
-    ): UserMediaListsResponse {
-
-        val query = """
-            query (${"$"}userName: String) {
-              MediaListCollection(userName: ${"$"}userName, type: $type) {
-                lists {
-                  name
-                  entries {
-                    media {
-                      id
-                    }
-                  }
-                }
-              }
-            }
-        """.trimIndent()
-
-        val variables = mapOf(
-            "userName" to userName
-        )
-        val jsonVariables = Gson().toJson(variables)
-
-        return apiInstance.getUserMediaLists(
-            body = CommonRequest(
-                query = query,
-                variables = jsonVariables
-            )
-        )
-    }
 }
