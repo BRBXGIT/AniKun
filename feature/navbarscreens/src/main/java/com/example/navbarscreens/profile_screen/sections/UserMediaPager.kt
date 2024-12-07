@@ -1,6 +1,7 @@
 package com.example.navbarscreens.profile_screen.sections
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -53,140 +54,144 @@ fun UserMediaPager(
     var selectedType by rememberSaveable { mutableIntStateOf(0) }
     val animationScope = rememberCoroutineScope()
 
-    if((userAnime.exception == null) && (!chosenContentType)) {
-        val pagerState = rememberPagerState(
-            pageCount = { userAnime.data!!.mediaListCollection.lists.size }
-        )
+    if(!chosenContentType) {
+        if(userAnime.exception == null) {
+            val pagerState = rememberPagerState(
+                pageCount = { userAnime.data!!.mediaListCollection.lists.size }
+            )
 
-        LaunchedEffect(pagerState) {
-            snapshotFlow { pagerState.currentPage }.collect { page ->
-                selectedType = page
+            LaunchedEffect(pagerState) {
+                snapshotFlow { pagerState.currentPage }.collect { page ->
+                    selectedType = page
+                }
             }
-        }
 
-        ScrollableTabRow(
-            selectedTabIndex = selectedType,
-            edgePadding = 16.dp,
-            divider = {
-                HorizontalDivider(
-                    thickness = 1.dp,
-                )
-            },
-            indicator = { tabPositions ->
-                if(selectedType < tabPositions.size) {
-                    Box(
-                        modifier = Modifier
-                            .customTabIndicatorOffset(
-                                currentTabPosition = tabPositions[selectedType],
-                                width = 50.dp
+            ScrollableTabRow(
+                selectedTabIndex = selectedType,
+                edgePadding = 16.dp,
+                divider = {
+                    HorizontalDivider(
+                        thickness = 1.dp,
+                    )
+                },
+                indicator = { tabPositions ->
+                    if(selectedType < tabPositions.size) {
+                        Box(
+                            modifier = Modifier
+                                .customTabIndicatorOffset(
+                                    currentTabPosition = tabPositions[selectedType],
+                                    width = 50.dp
+                                )
+                                .height(3.dp)
+                                .background(
+                                    color = mColors.primary,
+                                    shape = RoundedCornerShape(3.dp)
+                                )
+                        )
+                    }
+                }
+            ) {
+                userAnime.data!!.mediaListCollection.lists.forEachIndexed { index, list ->
+                    Tab(
+                        selected = index == selectedType,
+                        onClick = {
+                            selectedType = index
+                            animationScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        },
+                        modifier = Modifier.clip(RoundedCornerShape(10.dp)),
+                        text = {
+                            Text(
+                                text = list.name
                             )
-                            .height(3.dp)
-                            .background(
-                                color = mColors.primary,
-                                shape = RoundedCornerShape(3.dp)
-                            )
+                        }
                     )
                 }
             }
-        ) {
-            userAnime.data!!.mediaListCollection.lists.forEachIndexed { index, list ->
-                Tab(
-                    selected = index == selectedType,
-                    onClick = {
-                        selectedType = index
-                        animationScope.launch {
-                            pagerState.animateScrollToPage(index)
-                        }
-                    },
-                    modifier = Modifier.clip(RoundedCornerShape(10.dp)),
-                    text = {
-                        Text(
-                            text = list.name
-                        )
-                    }
+
+            HorizontalPager(state = pagerState) { page ->
+                UserAnimeLCSection(
+                    animeList = userAnime.data!!.mediaListCollection.lists[page].entries,
+                    navController = navController
                 )
             }
-        }
-
-        HorizontalPager(state = pagerState) { page ->
-            UserAnimeLCSection(
-                animeList = userAnime.data!!.mediaListCollection.lists[page].entries,
-                navController = navController
+        } else {
+            ErrorSection(
+                errorText = userAnime.exception.toString(),
+                modifier = Modifier.fillMaxSize()
             )
         }
-    } else {
-        ErrorSection(
-            errorText = userAnime.exception.toString(),
-            modifier = Modifier.fillMaxSize()
-        )
     }
 
-    if((userManga.exception == null) && (chosenContentType)) {
-        val pagerState = rememberPagerState(
-            pageCount = { userManga.data!!.mediaListCollection.lists.size }
-        )
+    if(chosenContentType) {
+        if(userManga.exception == null) {
+            val pagerState = rememberPagerState(
+                pageCount = { userManga.data!!.mediaListCollection.lists.size }
+            )
 
-        LaunchedEffect(pagerState) {
-            snapshotFlow { pagerState.currentPage }.collect { page ->
-                selectedType = page
+            LaunchedEffect(pagerState) {
+                snapshotFlow { pagerState.currentPage }.collect { page ->
+                    selectedType = page
+                }
             }
-        }
 
-        ScrollableTabRow(
-            selectedTabIndex = selectedType,
-            edgePadding = 16.dp,
-            divider = {
-                HorizontalDivider(
-                    thickness = 1.dp,
-                )
-            },
-            indicator = { tabPositions ->
-                if(selectedType < tabPositions.size) {
-                    Box(
-                        modifier = Modifier
-                            .customTabIndicatorOffset(
-                                currentTabPosition = tabPositions[selectedType],
-                                width = 50.dp
+            ScrollableTabRow(
+                selectedTabIndex = selectedType,
+                edgePadding = 16.dp,
+                divider = {
+                    HorizontalDivider(
+                        thickness = 1.dp,
+                    )
+                },
+                indicator = { tabPositions ->
+                    if(selectedType < tabPositions.size) {
+                        Box(
+                            modifier = Modifier
+                                .customTabIndicatorOffset(
+                                    currentTabPosition = tabPositions[selectedType],
+                                    width = 50.dp
+                                )
+                                .height(3.dp)
+                                .background(
+                                    color = mColors.primary,
+                                    shape = RoundedCornerShape(3.dp)
+                                )
+                        )
+                    }
+                }
+            ) {
+                userManga.data!!.mediaListCollection.lists.forEachIndexed { index, list ->
+                    Tab(
+                        selected = index == selectedType,
+                        onClick = {
+                            selectedType = index
+                            animationScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        },
+                        modifier = Modifier.clip(RoundedCornerShape(10.dp)),
+                        text = {
+                            Text(
+                                text = list.name
                             )
-                            .height(3.dp)
-                            .background(
-                                color = mColors.primary,
-                                shape = RoundedCornerShape(3.dp)
-                            )
+                        }
                     )
                 }
             }
-        ) {
-            userManga.data!!.mediaListCollection.lists.forEachIndexed { index, list ->
-                Tab(
-                    selected = index == selectedType,
-                    onClick = {
-                        selectedType = index
-                        animationScope.launch {
-                            pagerState.animateScrollToPage(index)
-                        }
-                    },
-                    modifier = Modifier.clip(RoundedCornerShape(10.dp)),
-                    text = {
-                        Text(
-                            text = list.name
-                        )
-                    }
+
+            HorizontalPager(state = pagerState) { page ->
+                UserMangaLVGSection(
+                    mangaList = userManga.data!!.mediaListCollection.lists[page].entries,
+                    navController = navController
                 )
             }
-        }
-
-        HorizontalPager(state = pagerState) { page ->
-            UserMangaLVGSection(
-                mangaList = userManga.data!!.mediaListCollection.lists[page].entries,
-                navController = navController
+        } else {
+            ErrorSection(
+                errorText = userManga.exception.toString(),
+                modifier = Modifier.fillMaxSize()
             )
         }
-    } else {
-        ErrorSection(
-            errorText = userManga.exception.toString(),
-            modifier = Modifier.fillMaxSize()
-        )
     }
 }
 
