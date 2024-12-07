@@ -54,6 +54,7 @@ fun AnimeScreen(
             val animeByQuery = viewModel.animeByQuery.collectAsLazyPagingItems()
 
             NavbarScreensSearchBar(
+                navController = navController,
                 placeHolderText = "Find anime",
                 onExpandChange = { isSearching = false },
                 onSearchClick = { viewModel.setQuery(it) },

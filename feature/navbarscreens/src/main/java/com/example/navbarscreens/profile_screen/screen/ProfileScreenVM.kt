@@ -1,10 +1,13 @@
 package com.example.navbarscreens.profile_screen.screen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.example.data.remote.models.profile_models.user_anime_list_response.UserAnimeListsResponse
 import com.example.data.remote.models.profile_models.user_by_query_response.UserByQueryResponse
 import com.example.data.remote.models.profile_models.user_data_response.AniListUser
+import com.example.data.remote.models.profile_models.user_manga_list_response.UserMangaListsResponse
 import com.example.data.remote.repos.CommonRepoImpl
 import com.example.data.remote.repos.ProfileScreenRepoImpl
 import com.example.navbarscreens.utils.Utils
@@ -16,7 +19,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -89,112 +91,37 @@ class ProfileScreenVM @Inject constructor(
 
     //User anime lists
     @OptIn(ExperimentalCoroutinesApi::class)
-    val userWatchingAnime = combine(aniKunUser, aniListUser) { aniKunUser, aniListUser ->
-        repository.getUserAnimeList(
-            accessToken = "Bearer ${aniKunUser[0].accessToken}",
-            userName = aniListUser.data.viewer.name,
-            status = Utils.USER_WATCHING_MEDIA_TYPE
-        ).cachedIn(viewModelScope)
-    }.flatMapLatest { it.cachedIn(viewModelScope) }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val userReWatchingAnime = combine(aniKunUser, aniListUser) { aniKunUser, aniListUser ->
-        repository.getUserAnimeList(
-            accessToken = "Bearer ${aniKunUser[0].accessToken}",
-            userName = aniListUser.data.viewer.name,
-            status = Utils.USER_RE_WATCHING_MEDIA_TYPE
-        ).cachedIn(viewModelScope)
-    }.flatMapLatest { it.cachedIn(viewModelScope) }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val userCompletedAnime = combine(aniKunUser, aniListUser) { aniKunUser, aniListUser ->
-        repository.getUserAnimeList(
-            accessToken = "Bearer ${aniKunUser[0].accessToken}",
-            userName = aniListUser.data.viewer.name,
-            status = Utils.USER_COMPLETED_MEDIA_TYPE
-        ).cachedIn(viewModelScope)
-    }.flatMapLatest { it.cachedIn(viewModelScope) }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val userPausedAnime = combine(aniKunUser, aniListUser) { aniKunUser, aniListUser ->
-        repository.getUserAnimeList(
-            accessToken = "Bearer ${aniKunUser[0].accessToken}",
-            userName = aniListUser.data.viewer.name,
-            status = Utils.USER_PAUSED_MEDIA_TYPE
-        ).cachedIn(viewModelScope)
-    }.flatMapLatest { it.cachedIn(viewModelScope) }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val userDroppedAnime = combine(aniKunUser, aniListUser) { aniKunUser, aniListUser ->
-        repository.getUserAnimeList(
-            accessToken = "Bearer ${aniKunUser[0].accessToken}",
-            userName = aniListUser.data.viewer.name,
-            status = Utils.USER_DROPPED_MEDIA_TYPE
-        ).cachedIn(viewModelScope)
-    }.flatMapLatest { it.cachedIn(viewModelScope) }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val userPlanningAnime = combine(aniKunUser, aniListUser) { aniKunUser, aniListUser ->
-        repository.getUserAnimeList(
-            accessToken = "Bearer ${aniKunUser[0].accessToken}",
-            userName = aniListUser.data.viewer.name,
-            status = Utils.USER_PLANNING_MEDIA_TYPE
-        ).cachedIn(viewModelScope)
-    }.flatMapLatest { it.cachedIn(viewModelScope) }
-
+    val userAnimeLists = aniListUser.flatMapLatest { aniListUser ->
+        flow {
+            try {
+                emit(
+                    repository.getUserAnimeLists(userName = aniListUser.data.viewer.name)
+                )
+            } catch(e: Exception) {
+                emit(
+                    UserAnimeListsResponse(
+                        exception = e.message.toString()
+                    )
+                )
+            }
+        }
+    }
 
     //User manga lists
     @OptIn(ExperimentalCoroutinesApi::class)
-    val userReadingManga = combine(aniKunUser, aniListUser) { aniKunUser, aniListUser ->
-        repository.getUserMangaList(
-            accessToken = "Bearer ${aniKunUser[0].accessToken}",
-            userName = aniListUser.data.viewer.name,
-            status = Utils.USER_WATCHING_MEDIA_TYPE
-        ).cachedIn(viewModelScope)
-    }.flatMapLatest { it.cachedIn(viewModelScope) }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val userReReadingManga = combine(aniKunUser, aniListUser) { aniKunUser, aniListUser ->
-        repository.getUserMangaList(
-            accessToken = "Bearer ${aniKunUser[0].accessToken}",
-            userName = aniListUser.data.viewer.name,
-            status = Utils.USER_RE_WATCHING_MEDIA_TYPE
-        ).cachedIn(viewModelScope)
-    }.flatMapLatest { it.cachedIn(viewModelScope) }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val userCompletedManga = combine(aniKunUser, aniListUser) { aniKunUser, aniListUser ->
-        repository.getUserMangaList(
-            accessToken = "Bearer ${aniKunUser[0].accessToken}",
-            userName = aniListUser.data.viewer.name,
-            status = Utils.USER_COMPLETED_MEDIA_TYPE
-        ).cachedIn(viewModelScope)
-    }.flatMapLatest { it.cachedIn(viewModelScope) }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val userPausedManga = combine(aniKunUser, aniListUser) { aniKunUser, aniListUser ->
-        repository.getUserMangaList(
-            accessToken = "Bearer ${aniKunUser[0].accessToken}",
-            userName = aniListUser.data.viewer.name,
-            status = Utils.USER_PAUSED_MEDIA_TYPE
-        ).cachedIn(viewModelScope)
-    }.flatMapLatest { it.cachedIn(viewModelScope) }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val userDroppedManga = combine(aniKunUser, aniListUser) { aniKunUser, aniListUser ->
-        repository.getUserMangaList(
-            accessToken = "Bearer ${aniKunUser[0].accessToken}",
-            userName = aniListUser.data.viewer.name,
-            status = Utils.USER_DROPPED_MEDIA_TYPE
-        ).cachedIn(viewModelScope)
-    }.flatMapLatest { it.cachedIn(viewModelScope) }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val userPlanningManga = combine(aniKunUser, aniListUser) { aniKunUser, aniListUser ->
-        repository.getUserMangaList(
-            accessToken = "Bearer ${aniKunUser[0].accessToken}",
-            userName = aniListUser.data.viewer.name,
-            status = Utils.USER_PLANNING_MEDIA_TYPE
-        ).cachedIn(viewModelScope)
-    }.flatMapLatest { it.cachedIn(viewModelScope) }
+    val userMangaLists = aniListUser.flatMapLatest { aniListUser ->
+        flow {
+            try {
+                emit(
+                    repository.getUserMangaLists(userName = aniListUser.data.viewer.name)
+                )
+            } catch(e: Exception) {
+                emit(
+                    UserMangaListsResponse(
+                        exception = e.message.toString()
+                    )
+                )
+            }
+        }
+    }
 }

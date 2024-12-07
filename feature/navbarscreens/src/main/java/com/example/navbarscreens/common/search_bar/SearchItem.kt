@@ -21,7 +21,7 @@ import com.example.designsystem.theme.mTypography
 
 @Composable
 fun SearchItem(
-    onExpandChange: () -> Unit,
+    onItemClick: () -> Unit,
     media: MediaByQueryMedia,
     modifier: Modifier
 ) {
@@ -30,7 +30,7 @@ fun SearchItem(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         modifier = modifier
             .fillMaxWidth()
-            .clickable { onExpandChange() }
+            .clickable { onItemClick() }
             .padding(16.dp)
     ) {
         Icon(

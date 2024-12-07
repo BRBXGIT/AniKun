@@ -6,6 +6,7 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -36,132 +37,156 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.navigation.NavController
-import androidx.paging.compose.LazyPagingItems
+import com.example.data.remote.models.profile_models.user_anime_list_response.UserAnimeListsResponse
+import com.example.data.remote.models.profile_models.user_manga_list_response.UserMangaListsResponse
+import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.theme.mColors
 import kotlinx.coroutines.launch
-import com.example.data.remote.models.profile_models.user_anime_list_response.Media as UserAnimeListMedia
-import com.example.data.remote.models.profile_models.user_manga_list_response.Media as UserMangaListMedia
 
 @Composable
 fun UserMediaPager(
-    userAnime: List<LazyPagingItems<UserAnimeListMedia>>? = null,
-    userManga: List<LazyPagingItems<UserMangaListMedia>>? = null,
+    userAnime: UserAnimeListsResponse,
+    userManga: UserMangaListsResponse,
+    chosenContentType: Boolean,
     navController: NavController
 ) {
-    val userAnimeListsType = listOf(
-        "Watching",
-        "ReWatching",
-        "Completed",
-        "Paused",
-        "Dropped",
-        "Planning"
-    )
-    val userMangaListsType = listOf(
-        "Reading",
-        "ReReading",
-        "Completed",
-        "Paused",
-        "Dropped",
-        "Planning"
-    )
     var selectedType by rememberSaveable { mutableIntStateOf(0) }
     val animationScope = rememberCoroutineScope()
-    val pagerState = rememberPagerState(
-        pageCount = { userAnimeListsType.size }
-    )
 
-    LaunchedEffect(pagerState) {
-        snapshotFlow { pagerState.currentPage }.collect { page ->
-            selectedType = page
+    if((userAnime.exception == null) && (!chosenContentType)) {
+        val pagerState = rememberPagerState(
+            pageCount = { userAnime.data!!.mediaListCollection.lists.size }
+        )
+
+        LaunchedEffect(pagerState) {
+            snapshotFlow { pagerState.currentPage }.collect { page ->
+                selectedType = page
+            }
         }
-    }
 
-    ScrollableTabRow(
-        selectedTabIndex = selectedType,
-        edgePadding = 16.dp,
-        divider = {
-            HorizontalDivider(
-                thickness = 1.dp,
+        ScrollableTabRow(
+            selectedTabIndex = selectedType,
+            edgePadding = 16.dp,
+            divider = {
+                HorizontalDivider(
+                    thickness = 1.dp,
+                )
+            },
+            indicator = { tabPositions ->
+                if(selectedType < tabPositions.size) {
+                    Box(
+                        modifier = Modifier
+                            .customTabIndicatorOffset(
+                                currentTabPosition = tabPositions[selectedType],
+                                width = 50.dp
+                            )
+                            .height(3.dp)
+                            .background(
+                                color = mColors.primary,
+                                shape = RoundedCornerShape(3.dp)
+                            )
+                    )
+                }
+            }
+        ) {
+            userAnime.data!!.mediaListCollection.lists.forEachIndexed { index, list ->
+                Tab(
+                    selected = index == selectedType,
+                    onClick = {
+                        selectedType = index
+                        animationScope.launch {
+                            pagerState.animateScrollToPage(index)
+                        }
+                    },
+                    modifier = Modifier.clip(RoundedCornerShape(10.dp)),
+                    text = {
+                        Text(
+                            text = list.name
+                        )
+                    }
+                )
+            }
+        }
+
+        HorizontalPager(state = pagerState) { page ->
+            UserAnimeLCSection(
+                animeList = userAnime.data!!.mediaListCollection.lists[page].entries,
+                navController = navController
             )
-        },
-        indicator = { tabPositions ->
-            if(selectedType < tabPositions.size) {
-                Box(
-                    modifier = Modifier
-                        .customTabIndicatorOffset(
-                            currentTabPosition = tabPositions[selectedType],
-                            width = 50.dp
-                        )
-                        .height(3.dp)
-                        .background(
-                            color = mColors.primary,
-                            shape = RoundedCornerShape(3.dp)
-                        )
-                )
-            }
         }
-    ) {
-        if(userAnime != null) {
-            userAnimeListsType.forEachIndexed { index, type ->
-                Tab(
-                    selected = index == selectedType,
-                    onClick = {
-                        selectedType = index
-                        animationScope.launch {
-                            pagerState.animateScrollToPage(index)
-                        }
-                    },
-                    modifier = Modifier.clip(RoundedCornerShape(10.dp)),
-                    text = {
-                        Text(
-                            text = type
-                        )
-                    }
-                )
-            }
-        }
-        if(userManga != null) {
-            userMangaListsType.forEachIndexed { index, type ->
-                Tab(
-                    selected = index == selectedType,
-                    onClick = {
-                        selectedType = index
-                        animationScope.launch {
-                            pagerState.animateScrollToPage(index)
-                        }
-                    },
-                    modifier = Modifier.clip(RoundedCornerShape(10.dp)),
-                    text = {
-                        Text(
-                            text = type
-                        )
-                    }
-                )
-            }
-        }
+    } else {
+        ErrorSection(
+            errorText = userAnime.exception.toString(),
+            modifier = Modifier.fillMaxSize()
+        )
     }
 
-    HorizontalPager(state = pagerState) { page ->
-        if(userAnime != null) {
-            when(page) {
-                0 -> UserAnimeLCSection(userAnime[0], navController)
-                1 -> UserAnimeLCSection(userAnime[1], navController)
-                2 -> UserAnimeLCSection(userAnime[2], navController)
-                3 -> UserAnimeLCSection(userAnime[3], navController)
-                4 -> UserAnimeLCSection(userAnime[4], navController)
-                5 -> UserAnimeLCSection(userAnime[5], navController)
+    if((userManga.exception == null) && (chosenContentType)) {
+        val pagerState = rememberPagerState(
+            pageCount = { userManga.data!!.mediaListCollection.lists.size }
+        )
+
+        LaunchedEffect(pagerState) {
+            snapshotFlow { pagerState.currentPage }.collect { page ->
+                selectedType = page
             }
         }
-        if(userManga != null) {
-            when(page) {
-                0 -> UserMangaLVGSection(userManga[0], navController)
-                1 -> UserMangaLVGSection(userManga[1], navController)
-                2 -> UserMangaLVGSection(userManga[2], navController)
-                3 -> UserMangaLVGSection(userManga[3], navController)
-                4 -> UserMangaLVGSection(userManga[4], navController)
-                5 -> UserMangaLVGSection(userManga[5], navController)
+
+        ScrollableTabRow(
+            selectedTabIndex = selectedType,
+            edgePadding = 16.dp,
+            divider = {
+                HorizontalDivider(
+                    thickness = 1.dp,
+                )
+            },
+            indicator = { tabPositions ->
+                if(selectedType < tabPositions.size) {
+                    Box(
+                        modifier = Modifier
+                            .customTabIndicatorOffset(
+                                currentTabPosition = tabPositions[selectedType],
+                                width = 50.dp
+                            )
+                            .height(3.dp)
+                            .background(
+                                color = mColors.primary,
+                                shape = RoundedCornerShape(3.dp)
+                            )
+                    )
+                }
+            }
+        ) {
+            userManga.data!!.mediaListCollection.lists.forEachIndexed { index, list ->
+                Tab(
+                    selected = index == selectedType,
+                    onClick = {
+                        selectedType = index
+                        animationScope.launch {
+                            pagerState.animateScrollToPage(index)
+                        }
+                    },
+                    modifier = Modifier.clip(RoundedCornerShape(10.dp)),
+                    text = {
+                        Text(
+                            text = list.name
+                        )
+                    }
+                )
             }
         }
+
+        HorizontalPager(state = pagerState) { page ->
+            UserMangaLVGSection(
+                mangaList = userManga.data!!.mediaListCollection.lists[page].entries,
+                navController = navController
+            )
+        }
+    } else {
+        ErrorSection(
+            errorText = userManga.exception.toString(),
+            modifier = Modifier.fillMaxSize()
+        )
     }
 }
 

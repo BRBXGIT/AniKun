@@ -17,9 +17,9 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
-import com.example.data.remote.models.profile_models.user_anime_list_response.Media as UserAnimeListMedia
+import com.example.data.remote.models.profile_models.user_anime_list_response.UserAnimeListsResponse
 import com.example.data.remote.models.profile_models.user_data_response.AniListUser
-import com.example.data.remote.models.profile_models.user_manga_list_response.Media as UserMangaListMedia
+import com.example.data.remote.models.profile_models.user_manga_list_response.UserMangaListsResponse
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.common.navbar.NavBar
 import com.example.navbarscreens.profile_screen.sections.UserMediaPager
@@ -34,8 +34,8 @@ fun ProfileScreen(
     viewModel: ProfileScreenVM,
     aniListUser: AniListUser,
     chosenContentType: Boolean,
-    userAnimeLists: List<LazyPagingItems<UserAnimeListMedia>>,
-    userMangaLists: List<LazyPagingItems<UserMangaListMedia>>
+    userAnimeLists: UserAnimeListsResponse,
+    userMangaLists: UserMangaListsResponse
 ) {
     val topBarScrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -65,7 +65,8 @@ fun ProfileScreen(
                 placeHolderText = "Find user",
                 onExpandChange = { isSearching = false },
                 onSearchClick = { viewModel.setQuery(it) },
-                userByQuery = userByQuery
+                userByQuery = userByQuery,
+                navController = navController
             )
         }
 
@@ -74,17 +75,12 @@ fun ProfileScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            if(!chosenContentType) {
-                UserMediaPager(
-                    userAnime = userAnimeLists,
-                    navController = navController
-                )
-            } else {
-                UserMediaPager(
-                    userManga = userMangaLists,
-                    navController = navController
-                )
-            }
+            UserMediaPager(
+                chosenContentType = chosenContentType,
+                userAnime = userAnimeLists,
+                userManga = userMangaLists,
+                navController = navController
+            )
         }
     }
 }

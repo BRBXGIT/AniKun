@@ -51,7 +51,7 @@ class MangaListsPS(
         val jsonVariables = Gson().toJson(variables)
 
         return try {
-            val manga = apiInstance.getMangaList(
+            val manga = apiInstance.getTrendingMangaList(
                 CommonRequest(
                     query = query,
                     variables = jsonVariables

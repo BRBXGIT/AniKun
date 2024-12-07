@@ -57,7 +57,8 @@ fun MangaScreen(
                 placeHolderText = "Find manga",
                 onExpandChange = { isSearching = false },
                 onSearchClick = { viewModel.setQuery(it) },
-                mediaByQuery = mangaByQuery
+                mediaByQuery = mangaByQuery,
+                navController = navController
             )
         }
 

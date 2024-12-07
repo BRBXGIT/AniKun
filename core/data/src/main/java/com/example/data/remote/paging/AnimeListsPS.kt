@@ -53,7 +53,7 @@ class AnimeListsPS(
         val jsonVariables = Gson().toJson(variables)
 
         return try {
-            val anime = apiInstance.getAnimeList(
+            val anime = apiInstance.getTrendingAnimeList(
                 CommonRequest(
                     query = query,
                     variables = jsonVariables

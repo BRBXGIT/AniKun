@@ -35,6 +35,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import coil.compose.SubcomposeAsyncImage
@@ -47,10 +48,12 @@ import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.icons.AniKunIcons
 import com.example.designsystem.theme.mShapes
 import com.example.designsystem.theme.mTypography
+import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavbarScreensSearchBar(
+    navController: NavController,
     onSearchClick: (String) -> Unit,
     mediaByQuery: LazyPagingItems<MediaByQueryMedia>? = null,
     onExpandChange: () -> Unit,
@@ -121,7 +124,10 @@ fun NavbarScreensSearchBar(
                         val currentMedia = mediaByQuery[index]
 
                         SearchItem(
-                            onExpandChange = { onExpandChange() },
+                            onItemClick = {
+                                navController.navigate(MediaDetailsScreenRoute(currentMedia!!.id))
+                                onExpandChange()
+                            },
                             media = currentMedia!!,
                             modifier = Modifier.animateItem()
                         )

@@ -11,7 +11,9 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.auth.navigation.AuthScreenRoute
 import com.example.auth.navigation.authScreen
+import com.example.data.remote.models.profile_models.user_anime_list_response.UserAnimeListsResponse
 import com.example.data.remote.models.profile_models.user_data_response.AniListUser
+import com.example.data.remote.models.profile_models.user_manga_list_response.UserMangaListsResponse
 import com.example.designsystem.theme.AppSettingsVM
 import com.example.media_screen.media_screen.navigation.mediaDetailsScreen
 import com.example.navbarscreens.anime_screen.navigation.AnimeScreenRoute
@@ -23,8 +25,6 @@ import com.example.navbarscreens.manga_screen.screen.MangaScreenVM
 import com.example.navbarscreens.profile_screen.navigation.profileScreen
 import com.example.navbarscreens.profile_screen.screen.ProfileScreenVM
 import com.example.settingsscreen.settings_screen.navigation.settingsScreen
-import com.example.data.remote.models.profile_models.user_anime_list_response.Media as UserAnimeListMedia
-import com.example.data.remote.models.profile_models.user_manga_list_response.Media as UserMangaListMedia
 
 @Composable
 fun NavGraph(
@@ -48,16 +48,12 @@ fun NavGraph(
     val chosenContentType = profileScreenVM.chosenContentType.collectAsStateWithLifecycle().value
     val isUserLoggedIn = prefs.getBoolean("loggedIn", false)
 
-    val userAnimeList = if(isUserLoggedIn) {
-        getUserAnimeList(profileScreenVM)
-    } else {
-        emptyList()
-    }
-    val userMangaList = if(isUserLoggedIn) {
-        getUserMangaList(profileScreenVM)
-    } else {
-        emptyList()
-    }
+    val userAnimeLists = profileScreenVM.userAnimeLists.collectAsStateWithLifecycle(
+        initialValue = UserAnimeListsResponse()
+    ).value
+    val userMangaLists = profileScreenVM.userMangaLists.collectAsStateWithLifecycle(
+        initialValue = UserMangaListsResponse()
+    ).value
 
     NavHost(
         navController = navController,
@@ -87,8 +83,8 @@ fun NavGraph(
                 profileScreenVM = profileScreenVM,
                 aniListUser = aniListUser,
                 chosenContentType = chosenContentType,
-                userAnimeLists = userAnimeList,
-                userMangaLists = userMangaList
+                userAnimeLists = userAnimeLists,
+                userMangaLists = userMangaLists
             )
         }
 
@@ -107,42 +103,4 @@ fun NavGraph(
             navController = navController
         )
     }
-}
-
-@Composable
-private fun getUserAnimeList(profileScreenVM: ProfileScreenVM): List<LazyPagingItems<UserAnimeListMedia>> {
-    val userWatchingAnime = profileScreenVM.userWatchingAnime.collectAsLazyPagingItems()
-    val userReWatchingAnime = profileScreenVM.userReWatchingAnime.collectAsLazyPagingItems()
-    val userCompletedAnime = profileScreenVM.userCompletedAnime.collectAsLazyPagingItems()
-    val userPausedAnime = profileScreenVM.userPausedAnime.collectAsLazyPagingItems()
-    val userDroppedAnime = profileScreenVM.userDroppedAnime.collectAsLazyPagingItems()
-    val userPlanningAnime = profileScreenVM.userPlanningAnime.collectAsLazyPagingItems()
-
-    return listOf(
-        userWatchingAnime,
-        userReWatchingAnime,
-        userCompletedAnime,
-        userPausedAnime,
-        userDroppedAnime,
-        userPlanningAnime
-    )
-}
-
-@Composable
-private fun getUserMangaList(profileScreenVM: ProfileScreenVM): List<LazyPagingItems<UserMangaListMedia>> {
-    val userReadingManga = profileScreenVM.userReadingManga.collectAsLazyPagingItems()
-    val userReReadingManga = profileScreenVM.userReReadingManga.collectAsLazyPagingItems()
-    val userCompletedManga = profileScreenVM.userCompletedManga.collectAsLazyPagingItems()
-    val userPausedManga = profileScreenVM.userPausedManga.collectAsLazyPagingItems()
-    val userDroppedManga = profileScreenVM.userDroppedManga.collectAsLazyPagingItems()
-    val userPlanningManga = profileScreenVM.userPlanningManga.collectAsLazyPagingItems()
-
-    return listOf(
-        userReadingManga,
-        userReReadingManga,
-        userCompletedManga,
-        userPausedManga,
-        userDroppedManga,
-        userPlanningManga
-    )
 }

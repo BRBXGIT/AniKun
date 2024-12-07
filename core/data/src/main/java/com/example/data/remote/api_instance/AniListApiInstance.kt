@@ -2,14 +2,14 @@ package com.example.data.remote.api_instance
 
 import com.example.data.remote.models.common_models.common_request.CommonRequest
 import com.example.data.remote.models.anime_list_response.AnimeListResponse
-import com.example.data.remote.models.profile_models.user_anime_list_response.UserAnimeListResponse
 import com.example.data.remote.models.common_models.media_by_query_response.MediaByQueryResponse
 import com.example.data.remote.models.manga_list_response.MangaListsResponse
 import com.example.data.remote.models.media_details_models.media_details_response.MediaDetailsResponse
 import com.example.data.remote.models.media_details_models.user_media_lists_response.UserMediaListsResponse
+import com.example.data.remote.models.profile_models.user_anime_list_response.UserAnimeListsResponse
 import com.example.data.remote.models.profile_models.user_by_query_response.UserByQueryResponse
 import com.example.data.remote.models.profile_models.user_data_response.AniListUser
-import com.example.data.remote.models.profile_models.user_manga_list_response.UserMangaListResponse
+import com.example.data.remote.models.profile_models.user_manga_list_response.UserMangaListsResponse
 import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -17,12 +17,12 @@ import retrofit2.http.POST
 interface AniListApiInstance {
 
     @POST(".")
-    suspend fun getAnimeList(
+    suspend fun getTrendingAnimeList(
         @Body body: CommonRequest
     ): AnimeListResponse
 
     @POST(".")
-    suspend fun getMangaList(
+    suspend fun getTrendingMangaList(
         @Body body: CommonRequest
     ): MangaListsResponse
 
@@ -38,16 +38,14 @@ interface AniListApiInstance {
     ): AniListUser
 
     @POST(".")
-    suspend fun getUserAnimeList(
-        @Body body: CommonRequest,
-        @Header("Authorization") accessToken: String
-    ): UserAnimeListResponse
+    suspend fun getUserAnimeLists(
+        @Body body: CommonRequest
+    ): UserAnimeListsResponse
 
     @POST(".")
-    suspend fun getUserMangaList(
-        @Body body: CommonRequest,
-        @Header("Authorization") accessToken: String
-    ): UserMangaListResponse
+    suspend fun getUserMangaLists(
+        @Body body: CommonRequest
+    ): UserMangaListsResponse
 
     @POST(".")
     suspend fun getUserByQuery(
