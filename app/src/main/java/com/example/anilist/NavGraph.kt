@@ -7,7 +7,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.auth.navigation.AuthScreenRoute
 import com.example.auth.navigation.authScreen
@@ -20,6 +19,8 @@ import com.example.navbarscreens.anime_screen.navigation.AnimeScreenRoute
 import com.example.navbarscreens.anime_screen.navigation.animeScreen
 import com.example.navbarscreens.anime_screen.screen.AnimeScreenVM
 import com.example.navbarscreens.common.navigation.NavBarScreensRoute
+import com.example.navbarscreens.favorites_screen.navigation.favoritesScreen
+import com.example.navbarscreens.favorites_screen.screen.FavoritesScreenVM
 import com.example.navbarscreens.manga_screen.navigation.mangaScreen
 import com.example.navbarscreens.manga_screen.screen.MangaScreenVM
 import com.example.navbarscreens.profile_screen.navigation.profileScreen
@@ -37,7 +38,9 @@ fun NavGraph(
     val animeScreenVM = hiltViewModel<AnimeScreenVM>()
     val mangaScreenVM = hiltViewModel<MangaScreenVM>()
     val profileScreenVM = hiltViewModel<ProfileScreenVM>()
+    val favoritesScreenVM = hiltViewModel<FavoritesScreenVM>()
 
+    //Anime and manga screens
     val trendingAnime = animeScreenVM.trendingAnime.collectAsLazyPagingItems()
     val trendingManga = mangaScreenVM.trendingManga.collectAsLazyPagingItems()
 
@@ -45,7 +48,7 @@ fun NavGraph(
     val aniListUser = profileScreenVM.aniListUser.collectAsStateWithLifecycle(
         initialValue = AniListUser()
     ).value
-    val chosenContentType = profileScreenVM.chosenContentType.collectAsStateWithLifecycle().value
+    val chosenProfileScreenContentType = profileScreenVM.chosenContentType.collectAsStateWithLifecycle().value
     val isUserLoggedIn = prefs.getBoolean("loggedIn", false)
 
     val userAnimeLists = profileScreenVM.userAnimeLists.collectAsStateWithLifecycle(
@@ -54,6 +57,11 @@ fun NavGraph(
     val userMangaLists = profileScreenVM.userMangaLists.collectAsStateWithLifecycle(
         initialValue = UserMangaListsResponse()
     ).value
+
+    //UserFavoritesScreen
+    favoritesScreenVM.fetchUserFavorites(aniListUser.data.viewer.name)
+    val userFavorites = favoritesScreenVM.userFavorites.collectAsStateWithLifecycle().value
+    val chosenFavoritesScreenContentType = favoritesScreenVM.chosenContentType.collectAsStateWithLifecycle().value
 
     NavHost(
         navController = navController,
@@ -78,11 +86,18 @@ fun NavGraph(
                 trendingManga = trendingManga
             )
 
+            favoritesScreen(
+                navController = navController,
+                userFavorites = userFavorites,
+                favoritesScreenVM = favoritesScreenVM,
+                chosenContentType = chosenFavoritesScreenContentType
+            )
+
             profileScreen(
                 navController = navController,
                 profileScreenVM = profileScreenVM,
                 aniListUser = aniListUser,
-                chosenContentType = chosenContentType,
+                chosenContentType = chosenProfileScreenContentType,
                 userAnimeLists = userAnimeLists,
                 userMangaLists = userMangaLists
             )

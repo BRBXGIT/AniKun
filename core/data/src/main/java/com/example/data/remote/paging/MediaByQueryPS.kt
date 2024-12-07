@@ -12,19 +12,19 @@ import java.io.IOException
 class MediaByQueryPS(
     private val apiInstance: AniListApiInstance,
     private val search: String,
-    type: String
+    private val type: String
 ): PagingSource<Int, MediaByQueryMedia>() {
     override fun getRefreshKey(state: PagingState<Int, MediaByQueryMedia>): Int? {
         return state.anchorPosition
     }
 
     private val query = """
-        query (${"$"}search: String!, ${"$"}page: Int, ${"$"}perPage: Int) {
+        query (${"$"}search: String!, ${"$"}page: Int, ${"$"}perPage: Int, ${"$"}type: MediaType) {
           Page(page: ${"$"}page, perPage: ${"$"}perPage) {
             pageInfo {
               hasNextPage
             }
-            media(search: ${"$"}search, type: $type) {
+            media(search: ${"$"}search, type: ${"$"}type) {
               id
               title {
                 romaji
@@ -44,7 +44,8 @@ class MediaByQueryPS(
         val variables = mapOf(
             "search" to search,
             "page" to startPage,
-            "perPage" to perPage
+            "perPage" to perPage,
+            "type" to type
         )
 
         val jsonVariables = Gson().toJson(variables)

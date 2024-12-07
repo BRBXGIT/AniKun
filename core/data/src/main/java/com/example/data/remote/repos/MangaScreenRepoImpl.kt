@@ -14,7 +14,7 @@ class MangaScreenRepoImpl @Inject constructor(
     private val apiInstance: AniListApiInstance
 ): MangaScreenRepo {
 
-    override fun getMangaList(): Flow<PagingData<MangaListMedia>> {
+    override fun getTrendingMangaList(): Flow<PagingData<MangaListMedia>> {
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = { MangaListsPS(apiInstance) }

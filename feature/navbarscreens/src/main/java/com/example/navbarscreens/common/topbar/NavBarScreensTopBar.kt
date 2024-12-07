@@ -9,7 +9,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,7 +28,6 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.example.designsystem.animated_shimmer.AnimatedShimmer
 import com.example.designsystem.icons.AniKunIcons
-import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.profile_screen.sections.ContentTypeDDM
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,8 +39,8 @@ fun NavBarScreensTopBar(
     onSettingsClick: () -> Unit,
     userAvatar: String? = null, //Only for profile screen
     userName: String? = null, //Only for profile screen
-    chosenContent: Boolean = false, //Only for profile screen
-    onContentClick: (contentType: Boolean) -> Unit = {} //Only for profile screen
+    chosenContent: Boolean? = null, //Only for favorites and profile screen
+    onContentClick: (contentType: Boolean) -> Unit = {} //Only for favorites and profile screen
 ) {
     TopAppBar(
         title = {
@@ -91,7 +89,7 @@ fun NavBarScreensTopBar(
                 )
             }
 
-            if(userName != null) {
+            if(chosenContent != null) {
                 //ddm is dropDownMenu
                 var ddmOpen by rememberSaveable { mutableStateOf(false) }
 

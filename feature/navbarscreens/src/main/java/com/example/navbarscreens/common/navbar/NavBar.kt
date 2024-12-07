@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.designsystem.icons.AniKunIcons
 import com.example.navbarscreens.anime_screen.navigation.AnimeScreenRoute
+import com.example.navbarscreens.favorites_screen.navigation.FavoritesScreenRoute
 import com.example.navbarscreens.manga_screen.navigation.MangaScreenRoute
 import com.example.navbarscreens.profile_screen.navigation.ProfileScreenRoute
 
@@ -39,6 +40,13 @@ fun NavBar(
             iconChosen = AniKunIcons.MangaFilled,
             route = "MangaScreenRoute",
             destination = MangaScreenRoute
+        ),
+        NavItem(
+            label = "Favorites",
+            iconDefault = AniKunIcons.Heart,
+            iconChosen = AniKunIcons.HeartFilled,
+            route = "FavoritesScreenRoute",
+            destination = FavoritesScreenRoute
         ),
         NavItem(
             label = "Profile",

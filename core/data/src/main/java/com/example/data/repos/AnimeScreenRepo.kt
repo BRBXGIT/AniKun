@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface AnimeScreenRepo {
 
-    fun getAnimeList(): Flow<PagingData<AnimeListMedia>>
+    fun getTrendingAnimeList(): Flow<PagingData<AnimeListMedia>>
 }

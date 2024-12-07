@@ -6,5 +6,5 @@ import com.example.data.remote.models.manga_list_response.Media as MangaListMedi
 
 interface MangaScreenRepo {
 
-    fun getMangaList(): Flow<PagingData<MangaListMedia>>
+    fun getTrendingMangaList(): Flow<PagingData<MangaListMedia>>
 }

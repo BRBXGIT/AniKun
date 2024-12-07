@@ -9,12 +9,14 @@ import com.example.data.remote.api_instance.AniListApiInstance
 import com.example.data.remote.repos.AnimeScreenRepoImpl
 import com.example.data.remote.repos.AuthRepoImpl
 import com.example.data.remote.repos.CommonRepoImpl
+import com.example.data.remote.repos.FavoritesScreenRepoImpl
 import com.example.data.remote.repos.MangaScreenRepoImpl
 import com.example.data.remote.repos.MediaDetailsScreenRepoImpl
 import com.example.data.remote.repos.ProfileScreenRepoImpl
 import com.example.data.repos.AnimeScreenRepo
 import com.example.data.repos.AuthRepo
 import com.example.data.repos.CommonRepo
+import com.example.data.repos.FavoritesScreenRepo
 import com.example.data.repos.MangaScreenRepo
 import com.example.data.repos.MediaDetailsScreenRepo
 import com.example.data.repos.ProfileScreenRepo
@@ -92,5 +94,11 @@ object DataModule {
     @Singleton
     fun provideMediaDetailsScreenRepo(apiInstance: AniListApiInstance): MediaDetailsScreenRepo {
         return MediaDetailsScreenRepoImpl(apiInstance)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoritesScreenRepo(apiInstance: AniListApiInstance): FavoritesScreenRepo {
+        return FavoritesScreenRepoImpl(apiInstance)
     }
 }

@@ -77,7 +77,7 @@ fun InfoSection(
             InfoRow("Source", source)
             InfoRow("Status", status)
             InfoRow("Start date", "${formatDate(startDate.day.toString())}.${formatDate(startDate.month.toString())}.${startDate.year}")
-            val formattedEndDate = "${formatDate(endDate.day.toString())}.${endDate.month}.${endDate.year}"
+            val formattedEndDate = "${formatDate(endDate.day.toString())}.${formatDate(endDate.month.toString())}.${endDate.year}"
             if(formattedEndDate == "00.0.0") {
                 InfoRow("End date", "?")
             } else {

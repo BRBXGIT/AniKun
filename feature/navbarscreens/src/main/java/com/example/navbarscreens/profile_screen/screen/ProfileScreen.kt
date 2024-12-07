@@ -16,15 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import androidx.paging.compose.LazyPagingItems
 import com.example.data.remote.models.profile_models.user_anime_list_response.UserAnimeListsResponse
 import com.example.data.remote.models.profile_models.user_data_response.AniListUser
 import com.example.data.remote.models.profile_models.user_manga_list_response.UserMangaListsResponse
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.common.navbar.NavBar
-import com.example.navbarscreens.profile_screen.sections.UserMediaPager
 import com.example.navbarscreens.common.search_bar.NavbarScreensSearchBar
 import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
+import com.example.navbarscreens.profile_screen.sections.UserMediaPager
 import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute
 
 @OptIn(ExperimentalMaterial3Api::class)

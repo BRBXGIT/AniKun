@@ -9,6 +9,7 @@ import com.example.data.remote.models.media_details_models.user_media_lists_resp
 import com.example.data.remote.models.profile_models.user_anime_list_response.UserAnimeListsResponse
 import com.example.data.remote.models.profile_models.user_by_query_response.UserByQueryResponse
 import com.example.data.remote.models.profile_models.user_data_response.AniListUser
+import com.example.data.remote.models.profile_models.user_favorites_response.UserFavoritesResponse
 import com.example.data.remote.models.profile_models.user_manga_list_response.UserMangaListsResponse
 import retrofit2.http.Body
 import retrofit2.http.Header
@@ -56,4 +57,9 @@ interface AniListApiInstance {
     suspend fun getMediaDetailsById(
         @Body body: CommonRequest
     ): MediaDetailsResponse
+
+    @POST(".")
+    suspend fun getUserFavorites(
+        @Body body: CommonRequest
+    ): UserFavoritesResponse
 }

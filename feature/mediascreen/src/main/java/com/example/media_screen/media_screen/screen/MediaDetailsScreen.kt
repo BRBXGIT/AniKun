@@ -53,7 +53,7 @@ fun MediaDetailsScreen(
     userListType = if((userAnimeLists != null) and (userMangaLists != null)) {
         checkIsMediaInUserList(userMangaLists!!, userAnimeLists!!, mediaId)
     } else {
-        "Error :)"
+        "Error :("
     }
 
     val topBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()

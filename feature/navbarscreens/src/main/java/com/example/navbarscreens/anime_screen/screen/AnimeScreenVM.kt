@@ -17,7 +17,7 @@ class AnimeScreenVM @Inject constructor(
     repository: AnimeScreenRepoImpl,
     commonRepository: CommonRepoImpl
 ): ViewModel() {
-    val trendingAnime = repository.getAnimeList().cachedIn(viewModelScope)
+    val trendingAnime = repository.getTrendingAnimeList().cachedIn(viewModelScope)
 
     private val query = MutableStateFlow("")
 
