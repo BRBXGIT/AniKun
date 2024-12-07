@@ -66,7 +66,10 @@ fun RecommendationsLRSection(
                     recommendation = recommendation,
                     onCardClick = {
                         navController.navigate(
-                            MediaDetailsScreenRoute(recommendation.mediaRecommendation.id)
+                            MediaDetailsScreenRoute(
+                                mediaId = recommendation.mediaRecommendation.id,
+                                mediaType = recommendation.mediaRecommendation.type
+                            )
                         )
                     }
                 )

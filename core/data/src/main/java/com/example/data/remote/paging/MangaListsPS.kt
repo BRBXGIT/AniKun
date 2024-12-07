@@ -20,6 +20,7 @@ class MangaListsPS(
                   hasNextPage
                 }
                 media(sort: TRENDING_DESC, type: MANGA) {
+                  type
                   id
                   title {
                     english

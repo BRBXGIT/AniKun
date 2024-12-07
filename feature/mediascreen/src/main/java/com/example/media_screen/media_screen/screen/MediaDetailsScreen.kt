@@ -14,6 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -23,9 +24,9 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.example.data.remote.models.profile_models.user_anime_list_response.Lists as UserAnimeLists
-import com.example.data.remote.models.profile_models.user_manga_list_response.Lists as UserMangaLists
+import com.example.data.remote.models.profile_models.user_favorites_response.Favourites
 import com.example.designsystem.error_section.ErrorSection
+import com.example.designsystem.icons.AniKunIcons
 import com.example.designsystem.theme.mColors
 import com.example.media_screen.media_screen.sections.CharactersLRSection
 import com.example.media_screen.media_screen.sections.DescriptionSection
@@ -36,15 +37,19 @@ import com.example.media_screen.media_screen.sections.MediaScreenTopBar
 import com.example.media_screen.media_screen.sections.RecommendationsLRSection
 import com.example.media_screen.media_screen.sections.TagsSection
 import com.example.media_screen.media_screen.sections.UserListTypeSection
+import com.example.data.remote.models.profile_models.user_anime_list_response.Lists as UserAnimeLists
+import com.example.data.remote.models.profile_models.user_manga_list_response.Lists as UserMangaLists
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MediaDetailsScreen(
+    mediaType: String,
     mediaId: Int,
     viewModel: MediaScreenVM,
     navController: NavController,
     userMangaLists: List<UserMangaLists>?,
-    userAnimeLists: List<UserAnimeLists>?
+    userAnimeLists: List<UserAnimeLists>?,
+    userFavorites: Favourites?
 ) {
     //Get and collect media details
     viewModel.fetchMediaDetailsById(mediaId)
@@ -55,6 +60,8 @@ fun MediaDetailsScreen(
     } else {
         "Error :("
     }
+    var isMediaInFavorites by rememberSaveable { mutableStateOf(false) }
+    isMediaInFavorites = checkIsMediaInFavorites(userFavorites!!, mediaId)
 
     val topBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
@@ -63,8 +70,10 @@ fun MediaDetailsScreen(
                 title = mediaDetails.data?.media?.title,
                 scrollBehavior = topBarScrollBehavior,
                 onNavIconClick = { navController.navigateUp() },
-                onFavoriteIconClick = {  },
-                onListIconClick = {  }
+                onFavoriteIconClick = { isMediaInFavorites = !isMediaInFavorites },
+                onListIconClick = {  },
+                isFavorite = isMediaInFavorites,
+                isInList = userListType != "Not in list"
             )
         },
         modifier = Modifier
@@ -181,19 +190,29 @@ private fun checkIsMediaInUserList(
 ): String {
     userAnimeLists.forEach { list ->
         list.entries.forEach { entry ->
-            if(entry.media.id == mediaId) {
-                return list.name
-            }
+            if(entry.media.id == mediaId) return list.name
         }
     }
 
     userMangaLists.forEach { list ->
         list.entries.forEach { entry ->
-            if(entry.media.id == mediaId) {
-                return list.name
-            }
+            if(entry.media.id == mediaId) return list.name
         }
     }
 
     return "Not in list"
+}
+
+private fun checkIsMediaInFavorites(
+    userFavorites: Favourites,
+    mediaId: Int
+): Boolean {
+    userFavorites.anime.nodes.forEach { anime ->
+        if(mediaId == anime.id) return true
+    }
+    userFavorites.manga.nodes.forEach { manga ->
+        if(mediaId == manga.id) return true
+    }
+
+    return false
 }

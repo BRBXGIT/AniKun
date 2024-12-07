@@ -24,7 +24,10 @@ fun FavoriteAnimeLCSection(
                 index = index,
                 onAnimeClick = {
                     navController.navigate(
-                        MediaDetailsScreenRoute(anime.id)
+                        MediaDetailsScreenRoute(
+                            mediaId = anime.id,
+                            mediaType = anime.type
+                        )
                     )
                 }
             )

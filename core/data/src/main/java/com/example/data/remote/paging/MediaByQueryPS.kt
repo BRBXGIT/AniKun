@@ -26,6 +26,7 @@ class MediaByQueryPS(
             }
             media(search: ${"$"}search, type: ${"$"}type) {
               id
+              type
               title {
                 romaji
                 english

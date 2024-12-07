@@ -50,7 +50,10 @@ fun AnimeLCSection(
                         index = index,
                         onAnimeClick = {
                             navController.navigate(
-                                MediaDetailsScreenRoute(currentAnime.id)
+                                MediaDetailsScreenRoute(
+                                    mediaId = currentAnime.id,
+                                    mediaType = currentAnime.type
+                                )
                             )
                         }
                     )

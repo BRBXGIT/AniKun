@@ -66,7 +66,10 @@ fun MangaLVGSection(
                         index = index,
                         onCardClick = {
                             navController.navigate(
-                                MediaDetailsScreenRoute(currentManga.id)
+                                MediaDetailsScreenRoute(
+                                    mediaId = currentManga.id,
+                                    mediaType = currentManga.type
+                                )
                             )
                         }
                     )

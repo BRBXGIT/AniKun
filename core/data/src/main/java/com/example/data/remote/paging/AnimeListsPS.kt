@@ -20,6 +20,7 @@ class AnimeListsPS(
                   hasNextPage
                 }
                 media(sort: TRENDING_DESC, type: ANIME) {
+                  type
                   id
                   episodes
                   title {

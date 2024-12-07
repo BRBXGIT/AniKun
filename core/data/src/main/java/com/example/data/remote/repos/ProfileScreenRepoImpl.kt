@@ -50,6 +50,7 @@ class ProfileScreenRepoImpl @Inject constructor(
                   name
                   entries {
                     media {
+                      type
                       averageScore
                       coverImage {
                         large
@@ -90,6 +91,7 @@ class ProfileScreenRepoImpl @Inject constructor(
                   name
                   entries {
                     media {
+                      type
                       averageScore
                       coverImage {
                         large

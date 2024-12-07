@@ -18,6 +18,7 @@ class FavoritesScreenRepoImpl @Inject constructor(
                 favourites {
                   anime {
                     nodes {
+                      type
                       id
                       averageScore
                       title {
@@ -34,6 +35,7 @@ class FavoritesScreenRepoImpl @Inject constructor(
                   }
                   manga {
                     nodes {
+                      type
                       id
                       averageScore
                       title {

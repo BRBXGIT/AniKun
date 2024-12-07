@@ -43,12 +43,11 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.example.data.remote.models.profile_models.user_by_query_response.UserByQueryResponse
 import com.example.designsystem.animated_shimmer.AnimatedShimmer
-import com.example.data.remote.models.common_models.media_by_query_response.Media as MediaByQueryMedia
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.icons.AniKunIcons
-import com.example.designsystem.theme.mShapes
 import com.example.designsystem.theme.mTypography
 import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
+import com.example.data.remote.models.common_models.media_by_query_response.Media as MediaByQueryMedia
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -125,7 +124,12 @@ fun NavbarScreensSearchBar(
 
                         SearchItem(
                             onItemClick = {
-                                navController.navigate(MediaDetailsScreenRoute(currentMedia!!.id))
+                                navController.navigate(
+                                    MediaDetailsScreenRoute(
+                                        mediaId = currentMedia!!.id,
+                                        mediaType = currentMedia.type
+                                    )
+                                )
                                 onExpandChange()
                             },
                             media = currentMedia!!,

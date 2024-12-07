@@ -26,6 +26,8 @@ import com.example.designsystem.theme.mColors
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MediaScreenTopBar(
+    isInList: Boolean,
+    isFavorite: Boolean,
     title: TitleX?,
     scrollBehavior: TopAppBarScrollBehavior,
     onNavIconClick: () -> Unit,
@@ -71,16 +73,20 @@ fun MediaScreenTopBar(
                 onClick = {  }
             ) {
                 Icon(
-                    painter = painterResource(id = AniKunIcons.List),
+                    painter = painterResource(
+                        id = if(isInList) AniKunIcons.InListFilled else AniKunIcons.List
+                    ),
                     contentDescription = null
                 )
             }
 
             IconButton(
-                onClick = {  }
+                onClick = { onFavoriteIconClick() }
             ) {
                 Icon(
-                    painter = painterResource(id = AniKunIcons.Heart),
+                    painter = painterResource(
+                        id = if(isFavorite) AniKunIcons.HeartFilled else AniKunIcons.Heart
+                    ),
                     contentDescription = null
                 )
             }

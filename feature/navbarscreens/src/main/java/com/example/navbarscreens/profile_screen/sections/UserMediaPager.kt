@@ -1,7 +1,6 @@
 package com.example.navbarscreens.profile_screen.sections
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
