@@ -2,6 +2,7 @@ package com.example.data.remote.repos
 
 import com.example.data.remote.api_instance.AniListApiInstance
 import com.example.data.remote.models.common_models.common_request.CommonRequest
+import com.example.data.remote.models.profile_models.toggle_favorite_response.ToggleFavoriteResponse
 import com.example.data.remote.models.profile_models.user_favorites_response.UserFavoritesResponse
 import com.example.data.repos.FavoritesScreenRepo
 import com.google.gson.Gson
@@ -63,6 +64,67 @@ class FavoritesScreenRepoImpl @Inject constructor(
                 query = query,
                 variables = jsonVariables
             )
+        )
+    }
+
+    override suspend fun toggleFavorite(
+        animeId: Int,
+        mangaId: Int,
+        mediaType: String,
+        accessToken: String
+    ): ToggleFavoriteResponse {
+        val query = """
+            mutation (${"$"}animeId: Int, ${"$"}mangaId: Int) {
+              ToggleFavourite(animeId: ${"$"}animeId, mangaId: ${"$"}mangaId) {
+                anime {
+                  nodes {
+                    id
+                    type
+                    averageScore
+                    coverImage {
+                      large
+                    }
+                    description
+                    genres
+                    title {
+                      romaji
+                      english
+                    }
+                    episodes
+                  }
+                }
+                manga {
+                  nodes {
+                    type
+                    id
+                    averageScore
+                    coverImage {
+                      large
+                    }
+                    genres
+                    title {
+                      romaji
+                      english
+                    }
+                  }
+                }
+              }
+            }
+        """.trimIndent()
+
+        val variables = if(mediaType == "MANGA") {
+            mapOf("mangaId" to mangaId)
+        } else {
+            mapOf("animeId" to animeId)
+        }
+        val jsonVariables = Gson().toJson(variables)
+
+        return apiInstance.toggleFavorite(
+            body = CommonRequest(
+                query = query,
+                variables = jsonVariables
+            ),
+            accessToken = accessToken
         )
     }
 }

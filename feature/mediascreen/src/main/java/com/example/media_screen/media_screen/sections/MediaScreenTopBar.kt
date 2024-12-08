@@ -70,7 +70,7 @@ fun MediaScreenTopBar(
         },
         actions = {
             IconButton(
-                onClick = {  }
+                onClick = { onListIconClick() }
             ) {
                 Icon(
                     painter = painterResource(

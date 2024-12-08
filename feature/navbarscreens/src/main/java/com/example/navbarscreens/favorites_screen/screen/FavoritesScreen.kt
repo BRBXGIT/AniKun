@@ -1,6 +1,5 @@
 package com.example.navbarscreens.favorites_screen.screen
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,9 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavController
-import com.example.data.remote.models.profile_models.user_favorites_response.UserFavoritesResponse
+import com.example.data.remote.models.profile_models.user_favorites_response.Favourites
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.theme.mColors
+import com.example.media_screen.media_screen.screen.FavoritesScreenMediaScreenSharedVM
 import com.example.navbarscreens.common.navbar.NavBar
 import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
 import com.example.navbarscreens.favorites_screen.sections.FavoriteAnimeLCSection
@@ -25,8 +25,9 @@ import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute
 @Composable
 fun FavoritesScreen(
     navController: NavController,
-    userFavorites: UserFavoritesResponse,
-    viewModel: FavoritesScreenVM,
+    userFavorites: Favourites,
+    favoritesException: String?,
+    viewModel: FavoritesScreenMediaScreenSharedVM,
     chosenContentType: Boolean
 ) {
     val topBarScrollBehaviour = TopAppBarDefaults.pinnedScrollBehavior()
@@ -53,21 +54,21 @@ fun FavoritesScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            if(userFavorites.exception == null) {
+            if(favoritesException == null) {
                 if(!chosenContentType) {
                     FavoriteAnimeLCSection(
-                        favoriteAnime = userFavorites.data!!.user.favourites.anime.nodes,
+                        favoriteAnime = userFavorites.anime.nodes,
                         navController = navController
                     )
                 } else {
                     FavoriteMangaLVGSection(
-                        favoriteManga = userFavorites.data!!.user.favourites.manga.nodes,
+                        favoriteManga = userFavorites.manga.nodes,
                         navController = navController
                     )
                 }
             } else {
                 ErrorSection(
-                    errorText = userFavorites.exception.toString(),
+                    errorText = favoritesException.toString(),
                     modifier = Modifier.fillMaxSize()
                 )
             }

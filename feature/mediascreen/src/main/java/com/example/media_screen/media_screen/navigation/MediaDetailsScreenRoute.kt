@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.example.data.remote.models.profile_models.user_favorites_response.Favourites
+import com.example.media_screen.media_screen.screen.FavoritesScreenMediaScreenSharedVM
 import com.example.media_screen.media_screen.screen.MediaDetailsScreen
 import com.example.media_screen.media_screen.screen.MediaScreenVM
 import com.example.data.remote.models.profile_models.user_anime_list_response.Lists as UserAnimeLists
@@ -23,7 +24,8 @@ fun NavGraphBuilder.mediaDetailsScreen(
     navController: NavController,
     userMangaLists: List<UserMangaLists>?,
     userAnimeLists: List<UserAnimeLists>?,
-    userFavorites: Favourites?
+    userFavorites: Favourites?,
+    sharedVM: FavoritesScreenMediaScreenSharedVM
 ) = composable<MediaDetailsScreenRoute> {
     val mediaId = it.toRoute<MediaDetailsScreenRoute>().mediaId
     val mediaType = it.toRoute<MediaDetailsScreenRoute>().mediaType
@@ -36,6 +38,7 @@ fun NavGraphBuilder.mediaDetailsScreen(
         userMangaLists = userMangaLists,
         userAnimeLists = userAnimeLists,
         userFavorites = userFavorites,
-        mediaType = mediaType
+        mediaType = mediaType,
+        sharedVM = sharedVM
     )
 }

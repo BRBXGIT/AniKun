@@ -20,7 +20,7 @@ import com.example.navbarscreens.anime_screen.navigation.animeScreen
 import com.example.navbarscreens.anime_screen.screen.AnimeScreenVM
 import com.example.navbarscreens.common.navigation.NavBarScreensRoute
 import com.example.navbarscreens.favorites_screen.navigation.favoritesScreen
-import com.example.navbarscreens.favorites_screen.screen.FavoritesScreenVM
+import com.example.media_screen.media_screen.screen.FavoritesScreenMediaScreenSharedVM
 import com.example.navbarscreens.manga_screen.navigation.mangaScreen
 import com.example.navbarscreens.manga_screen.screen.MangaScreenVM
 import com.example.navbarscreens.profile_screen.navigation.profileScreen
@@ -38,7 +38,7 @@ fun NavGraph(
     val animeScreenVM = hiltViewModel<AnimeScreenVM>()
     val mangaScreenVM = hiltViewModel<MangaScreenVM>()
     val profileScreenVM = hiltViewModel<ProfileScreenVM>()
-    val favoritesScreenVM = hiltViewModel<FavoritesScreenVM>()
+    val favoritesScreenMediaScreenSharedVM = hiltViewModel<FavoritesScreenMediaScreenSharedVM>()
 
     //Anime and manga screens
     val trendingAnime = animeScreenVM.trendingAnime.collectAsLazyPagingItems()
@@ -59,9 +59,10 @@ fun NavGraph(
     ).value
 
     //UserFavoritesScreen
-    favoritesScreenVM.fetchUserFavorites(aniListUser.data.viewer.name)
-    val userFavorites = favoritesScreenVM.userFavorites.collectAsStateWithLifecycle().value
-    val chosenFavoritesScreenContentType = favoritesScreenVM.chosenContentType.collectAsStateWithLifecycle().value
+    favoritesScreenMediaScreenSharedVM.fetchUserFavorites(aniListUser.data.viewer.name)
+    val userFavorites = favoritesScreenMediaScreenSharedVM.userFavorites.collectAsStateWithLifecycle().value
+    val chosenFavoritesScreenContentType = favoritesScreenMediaScreenSharedVM.chosenContentType.collectAsStateWithLifecycle().value
+    val favoritesException = favoritesScreenMediaScreenSharedVM.userFavoritesException.collectAsStateWithLifecycle().value
 
     NavHost(
         navController = navController,
@@ -89,8 +90,9 @@ fun NavGraph(
             favoritesScreen(
                 navController = navController,
                 userFavorites = userFavorites,
-                favoritesScreenVM = favoritesScreenVM,
-                chosenContentType = chosenFavoritesScreenContentType
+                favoritesScreenMediaScreenSharedVM = favoritesScreenMediaScreenSharedVM,
+                chosenContentType = chosenFavoritesScreenContentType,
+                favoritesException = favoritesException
             )
 
             profileScreen(
@@ -112,7 +114,8 @@ fun NavGraph(
             navController = navController,
             userMangaLists = if(userMangaLists.data != null) userMangaLists.data!!.mediaListCollection.lists else null,
             userAnimeLists = if(userAnimeLists.data != null) userAnimeLists.data!!.mediaListCollection.lists else null,
-            userFavorites = if(userFavorites.data != null) userFavorites.data!!.user.favourites else null
+            userFavorites = if(favoritesException == null) userFavorites else null,
+            sharedVM = favoritesScreenMediaScreenSharedVM
         )
 
         settingsScreen(

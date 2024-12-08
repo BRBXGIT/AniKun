@@ -38,8 +38,10 @@ fun AnimeCard(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier
             .fillMaxWidth()
+            .padding(8.dp)
+            .clip(mShapes.extraSmall)
             .clickable { onAnimeClick() }
-            .padding(16.dp)
+            .padding(8.dp)
     ) {
         SubcomposeAsyncImage(
             model = ImageRequest.Builder(LocalContext.current)

@@ -14,7 +14,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -26,8 +25,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.data.remote.models.profile_models.user_favorites_response.Favourites
 import com.example.designsystem.error_section.ErrorSection
-import com.example.designsystem.icons.AniKunIcons
 import com.example.designsystem.theme.mColors
+import com.example.media_screen.media_screen.sections.AddToListBS
 import com.example.media_screen.media_screen.sections.CharactersLRSection
 import com.example.media_screen.media_screen.sections.DescriptionSection
 import com.example.media_screen.media_screen.sections.GenresLRSection
@@ -49,7 +48,8 @@ fun MediaDetailsScreen(
     navController: NavController,
     userMangaLists: List<UserMangaLists>?,
     userAnimeLists: List<UserAnimeLists>?,
-    userFavorites: Favourites?
+    userFavorites: Favourites?,
+    sharedVM: FavoritesScreenMediaScreenSharedVM
 ) {
     //Get and collect media details
     viewModel.fetchMediaDetailsById(mediaId)
@@ -61,7 +61,21 @@ fun MediaDetailsScreen(
         "Error :("
     }
     var isMediaInFavorites by rememberSaveable { mutableStateOf(false) }
-    isMediaInFavorites = checkIsMediaInFavorites(userFavorites!!, mediaId)
+    isMediaInFavorites = if(userFavorites != null) {
+        checkIsMediaInFavorites(userFavorites, mediaId)
+    } else {
+        false
+    }
+
+    var addToListBSOpen by rememberSaveable { mutableStateOf(false) }
+    if(addToListBSOpen) {
+        AddToListBS(
+            onDismissRequest = { addToListBSOpen = false },
+            mediaType = mediaType,
+            onListClick = {  },
+            currentList = userListType
+        )
+    }
 
     val topBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
@@ -70,8 +84,11 @@ fun MediaDetailsScreen(
                 title = mediaDetails.data?.media?.title,
                 scrollBehavior = topBarScrollBehavior,
                 onNavIconClick = { navController.navigateUp() },
-                onFavoriteIconClick = { isMediaInFavorites = !isMediaInFavorites },
-                onListIconClick = {  },
+                onFavoriteIconClick = {
+                    sharedVM.toggleFavorite(mediaType, mediaId)
+                    isMediaInFavorites = !isMediaInFavorites
+                },
+                onListIconClick = { addToListBSOpen = true },
                 isFavorite = isMediaInFavorites,
                 isInList = userListType != "Not in list"
             )
