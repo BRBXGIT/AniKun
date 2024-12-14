@@ -49,7 +49,8 @@ fun MediaDetailsScreen(
     userMangaLists: List<UserMangaLists>?,
     userAnimeLists: List<UserAnimeLists>?,
     userFavorites: Favourites?,
-    sharedVM: FavoritesScreenMediaScreenSharedVM
+    favoritesScreenSharedVM: MediaFavoritesScreensSharedVM,
+    profileScreenSharedVM: MediaProfileScreensSharedVM
 ) {
     //Get and collect media details
     viewModel.fetchMediaDetailsById(mediaId)
@@ -72,7 +73,10 @@ fun MediaDetailsScreen(
         AddToListBS(
             onDismissRequest = { addToListBSOpen = false },
             mediaType = mediaType,
-            onListClick = {  },
+            onListClick = { listType ->
+                addToListBSOpen = false
+                profileScreenSharedVM.changeMediaListType(mediaId, listType)
+            },
             currentList = userListType
         )
     }
@@ -85,7 +89,7 @@ fun MediaDetailsScreen(
                 scrollBehavior = topBarScrollBehavior,
                 onNavIconClick = { navController.navigateUp() },
                 onFavoriteIconClick = {
-                    sharedVM.toggleFavorite(mediaType, mediaId)
+                    favoritesScreenSharedVM.toggleFavorite(mediaType, mediaId)
                     isMediaInFavorites = !isMediaInFavorites
                 },
                 onListIconClick = { addToListBSOpen = true },

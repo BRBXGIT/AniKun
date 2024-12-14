@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -23,30 +22,36 @@ import androidx.compose.ui.unit.dp
 import com.example.designsystem.icons.AniKunIcons
 import com.example.designsystem.theme.mShapes
 import com.example.designsystem.theme.mTypography
+import com.example.media_screen.utils.Utils
+
+data class ListType(
+    val previewName: String,
+    val listType: String
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddToListBS(
     onDismissRequest: () -> Unit,
     mediaType: String,
-    onListClick: () -> Unit,
+    onListClick: (listType: String) -> Unit,
     currentList: String
 ) {
     val animeListTypes = listOf(
-        "Watching",
-        "Planning",
-        "Completed",
-        "Paused",
-        "Dropped",
-        "Rewatching"
+        ListType("Watching", Utils.CURRENT_LIST_TYPE),
+        ListType("Planning", Utils.PLANNING_LIST_TYPE),
+        ListType("Completed", Utils.COMPLETED_LIST_TYPE),
+        ListType("Paused", Utils.PAUSED_LIST_TYPE),
+        ListType("Dropped", Utils.DROPPED_LIST_TYPE),
+        ListType("Rewatching", Utils.REPEATING_LIST_TYPE)
     )
     val mangaListTypes = listOf(
-        "Reading",
-        "Planning",
-        "Completed",
-        "Paused",
-        "Dropped",
-        "Rereading"
+        ListType("Reading", Utils.CURRENT_LIST_TYPE),
+        ListType("Planning", Utils.PLANNING_LIST_TYPE),
+        ListType("Completed", Utils.COMPLETED_LIST_TYPE),
+        ListType("Paused", Utils.PAUSED_LIST_TYPE),
+        ListType("Dropped", Utils.DROPPED_LIST_TYPE),
+        ListType("Rereading", Utils.REPEATING_LIST_TYPE)
     )
 
     ModalBottomSheet(
@@ -65,8 +70,8 @@ fun AddToListBS(
                 items(animeListTypes) { type ->
                     ListItem(
                         modifier = Modifier.fillParentMaxWidth(),
-                        onListClick = { onListClick() },
-                        type = type,
+                        onListClick = { onListClick(type.listType) },
+                        type = type.previewName,
                         currentList = currentList
                     )
                 }
@@ -74,8 +79,8 @@ fun AddToListBS(
                 items(mangaListTypes) { type ->
                     ListItem(
                         modifier = Modifier.fillParentMaxWidth(),
-                        onListClick = { onListClick() },
-                        type = type,
+                        onListClick = { onListClick(type.listType) },
+                        type = type.previewName,
                         currentList = currentList
                     )
                 }

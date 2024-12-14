@@ -5,6 +5,7 @@ import com.example.data.remote.models.common_models.common_request.CommonRequest
 import com.example.data.remote.models.common_models.media_by_query_response.MediaByQueryResponse
 import com.example.data.remote.models.manga_list_response.MangaListsResponse
 import com.example.data.remote.models.media_details_models.media_details_response.MediaDetailsResponse
+import com.example.data.remote.models.profile_models.change_list_type_response.ChangeMediaListTypeResponse
 import com.example.data.remote.models.profile_models.toggle_favorite_response.ToggleFavoriteResponse
 import com.example.data.remote.models.profile_models.user_anime_list_response.UserAnimeListsResponse
 import com.example.data.remote.models.profile_models.user_by_query_response.UserByQueryResponse
@@ -68,4 +69,10 @@ interface AniListApiInstance {
         @Body body: CommonRequest,
         @Header("Authorization") accessToken: String
     ): ToggleFavoriteResponse
+
+    @POST(".")
+    suspend fun changeMediaListType(
+        @Body body: CommonRequest,
+        @Header("Authorization") accessToken: String
+    ): ChangeMediaListTypeResponse
 }

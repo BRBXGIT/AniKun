@@ -1,17 +1,14 @@
 package com.example.data.remote.repos
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
 import com.example.data.remote.api_instance.AniListApiInstance
 import com.example.data.remote.models.common_models.common_request.CommonRequest
+import com.example.data.remote.models.profile_models.change_list_type_response.ChangeMediaListTypeResponse
 import com.example.data.remote.models.profile_models.user_anime_list_response.UserAnimeListsResponse
 import com.example.data.remote.models.profile_models.user_by_query_response.UserByQueryResponse
 import com.example.data.remote.models.profile_models.user_data_response.AniListUser
 import com.example.data.remote.models.profile_models.user_manga_list_response.UserMangaListsResponse
 import com.example.data.repos.ProfileScreenRepo
 import com.google.gson.Gson
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ProfileScreenRepoImpl @Inject constructor(
@@ -145,6 +142,34 @@ class ProfileScreenRepoImpl @Inject constructor(
                 query = userByQueryQuery,
                 variables = jsonVariables
             )
+        )
+    }
+
+    override suspend fun changeMediaListType(
+        mediaId: Int,
+        listType: String,
+        accessToken: String
+    ): ChangeMediaListTypeResponse {
+        val query = """
+            mutation (${"$"}mediaId: Int, ${"$"}status: MediaListStatus) {
+              SaveMediaListEntry(mediaId: ${"$"}mediaId, status: ${"$"}status) {
+                id
+              }
+            }
+        """.trimIndent()
+
+        val variables = mapOf(
+            "mediaId" to mediaId,
+            "status" to listType
+        )
+        val jsonVariables = Gson().toJson(variables)
+
+        return apiInstance.changeMediaListType(
+            body = CommonRequest(
+                query = query,
+                variables = jsonVariables
+            ),
+            accessToken = accessToken
         )
     }
 }

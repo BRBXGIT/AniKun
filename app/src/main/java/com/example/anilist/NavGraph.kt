@@ -20,11 +20,11 @@ import com.example.navbarscreens.anime_screen.navigation.animeScreen
 import com.example.navbarscreens.anime_screen.screen.AnimeScreenVM
 import com.example.navbarscreens.common.navigation.NavBarScreensRoute
 import com.example.navbarscreens.favorites_screen.navigation.favoritesScreen
-import com.example.media_screen.media_screen.screen.FavoritesScreenMediaScreenSharedVM
+import com.example.media_screen.media_screen.screen.MediaFavoritesScreensSharedVM
 import com.example.navbarscreens.manga_screen.navigation.mangaScreen
 import com.example.navbarscreens.manga_screen.screen.MangaScreenVM
 import com.example.navbarscreens.profile_screen.navigation.profileScreen
-import com.example.navbarscreens.profile_screen.screen.ProfileScreenVM
+import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import com.example.settingsscreen.settings_screen.navigation.settingsScreen
 
 @Composable
@@ -37,32 +37,32 @@ fun NavGraph(
     //Initialize values here to don't refresh it after screen will be recomposed
     val animeScreenVM = hiltViewModel<AnimeScreenVM>()
     val mangaScreenVM = hiltViewModel<MangaScreenVM>()
-    val profileScreenVM = hiltViewModel<ProfileScreenVM>()
-    val favoritesScreenMediaScreenSharedVM = hiltViewModel<FavoritesScreenMediaScreenSharedVM>()
+    val mediaProfileScreensSharedVM = hiltViewModel<MediaProfileScreensSharedVM>()
+    val mediaFavoritesScreensSharedVM = hiltViewModel<MediaFavoritesScreensSharedVM>()
 
     //Anime and manga screens
     val trendingAnime = animeScreenVM.trendingAnime.collectAsLazyPagingItems()
     val trendingManga = mangaScreenVM.trendingManga.collectAsLazyPagingItems()
 
     //Profile screen
-    val aniListUser = profileScreenVM.aniListUser.collectAsStateWithLifecycle(
+    val aniListUser = mediaProfileScreensSharedVM.aniListUser.collectAsStateWithLifecycle(
         initialValue = AniListUser()
     ).value
-    val chosenProfileScreenContentType = profileScreenVM.chosenContentType.collectAsStateWithLifecycle().value
+    val chosenProfileScreenContentType = mediaProfileScreensSharedVM.chosenContentType.collectAsStateWithLifecycle().value
     val isUserLoggedIn = prefs.getBoolean("loggedIn", false)
 
-    val userAnimeLists = profileScreenVM.userAnimeLists.collectAsStateWithLifecycle(
+    val userAnimeLists = mediaProfileScreensSharedVM.userAnimeLists.collectAsStateWithLifecycle(
         initialValue = UserAnimeListsResponse()
     ).value
-    val userMangaLists = profileScreenVM.userMangaLists.collectAsStateWithLifecycle(
+    val userMangaLists = mediaProfileScreensSharedVM.userMangaLists.collectAsStateWithLifecycle(
         initialValue = UserMangaListsResponse()
     ).value
 
     //UserFavoritesScreen
-    favoritesScreenMediaScreenSharedVM.fetchUserFavorites(aniListUser.data.viewer.name)
-    val userFavorites = favoritesScreenMediaScreenSharedVM.userFavorites.collectAsStateWithLifecycle().value
-    val chosenFavoritesScreenContentType = favoritesScreenMediaScreenSharedVM.chosenContentType.collectAsStateWithLifecycle().value
-    val favoritesException = favoritesScreenMediaScreenSharedVM.userFavoritesException.collectAsStateWithLifecycle().value
+    mediaFavoritesScreensSharedVM.fetchUserFavorites(aniListUser.data.viewer.name)
+    val userFavorites = mediaFavoritesScreensSharedVM.userFavorites.collectAsStateWithLifecycle().value
+    val chosenFavoritesScreenContentType = mediaFavoritesScreensSharedVM.chosenContentType.collectAsStateWithLifecycle().value
+    val favoritesException = mediaFavoritesScreensSharedVM.userFavoritesException.collectAsStateWithLifecycle().value
 
     NavHost(
         navController = navController,
@@ -90,14 +90,14 @@ fun NavGraph(
             favoritesScreen(
                 navController = navController,
                 userFavorites = userFavorites,
-                favoritesScreenMediaScreenSharedVM = favoritesScreenMediaScreenSharedVM,
+                mediaFavoritesScreensSharedVM = mediaFavoritesScreensSharedVM,
                 chosenContentType = chosenFavoritesScreenContentType,
                 favoritesException = favoritesException
             )
 
             profileScreen(
                 navController = navController,
-                profileScreenVM = profileScreenVM,
+                mediaProfileScreensSharedVM = mediaProfileScreensSharedVM,
                 aniListUser = aniListUser,
                 chosenContentType = chosenProfileScreenContentType,
                 userAnimeLists = userAnimeLists,
@@ -115,7 +115,8 @@ fun NavGraph(
             userMangaLists = if(userMangaLists.data != null) userMangaLists.data!!.mediaListCollection.lists else null,
             userAnimeLists = if(userAnimeLists.data != null) userAnimeLists.data!!.mediaListCollection.lists else null,
             userFavorites = if(favoritesException == null) userFavorites else null,
-            sharedVM = favoritesScreenMediaScreenSharedVM
+            favoritesScreenSharedVM = mediaFavoritesScreensSharedVM,
+            profileScreensSharedVM = mediaProfileScreensSharedVM
         )
 
         settingsScreen(

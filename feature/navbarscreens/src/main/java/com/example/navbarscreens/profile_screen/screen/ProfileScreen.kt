@@ -20,6 +20,7 @@ import com.example.data.remote.models.profile_models.user_anime_list_response.Us
 import com.example.data.remote.models.profile_models.user_data_response.AniListUser
 import com.example.data.remote.models.profile_models.user_manga_list_response.UserMangaListsResponse
 import com.example.designsystem.theme.mColors
+import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import com.example.navbarscreens.common.navbar.NavBar
 import com.example.navbarscreens.common.search_bar.NavbarScreensSearchBar
 import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
@@ -30,7 +31,7 @@ import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute
 @Composable
 fun ProfileScreen(
     navController: NavController,
-    viewModel: ProfileScreenVM,
+    viewModel: MediaProfileScreensSharedVM,
     aniListUser: AniListUser,
     chosenContentType: Boolean,
     userAnimeLists: UserAnimeListsResponse,

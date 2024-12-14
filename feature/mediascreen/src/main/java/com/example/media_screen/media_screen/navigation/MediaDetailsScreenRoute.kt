@@ -6,8 +6,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.example.data.remote.models.profile_models.user_favorites_response.Favourites
-import com.example.media_screen.media_screen.screen.FavoritesScreenMediaScreenSharedVM
+import com.example.media_screen.media_screen.screen.MediaFavoritesScreensSharedVM
 import com.example.media_screen.media_screen.screen.MediaDetailsScreen
+import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import com.example.media_screen.media_screen.screen.MediaScreenVM
 import com.example.data.remote.models.profile_models.user_anime_list_response.Lists as UserAnimeLists
 import com.example.data.remote.models.profile_models.user_manga_list_response.Lists as UserMangaLists
@@ -25,7 +26,8 @@ fun NavGraphBuilder.mediaDetailsScreen(
     userMangaLists: List<UserMangaLists>?,
     userAnimeLists: List<UserAnimeLists>?,
     userFavorites: Favourites?,
-    sharedVM: FavoritesScreenMediaScreenSharedVM
+    favoritesScreenSharedVM: MediaFavoritesScreensSharedVM,
+    profileScreensSharedVM: MediaProfileScreensSharedVM
 ) = composable<MediaDetailsScreenRoute> {
     val mediaId = it.toRoute<MediaDetailsScreenRoute>().mediaId
     val mediaType = it.toRoute<MediaDetailsScreenRoute>().mediaType
@@ -39,6 +41,7 @@ fun NavGraphBuilder.mediaDetailsScreen(
         userAnimeLists = userAnimeLists,
         userFavorites = userFavorites,
         mediaType = mediaType,
-        sharedVM = sharedVM
+        favoritesScreenSharedVM = favoritesScreenSharedVM,
+        profileScreenSharedVM = profileScreensSharedVM
     )
 }

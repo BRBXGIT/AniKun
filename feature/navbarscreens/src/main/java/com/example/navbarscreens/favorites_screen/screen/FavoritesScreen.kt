@@ -14,7 +14,7 @@ import androidx.navigation.NavController
 import com.example.data.remote.models.profile_models.user_favorites_response.Favourites
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.theme.mColors
-import com.example.media_screen.media_screen.screen.FavoritesScreenMediaScreenSharedVM
+import com.example.media_screen.media_screen.screen.MediaFavoritesScreensSharedVM
 import com.example.navbarscreens.common.navbar.NavBar
 import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
 import com.example.navbarscreens.favorites_screen.sections.FavoriteAnimeLCSection
@@ -27,7 +27,7 @@ fun FavoritesScreen(
     navController: NavController,
     userFavorites: Favourites,
     favoritesException: String?,
-    viewModel: FavoritesScreenMediaScreenSharedVM,
+    viewModel: MediaFavoritesScreensSharedVM,
     chosenContentType: Boolean
 ) {
     val topBarScrollBehaviour = TopAppBarDefaults.pinnedScrollBehavior()

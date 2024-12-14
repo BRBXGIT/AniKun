@@ -39,7 +39,7 @@ fun AnimeCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .clip(mShapes.extraSmall)
+            .clip(mShapes.small)
             .clickable { onAnimeClick() }
             .padding(8.dp)
     ) {
