@@ -37,7 +37,7 @@ class MediaScreenVM @Inject constructor(
     fun fetchMediaDetailsById(mediaId: Int) {
         viewModelScope.launch(dispatcherIo) {
             try {
-                _mediaDetails.value = repository.getMediaDetailsById(mediaId).body()!!
+                _mediaDetails.value = repository.getMediaDetailsById(mediaId)
             } catch(e: Exception) {
                 _mediaDetails.value = MediaDetailsResponse(
                     exception = e.message.toString()

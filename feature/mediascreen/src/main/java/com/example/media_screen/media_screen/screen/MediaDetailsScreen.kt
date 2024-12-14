@@ -108,7 +108,7 @@ fun MediaDetailsScreen(
             .background(mColors.background)
             .nestedScroll(topBarScrollBehavior.nestedScrollConnection)
     ) { innerPadding ->
-        if(((mediaDetails.data == null) && (mediaDetails.exception == null)) or (mediaDetails.exception == "HTTP 429")) {
+        if((mediaDetails.data == null) && (mediaDetails.exception == null)) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -119,9 +119,13 @@ fun MediaDetailsScreen(
             }
         }
 
-        if((mediaDetails.exception != null) and (mediaDetails.exception != "HTTP 429")) {
+        if(mediaDetails.exception != null) {
             ErrorSection(
-                errorText = mediaDetails.exception.toString(),
+                errorText = if(mediaDetails.exception == "HTTP 429") {
+                    "${mediaDetails.exception}, please give AniList a little rest :), try in 2-3 minutes"
+                } else {
+                    mediaDetails.exception.toString()
+                },
                 modifier = Modifier.fillMaxSize()
             )
         }

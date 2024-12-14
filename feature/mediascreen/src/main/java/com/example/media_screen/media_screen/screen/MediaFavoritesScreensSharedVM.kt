@@ -47,9 +47,7 @@ class MediaFavoritesScreensSharedVM @Inject constructor(
                     _userFavoritesException.value = null
                 }
             } catch(e: Exception) {
-                _userFavorites.value = Favourites(
-                    exception = e.message.toString()
-                )
+                _userFavoritesException.value = e.message.toString()
             }
         }
     }
