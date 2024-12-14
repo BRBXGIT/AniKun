@@ -63,4 +63,6 @@ dependencies {
     implementation(libs.coil.compose)
     //Haze
     implementation(libs.haze.materials)
+    //Retrofit
+    implementation(libs.retrofit)
 }

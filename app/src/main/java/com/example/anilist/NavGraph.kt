@@ -2,6 +2,7 @@ package com.example.anilist
 
 import android.content.SharedPreferences
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
@@ -15,16 +16,16 @@ import com.example.data.remote.models.profile_models.user_data_response.AniListU
 import com.example.data.remote.models.profile_models.user_manga_list_response.UserMangaListsResponse
 import com.example.designsystem.theme.AppSettingsVM
 import com.example.media_screen.media_screen.navigation.mediaDetailsScreen
+import com.example.media_screen.media_screen.screen.MediaFavoritesScreensSharedVM
+import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import com.example.navbarscreens.anime_screen.navigation.AnimeScreenRoute
 import com.example.navbarscreens.anime_screen.navigation.animeScreen
 import com.example.navbarscreens.anime_screen.screen.AnimeScreenVM
 import com.example.navbarscreens.common.navigation.NavBarScreensRoute
 import com.example.navbarscreens.favorites_screen.navigation.favoritesScreen
-import com.example.media_screen.media_screen.screen.MediaFavoritesScreensSharedVM
 import com.example.navbarscreens.manga_screen.navigation.mangaScreen
 import com.example.navbarscreens.manga_screen.screen.MangaScreenVM
 import com.example.navbarscreens.profile_screen.navigation.profileScreen
-import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import com.example.settingsscreen.settings_screen.navigation.settingsScreen
 
 @Composable
@@ -51,18 +52,31 @@ fun NavGraph(
     val chosenProfileScreenContentType = mediaProfileScreensSharedVM.chosenContentType.collectAsStateWithLifecycle().value
     val isUserLoggedIn = prefs.getBoolean("loggedIn", false)
 
+    //Launched to don't fetch data multiple times
     val userAnimeLists = mediaProfileScreensSharedVM.userAnimeLists.collectAsStateWithLifecycle(
         initialValue = UserAnimeListsResponse()
     ).value
+    LaunchedEffect(userAnimeLists, aniListUser) {
+        if((userAnimeLists.data == null) and (userAnimeLists.exception == null) and (aniListUser.data.viewer.name != "")) {
+            mediaProfileScreensSharedVM.fetchUserAnimeLists(aniListUser.data.viewer.name)
+        }
+    }
+
     val userMangaLists = mediaProfileScreensSharedVM.userMangaLists.collectAsStateWithLifecycle(
         initialValue = UserMangaListsResponse()
     ).value
+    LaunchedEffect(userMangaLists, aniListUser) {
+        if((userMangaLists.data == null) and (userMangaLists.exception == null) and (aniListUser.data.viewer.name != "")) {
+            mediaProfileScreensSharedVM.fetchUserMangaLists(aniListUser.data.viewer.name)
+        }
+    }
 
     //UserFavoritesScreen
-    mediaFavoritesScreensSharedVM.fetchUserFavorites(aniListUser.data.viewer.name)
-    val userFavorites = mediaFavoritesScreensSharedVM.userFavorites.collectAsStateWithLifecycle().value
     val chosenFavoritesScreenContentType = mediaFavoritesScreensSharedVM.chosenContentType.collectAsStateWithLifecycle().value
     val favoritesException = mediaFavoritesScreensSharedVM.userFavoritesException.collectAsStateWithLifecycle().value
+    mediaFavoritesScreensSharedVM.fetchUserFavorites(aniListUser.data.viewer.name)
+    val userFavorites = mediaFavoritesScreensSharedVM.userFavorites.collectAsStateWithLifecycle().value
+    LaunchedEffect(userFavorites) { }
 
     NavHost(
         navController = navController,

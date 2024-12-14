@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.common.dispatchers.AniKunDispatchers
 import com.example.common.dispatchers.Dispatcher
 import com.example.data.remote.models.media_details_models.media_details_response.MediaDetailsResponse
-import com.example.data.remote.models.media_details_models.user_media_lists_response.UserMediaListsResponse
 import com.example.data.remote.repos.CommonRepoImpl
 import com.example.data.remote.repos.MediaDetailsScreenRepoImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,19 +31,15 @@ class MediaScreenVM @Inject constructor(
     val mediaDetails = _mediaDetails.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5_000),
-        MediaDetailsResponse(
-            data = null,
-            exception = null
-        )
+        MediaDetailsResponse()
     )
 
     fun fetchMediaDetailsById(mediaId: Int) {
         viewModelScope.launch(dispatcherIo) {
             try {
-                _mediaDetails.value = repository.getMediaDetailsById(mediaId)
+                _mediaDetails.value = repository.getMediaDetailsById(mediaId).body()!!
             } catch(e: Exception) {
                 _mediaDetails.value = MediaDetailsResponse(
-                    data = null,
                     exception = e.message.toString()
                 )
             }

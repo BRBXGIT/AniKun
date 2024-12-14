@@ -13,6 +13,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -53,8 +54,13 @@ fun MediaDetailsScreen(
     profileScreenSharedVM: MediaProfileScreensSharedVM
 ) {
     //Get and collect media details
-    viewModel.fetchMediaDetailsById(mediaId)
     val mediaDetails = viewModel.mediaDetails.collectAsStateWithLifecycle().value
+    //Use LaunchedEffect to don't fetch data multiple times
+    LaunchedEffect(mediaDetails) {
+        if((mediaDetails.data == null) and (mediaDetails.exception == null)) {
+            viewModel.fetchMediaDetailsById(mediaId)
+        }
+    }
     var userListType by rememberSaveable { mutableStateOf("") }
     userListType = if((userAnimeLists != null) and (userMangaLists != null)) {
         checkIsMediaInUserList(userMangaLists!!, userAnimeLists!!, mediaId)
@@ -75,7 +81,7 @@ fun MediaDetailsScreen(
             mediaType = mediaType,
             onListClick = { listType ->
                 addToListBSOpen = false
-                profileScreenSharedVM.changeMediaListType(mediaId, listType)
+                profileScreenSharedVM.changeMediaListType(mediaId, listType, mediaType)
             },
             currentList = userListType
         )
@@ -102,7 +108,7 @@ fun MediaDetailsScreen(
             .background(mColors.background)
             .nestedScroll(topBarScrollBehavior.nestedScrollConnection)
     ) { innerPadding ->
-        if((mediaDetails.data == null) && (mediaDetails.exception == null)) {
+        if(((mediaDetails.data == null) && (mediaDetails.exception == null)) or (mediaDetails.exception == "HTTP 429")) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -113,7 +119,7 @@ fun MediaDetailsScreen(
             }
         }
 
-        if(mediaDetails.exception != null) {
+        if((mediaDetails.exception != null) and (mediaDetails.exception != "HTTP 429")) {
             ErrorSection(
                 errorText = mediaDetails.exception.toString(),
                 modifier = Modifier.fillMaxSize()

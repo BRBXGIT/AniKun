@@ -1,5 +1,6 @@
 package com.example.media_screen.media_screen.screen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.common.dispatchers.AniKunDispatchers
@@ -91,49 +92,66 @@ class MediaProfileScreensSharedVM @Inject constructor(
         )
 
     //User anime lists
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val userAnimeLists = aniListUser.flatMapLatest { aniListUser ->
-        flow {
+    private val _userAnimeLists = MutableStateFlow(UserAnimeListsResponse())
+    val userAnimeLists = _userAnimeLists.stateIn(
+        viewModelScope,
+        SharingStarted.Lazily,
+        UserAnimeListsResponse()
+    )
+    fun fetchUserAnimeLists(userName: String) {
+        Log.d("CCCC", "Fethced manga")
+        viewModelScope.launch(dispatcherIo) {
             try {
-                emit(
-                    repository.getUserAnimeLists(userName = aniListUser.data.viewer.name)
-                )
+                _userAnimeLists.value = repository.getUserAnimeLists(userName)
             } catch(e: Exception) {
-                emit(
-                    UserAnimeListsResponse(
-                        exception = e.message.toString()
-                    )
+                _userAnimeLists.value = UserAnimeListsResponse(
+                    exception = e.message.toString()
                 )
             }
         }
     }
 
     //User manga lists
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val userMangaLists = aniListUser.flatMapLatest { aniListUser ->
-        flow {
+    private val _userMangaLists = MutableStateFlow(UserMangaListsResponse())
+    val userMangaLists = _userMangaLists.stateIn(
+        viewModelScope,
+        SharingStarted.Lazily,
+        UserMangaListsResponse()
+    )
+    fun fetchUserMangaLists(userName: String) {
+        Log.d("CCCC", "Fethced manga")
+        viewModelScope.launch(dispatcherIo) {
             try {
-                emit(
-                    repository.getUserMangaLists(userName = aniListUser.data.viewer.name)
-                )
+                _userMangaLists.value = repository.getUserMangaLists(userName)
             } catch(e: Exception) {
-                emit(
-                    UserMangaListsResponse(
-                        exception = e.message.toString()
-                    )
+                _userMangaLists.value = UserMangaListsResponse(
+                    exception = e.message.toString()
                 )
             }
         }
     }
 
-    fun changeMediaListType(mediaId: Int, listType: String) {
+    fun changeMediaListType(mediaId: Int, listType: String, mediaType: String) {
         viewModelScope.launch(dispatcherIo) {
             aniKunUser.collect { aniKunUser ->
-                repository.changeMediaListType(
-                    mediaId = mediaId,
-                    listType = listType,
-                    accessToken = "Bearer ${aniKunUser[0].accessToken}"
-                )
+                try {
+                    repository.changeMediaListType(
+                        mediaId = mediaId,
+                        listType = listType,
+                        accessToken = "Bearer ${aniKunUser[0].accessToken}"
+                    )
+                    if(mediaType == "ANIME") {
+                        aniListUser.collect { aniListUser ->
+                            fetchUserAnimeLists(aniListUser.data.viewer.name)
+                        }
+                    } else {
+                        aniListUser.collect { aniListUser ->
+                            fetchUserMangaLists(aniListUser.data.viewer.name)
+                        }
+                    }
+                } catch(e: Exception) {
+                    Log.d("CCCC", e.message.toString())
+                }
             }
         }
     }
