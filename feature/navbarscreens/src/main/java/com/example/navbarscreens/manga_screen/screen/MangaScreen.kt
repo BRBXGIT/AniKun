@@ -17,13 +17,13 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.common.navbar.NavBar
-import com.example.navbarscreens.common.search_bar.NavbarScreensSearchBar
+import com.example.navbarscreens.common.search_bar.MediaListsScreensSearchBar
 import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
 import com.example.navbarscreens.manga_screen.sections.MangaLVGSection
 import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute
+import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,7 +53,7 @@ fun MangaScreen(
         if(isSearching) {
             val mangaByQuery = viewModel.mangaByQuery.collectAsLazyPagingItems()
 
-            NavbarScreensSearchBar(
+            MediaListsScreensSearchBar(
                 placeHolderText = "Find manga",
                 onExpandChange = { isSearching = false },
                 onSearchClick = { viewModel.setQuery(it) },

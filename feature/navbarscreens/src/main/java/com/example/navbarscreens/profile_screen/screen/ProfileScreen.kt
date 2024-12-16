@@ -22,8 +22,8 @@ import com.example.data.remote.models.profile_models.user_manga_list_response.Us
 import com.example.designsystem.theme.mColors
 import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import com.example.navbarscreens.common.navbar.NavBar
-import com.example.navbarscreens.common.search_bar.NavbarScreensSearchBar
 import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
+import com.example.navbarscreens.profile_screen.sections.ProfileScreenSearchBar
 import com.example.navbarscreens.profile_screen.sections.UserMediaPager
 import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute
 
@@ -61,7 +61,7 @@ fun ProfileScreen(
         if(isSearching) {
             val userByQuery = viewModel.userByQuery.collectAsStateWithLifecycle().value
 
-            NavbarScreensSearchBar(
+            ProfileScreenSearchBar(
                 placeHolderText = "Find user",
                 onExpandChange = { isSearching = false },
                 onSearchClick = { viewModel.setQuery(it) },

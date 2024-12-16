@@ -37,6 +37,17 @@ class MediaFavoritesScreensSharedVM @Inject constructor(
         null
     )
 
+    private val _userFavoritesQuery = MutableStateFlow("")
+    val userFavoritesQuery = _userFavoritesQuery.stateIn(
+        viewModelScope,
+        SharingStarted.Lazily,
+        ""
+    )
+
+    fun setQuery(searchBarQuery: String) {
+        _userFavoritesQuery.value = searchBarQuery
+    }
+
     fun fetchUserFavorites(userName: String) {
         viewModelScope.launch(dispatcherIo) {
             try {

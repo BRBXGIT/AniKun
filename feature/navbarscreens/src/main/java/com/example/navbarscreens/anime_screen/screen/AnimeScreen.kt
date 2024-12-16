@@ -20,7 +20,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.anime_screen.sections.AnimeLCSection
 import com.example.navbarscreens.common.navbar.NavBar
-import com.example.navbarscreens.common.search_bar.NavbarScreensSearchBar
+import com.example.navbarscreens.common.search_bar.MediaListsScreensSearchBar
 import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
 import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
@@ -53,7 +53,7 @@ fun AnimeScreen(
         if(isSearching) {
             val animeByQuery = viewModel.animeByQuery.collectAsLazyPagingItems()
 
-            NavbarScreensSearchBar(
+            MediaListsScreensSearchBar(
                 navController = navController,
                 placeHolderText = "Find anime",
                 onExpandChange = { isSearching = false },
