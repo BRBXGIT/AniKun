@@ -18,13 +18,13 @@ import com.example.designsystem.theme.AppSettingsVM
 import com.example.media_screen.media_screen.navigation.mediaDetailsScreen
 import com.example.media_screen.media_screen.screen.MediaFavoritesScreensSharedVM
 import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
-import com.example.navbarscreens.anime_screen.navigation.AnimeScreenRoute
-import com.example.navbarscreens.anime_screen.navigation.animeScreen
-import com.example.navbarscreens.anime_screen.screen.AnimeScreenVM
+import com.example.navbarscreens.trending_anime_screen.navigation.AnimeScreenRoute
+import com.example.navbarscreens.trending_anime_screen.navigation.trendingAnimeScreen
+import com.example.navbarscreens.trending_anime_screen.screen.TrendingAnimeScreenVM
 import com.example.navbarscreens.common.navigation.NavBarScreensRoute
 import com.example.navbarscreens.favorites_screen.navigation.favoritesScreen
-import com.example.navbarscreens.manga_screen.navigation.mangaScreen
-import com.example.navbarscreens.manga_screen.screen.MangaScreenVM
+import com.example.navbarscreens.trending_manga_screen.navigation.trendingMangaScreen
+import com.example.navbarscreens.trending_manga_screen.screen.TrendingMangaScreenVM
 import com.example.navbarscreens.profile_screen.navigation.profileScreen
 import com.example.settingsscreen.settings_screen.navigation.settingsScreen
 
@@ -36,14 +36,14 @@ fun NavGraph(
     val navController = rememberNavController()
 
     //Initialize values here to don't refresh it after screen will be recomposed
-    val animeScreenVM = hiltViewModel<AnimeScreenVM>()
-    val mangaScreenVM = hiltViewModel<MangaScreenVM>()
+    val trendingAnimeScreenVM = hiltViewModel<TrendingAnimeScreenVM>()
+    val trendingMangaScreenVM = hiltViewModel<TrendingMangaScreenVM>()
     val mediaProfileScreensSharedVM = hiltViewModel<MediaProfileScreensSharedVM>()
     val mediaFavoritesScreensSharedVM = hiltViewModel<MediaFavoritesScreensSharedVM>()
 
     //Anime and manga screens
-    val trendingAnime = animeScreenVM.trendingAnime.collectAsLazyPagingItems()
-    val trendingManga = mangaScreenVM.trendingManga.collectAsLazyPagingItems()
+    val trendingAnime = trendingAnimeScreenVM.trendingAnime.collectAsLazyPagingItems()
+    val trendingManga = trendingMangaScreenVM.trendingManga.collectAsLazyPagingItems()
 
     //Profile screen
     val aniListUser = mediaProfileScreensSharedVM.aniListUser.collectAsStateWithLifecycle(
@@ -88,15 +88,15 @@ fun NavGraph(
         navigation<NavBarScreensRoute>(
             startDestination = AnimeScreenRoute
         ) {
-            animeScreen(
+            trendingAnimeScreen(
                 navController = navController,
-                animeScreenVM = animeScreenVM,
+                trendingAnimeScreenVM = trendingAnimeScreenVM,
                 trendingAnime = trendingAnime
             )
 
-            mangaScreen(
+            trendingMangaScreen(
                 navController = navController,
-                mangaScreenVM = mangaScreenVM,
+                trendingMangaScreenVM = trendingMangaScreenVM,
                 trendingManga = trendingManga
             )
 

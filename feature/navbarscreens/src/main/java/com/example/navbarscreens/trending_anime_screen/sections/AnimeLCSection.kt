@@ -1,4 +1,4 @@
-package com.example.navbarscreens.anime_screen.sections
+package com.example.navbarscreens.trending_anime_screen.sections
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -1,4 +1,4 @@
-package com.example.navbarscreens.manga_screen.screen
+package com.example.navbarscreens.trending_manga_screen.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -21,7 +21,7 @@ import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.common.navbar.NavBar
 import com.example.navbarscreens.common.search_bar.MediaListsScreensSearchBar
 import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
-import com.example.navbarscreens.manga_screen.sections.MangaLVGSection
+import com.example.navbarscreens.trending_manga_screen.sections.MangaLVGSection
 import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute
 import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
 
@@ -29,7 +29,7 @@ import com.example.data.remote.models.manga_list_response.Media as MangaListMedi
 @Composable
 fun MangaScreen(
     navController: NavController,
-    viewModel: MangaScreenVM,
+    viewModel: TrendingMangaScreenVM,
     trendingManga: LazyPagingItems<MangaListMedia>
 ) {
     val topBarScrollBehaviour = TopAppBarDefaults.pinnedScrollBehavior()

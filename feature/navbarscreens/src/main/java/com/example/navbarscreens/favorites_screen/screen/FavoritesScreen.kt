@@ -71,7 +71,7 @@ fun FavoritesScreen(
                 navController = navController,
                 chosenContentType = chosenContentType,
                 favoriteAnimeByQuery = filteredAnime,
-                favoriteMangaByQuery = filteredManga
+                favoriteMangaByQuery = filteredManga,
             )
         }
 
@@ -102,6 +102,7 @@ fun FavoritesScreen(
     }
 }
 
+//My realization for non strong filtration
 private fun filterAnimeList(query: String, items: List<AnimeListMedia>): List<AnimeListMedia> {
     return items.filter { item ->
         if(item.title.english != null) {

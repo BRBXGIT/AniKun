@@ -41,6 +41,7 @@ import com.example.data.remote.models.profile_models.user_by_query_response.User
 import com.example.designsystem.animated_shimmer.AnimatedShimmer
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.icons.AniKunIcons
+import com.example.designsystem.theme.mShapes
 import com.example.designsystem.theme.mTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -105,10 +106,12 @@ fun ProfileScreenSearchBar(
         if(userByQuery.exception == null) {
             SearchUserItem(userByQuery)
         } else {
-            ErrorSection(
-                errorText = userByQuery.exception.toString(),
-                modifier = Modifier.fillMaxSize()
-            )
+            if(userByQuery.exception != "HTTP 404 ") {
+                ErrorSection(
+                    errorText = userByQuery.exception.toString(),
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
         }
     }
 }
@@ -122,8 +125,10 @@ private fun SearchUserItem(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
+            .padding(8.dp)
+            .clip(mShapes.small)
             .clickable {  }
-            .padding(16.dp)
+            .padding(8.dp)
     ) {
         Icon(
             painter = painterResource(id = AniKunIcons.Magnifier),

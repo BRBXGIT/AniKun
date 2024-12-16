@@ -1,4 +1,4 @@
-package com.example.navbarscreens.manga_screen.sections
+package com.example.navbarscreens.trending_manga_screen.sections
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,7 +26,6 @@ import androidx.paging.compose.LazyPagingItems
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.manga_card.MangaCard
 import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
-import com.example.media_screen.media_screen.screen.MediaDetailsScreen
 import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
 
 @OptIn(ExperimentalMaterial3Api::class)

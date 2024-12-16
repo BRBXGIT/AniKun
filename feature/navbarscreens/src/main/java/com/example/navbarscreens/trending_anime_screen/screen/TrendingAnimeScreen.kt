@@ -1,4 +1,4 @@
-package com.example.navbarscreens.anime_screen.screen
+package com.example.navbarscreens.trending_anime_screen.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -18,18 +18,18 @@ import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.designsystem.theme.mColors
-import com.example.navbarscreens.anime_screen.sections.AnimeLCSection
 import com.example.navbarscreens.common.navbar.NavBar
 import com.example.navbarscreens.common.search_bar.MediaListsScreensSearchBar
 import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
+import com.example.navbarscreens.trending_anime_screen.sections.AnimeLCSection
 import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AnimeScreen(
+fun TrendingAnimeScreen(
     navController: NavController,
-    viewModel: AnimeScreenVM,
+    viewModel: TrendingAnimeScreenVM,
     trendingAnime: LazyPagingItems<AnimeListMedia>
 ) {
     val topBarScrollBehaviour = TopAppBarDefaults.pinnedScrollBehavior()

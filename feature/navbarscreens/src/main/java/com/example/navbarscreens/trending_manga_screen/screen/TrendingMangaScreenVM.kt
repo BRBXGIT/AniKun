@@ -1,4 +1,4 @@
-package com.example.navbarscreens.manga_screen.screen
+package com.example.navbarscreens.trending_manga_screen.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
 @HiltViewModel
-class MangaScreenVM @Inject constructor(
+class TrendingMangaScreenVM @Inject constructor(
     repository: MangaScreenRepoImpl,
     commonRepository: CommonRepoImpl
 ): ViewModel() {
