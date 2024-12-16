@@ -9,6 +9,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,6 +29,7 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.example.designsystem.animated_shimmer.AnimatedShimmer
 import com.example.designsystem.icons.AniKunIcons
+import com.example.designsystem.theme.mColors
 import com.example.navbarscreens.profile_screen.sections.ContentTypeDDM
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,6 +45,9 @@ fun NavBarScreensTopBar(
     onContentClick: (contentType: Boolean) -> Unit = {} //Only for favorites and profile screen
 ) {
     TopAppBar(
+        colors = TopAppBarDefaults.topAppBarColors(
+            scrolledContainerColor = if(userName != null) mColors.background else mColors.surfaceContainer
+        ),
         title = {
             if(userName != null) {
                 Row(
