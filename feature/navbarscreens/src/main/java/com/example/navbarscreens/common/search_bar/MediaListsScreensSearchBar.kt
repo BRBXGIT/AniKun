@@ -73,18 +73,32 @@ fun MediaListsScreensSearchBar(
                         onClick = { onExpandChange() }
                     ) {
                         Icon(
-                            painter = painterResource(id = AniKunIcons.ArrowLeftFilled),
+                            painter = painterResource(id = AniKunIcons.NavigationArrowLeft),
                             contentDescription = null
                         )
                     }
                 },
                 trailingIcon = {
-                    if(query.isNotEmpty()) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(0.dp)
+                    ) {
+                        if(query.isNotEmpty()) {
+                            IconButton(
+                                onClick = { query = "" }
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = AniKunIcons.BackspaceFilled),
+                                    contentDescription = null
+                                )
+                            }
+                        }
+
                         IconButton(
-                            onClick = { query = "" }
+                            onClick = {  }
                         ) {
                             Icon(
-                                painter = painterResource(id = AniKunIcons.BackspaceFilled),
+                                painter = painterResource(id = AniKunIcons.Filters),
                                 contentDescription = null
                             )
                         }

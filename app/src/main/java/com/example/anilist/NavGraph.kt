@@ -15,17 +15,18 @@ import com.example.data.remote.models.profile_models.user_anime_list_response.Us
 import com.example.data.remote.models.profile_models.user_data_response.AniListUser
 import com.example.data.remote.models.profile_models.user_manga_list_response.UserMangaListsResponse
 import com.example.designsystem.theme.AppSettingsVM
+import com.example.media_screen.character_screen.navigation.characterScreen
 import com.example.media_screen.media_screen.navigation.mediaDetailsScreen
 import com.example.media_screen.media_screen.screen.MediaFavoritesScreensSharedVM
 import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
+import com.example.navbarscreens.common.navigation.NavBarScreensRoute
+import com.example.navbarscreens.favorites_screen.navigation.favoritesScreen
+import com.example.navbarscreens.profile_screen.navigation.profileScreen
 import com.example.navbarscreens.trending_anime_screen.navigation.AnimeScreenRoute
 import com.example.navbarscreens.trending_anime_screen.navigation.trendingAnimeScreen
 import com.example.navbarscreens.trending_anime_screen.screen.TrendingAnimeScreenVM
-import com.example.navbarscreens.common.navigation.NavBarScreensRoute
-import com.example.navbarscreens.favorites_screen.navigation.favoritesScreen
 import com.example.navbarscreens.trending_manga_screen.navigation.trendingMangaScreen
 import com.example.navbarscreens.trending_manga_screen.screen.TrendingMangaScreenVM
-import com.example.navbarscreens.profile_screen.navigation.profileScreen
 import com.example.settingsscreen.settings_screen.navigation.settingsScreen
 
 @Composable
@@ -131,6 +132,8 @@ fun NavGraph(
             favoritesScreenSharedVM = mediaFavoritesScreensSharedVM,
             profileScreensSharedVM = mediaProfileScreensSharedVM
         )
+
+        characterScreen(navController)
 
         settingsScreen(
             appSettingsVM = appSettingsVM,

@@ -1,5 +1,6 @@
 package com.example.media_screen.media_screen.sections
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,16 +22,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
 import com.example.data.remote.models.media_details_models.media_details_response.Characters
 import com.example.designsystem.animated_shimmer.AnimatedShimmer
+import com.example.designsystem.theme.mShapes
 import com.example.designsystem.theme.mTypography
+import com.example.media_screen.character_screen.navigation.CharacterScreenRoute
 
 @Composable
 fun CharactersLRSection(
-    characters: Characters
+    characters: Characters,
+    navController: NavController
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp)
@@ -46,12 +51,18 @@ fun CharactersLRSection(
         LazyRow(
             contentPadding = PaddingValues(horizontal = 16.dp),
             verticalAlignment = Alignment.Top,
-            horizontalArrangement = Arrangement.spacedBy(24.dp)
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(characters.nodes) { character ->
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .clip(mShapes.small)
+                        .clickable {
+                            navController.navigate(CharacterScreenRoute(character.id))
+                        }
+                        .padding(8.dp)
                 ) {
                     SubcomposeAsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)

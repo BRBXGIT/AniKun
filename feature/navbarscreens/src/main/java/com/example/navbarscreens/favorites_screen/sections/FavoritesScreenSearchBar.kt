@@ -73,7 +73,7 @@ fun FavoritesScreenSearchBar(
                         onClick = { onExpandChange() }
                     ) {
                         Icon(
-                            painter = painterResource(id = AniKunIcons.ArrowLeftFilled),
+                            painter = painterResource(id = AniKunIcons.NavigationArrowLeft),
                             contentDescription = null
                         )
                     }

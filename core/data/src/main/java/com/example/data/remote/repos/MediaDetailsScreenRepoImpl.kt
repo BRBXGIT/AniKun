@@ -44,6 +44,7 @@ class MediaDetailsScreenRepoImpl @Inject constructor(
 
                 characters {
                   nodes {
+                    id
                     image {
                       large
                     }

@@ -8,6 +8,7 @@ import com.example.data.local.user_db.UserDb
 import com.example.data.remote.api_instance.AniListApiInstance
 import com.example.data.remote.repos.AnimeScreenRepoImpl
 import com.example.data.remote.repos.AuthRepoImpl
+import com.example.data.remote.repos.CharacterScreenRepoImpl
 import com.example.data.remote.repos.CommonRepoImpl
 import com.example.data.remote.repos.FavoritesScreenRepoImpl
 import com.example.data.remote.repos.MangaScreenRepoImpl
@@ -15,6 +16,7 @@ import com.example.data.remote.repos.MediaDetailsScreenRepoImpl
 import com.example.data.remote.repos.ProfileScreenRepoImpl
 import com.example.data.repos.AnimeScreenRepo
 import com.example.data.repos.AuthRepo
+import com.example.data.repos.CharacterScreenRepo
 import com.example.data.repos.CommonRepo
 import com.example.data.repos.FavoritesScreenRepo
 import com.example.data.repos.MangaScreenRepo
@@ -100,5 +102,11 @@ object DataModule {
     @Singleton
     fun provideFavoritesScreenRepo(apiInstance: AniListApiInstance): FavoritesScreenRepo {
         return FavoritesScreenRepoImpl(apiInstance)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCharacterScreenRepo(apiInstance: AniListApiInstance): CharacterScreenRepo {
+        return CharacterScreenRepoImpl(apiInstance)
     }
 }

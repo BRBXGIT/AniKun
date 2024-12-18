@@ -4,12 +4,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.example.data.remote.models.profile_models.user_favorites_response.Favourites
-import com.example.navbarscreens.favorites_screen.screen.FavoritesScreen
 import com.example.media_screen.media_screen.screen.MediaFavoritesScreensSharedVM
+import com.example.navbarscreens.favorites_screen.screen.FavoritesScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
-object FavoritesScreenRoute
+data object FavoritesScreenRoute
 
 fun NavGraphBuilder.favoritesScreen(
     navController: NavController,

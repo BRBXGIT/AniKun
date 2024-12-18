@@ -121,7 +121,7 @@ fun MediaDetailsScreen(
 
         if(mediaDetails.exception != null) {
             ErrorSection(
-                errorText = if(mediaDetails.exception == "HTTP 429") {
+                errorText = if(mediaDetails.exception == "HTTP 429 ") {
                     "${mediaDetails.exception}, please give AniList a little rest :), try in 2-3 minutes"
                 } else {
                     mediaDetails.exception.toString()
@@ -168,7 +168,10 @@ fun MediaDetailsScreen(
                     }
 
                     item {
-                        CharactersLRSection(media.characters)
+                        CharactersLRSection(
+                            characters = media.characters,
+                            navController = navController
+                        )
                     }
 
                     item {

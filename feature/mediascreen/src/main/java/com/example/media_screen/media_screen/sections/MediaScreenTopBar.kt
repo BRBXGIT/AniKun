@@ -63,7 +63,7 @@ fun MediaScreenTopBar(
                 onClick = { onNavIconClick() }
             ) {
                 Icon(
-                    painter = painterResource(id = AniKunIcons.ArrowLeftFilled),
+                    painter = painterResource(id = AniKunIcons.NavigationArrowLeft),
                     contentDescription = null
                 )
             }

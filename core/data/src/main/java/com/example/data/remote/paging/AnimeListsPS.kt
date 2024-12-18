@@ -3,11 +3,11 @@ package com.example.data.remote.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.data.remote.api_instance.AniListApiInstance
-import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.data.remote.models.common_models.common_request.CommonRequest
 import com.google.gson.Gson
 import retrofit2.HttpException
 import java.io.IOException
+import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 
 class AnimeListsPS(
     private val apiInstance: AniListApiInstance
@@ -50,7 +50,6 @@ class AnimeListsPS(
             "page" to startPage,
             "perPage" to perPage
         )
-
         val jsonVariables = Gson().toJson(variables)
 
         return try {
