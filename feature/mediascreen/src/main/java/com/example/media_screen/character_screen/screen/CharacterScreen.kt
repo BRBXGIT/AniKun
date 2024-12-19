@@ -68,7 +68,8 @@ fun CharacterScreen(
                     favoritesScreenSharedVM.toggleFavorite("CHARACTER", characterId)
                 },
                 scrollBehavior = topBarScrollBehavior,
-                isFavorite = isCharacterInFavorites
+                isFavorite = isCharacterInFavorites,
+                characterName = characterDetails.data?.character?.name?.full
             )
         },
         modifier = Modifier

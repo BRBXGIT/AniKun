@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,6 +29,7 @@ import com.example.data.remote.models.profile_models.user_manga_list_response.Us
 import com.example.designsystem.custom_modifiers.customTabIndicatorOffset
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.theme.mColors
+import com.example.designsystem.theme.mShapes
 import kotlinx.coroutines.launch
 
 @Composable
@@ -86,7 +88,9 @@ fun UserMediaPager(
                                 pagerState.animateScrollToPage(index)
                             }
                         },
-                        modifier = Modifier.clip(RoundedCornerShape(10.dp)),
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .clip(mShapes.small),
                         text = {
                             Text(
                                 text = list.name
@@ -156,7 +160,9 @@ fun UserMediaPager(
                                 pagerState.animateScrollToPage(index)
                             }
                         },
-                        modifier = Modifier.clip(RoundedCornerShape(10.dp)),
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .clip(mShapes.small),
                         text = {
                             Text(
                                 text = list.name

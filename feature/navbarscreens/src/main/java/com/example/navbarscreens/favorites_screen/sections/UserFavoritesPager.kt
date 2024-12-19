@@ -3,12 +3,13 @@ package com.example.navbarscreens.favorites_screen.sections
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,6 +26,7 @@ import androidx.navigation.NavController
 import com.example.data.remote.models.profile_models.user_favorites_response.Node
 import com.example.designsystem.custom_modifiers.customTabIndicatorOffset
 import com.example.designsystem.theme.mColors
+import com.example.designsystem.theme.mShapes
 import kotlinx.coroutines.launch
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
@@ -55,9 +57,8 @@ fun UserFavoritesPager(
         }
     }
 
-    ScrollableTabRow(
+    TabRow(
         selectedTabIndex = selectedType,
-        edgePadding = 16.dp,
         divider = {
             HorizontalDivider(
                 thickness = 1.dp,
@@ -89,7 +90,9 @@ fun UserFavoritesPager(
                         pagerState.animateScrollToPage(index)
                     }
                 },
-                modifier = Modifier.clip(RoundedCornerShape(10.dp)),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .clip(mShapes.small),
                 text = {
                     Text(
                         text = type
