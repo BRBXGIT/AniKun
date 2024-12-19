@@ -69,6 +69,7 @@ class MediaFavoritesScreensSharedVM @Inject constructor(
                     val response = repository.toggleFavorite(
                         animeId = mediaId,
                         mangaId = mediaId,
+                        characterId = mediaId,
                         mediaType = mediaType,
                         accessToken = "Bearer ${aniKunUser[0].accessToken}"
                     ).data

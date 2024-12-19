@@ -12,6 +12,7 @@ import com.example.designsystem.icons.AniKunIcons
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CharacterScreenTopBar(
+    isFavorite: Boolean,
     onNavIconClick: () -> Unit,
     onFavoriteIconClick: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior
@@ -23,7 +24,9 @@ fun CharacterScreenTopBar(
                 onClick = { onFavoriteIconClick() }
             ) {
                 Icon(
-                    painter = painterResource(id =AniKunIcons.Heart),
+                    painter = painterResource(
+                        id = if(isFavorite) AniKunIcons.HeartFilled else AniKunIcons.Heart
+                    ),
                     contentDescription = null
                 )
             }

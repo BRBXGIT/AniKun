@@ -82,6 +82,7 @@ class FavoritesScreenRepoImpl @Inject constructor(
     override suspend fun toggleFavorite(
         animeId: Int,
         mangaId: Int,
+        characterId: Int,
         mediaType: String,
         accessToken: String
     ): ToggleFavoriteResponse {
@@ -136,10 +137,10 @@ class FavoritesScreenRepoImpl @Inject constructor(
             }
         """.trimIndent()
 
-        val variables = if(mediaType == "MANGA") {
-            mapOf("mangaId" to mangaId)
-        } else {
-            mapOf("animeId" to animeId)
+        val variables = when(mediaType) {
+            "MANGA" -> mapOf("mangaId" to mangaId)
+            "ANIME" -> mapOf("animeId" to animeId)
+            else -> mapOf("toggleFavouriteCharacterId2" to characterId)
         }
         val jsonVariables = Gson().toJson(variables)
 

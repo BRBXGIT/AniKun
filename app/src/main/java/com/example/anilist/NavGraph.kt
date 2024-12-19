@@ -131,7 +131,11 @@ fun NavGraph(
             profileScreensSharedVM = mediaProfileScreensSharedVM
         )
 
-        characterScreen(navController)
+        characterScreen(
+            navController = navController,
+            favoritesScreenSharedVM = mediaFavoritesScreensSharedVM,
+            userFavorites = if(favoritesException == null) userFavorites else null
+        )
 
         settingsScreen(
             appSettingsVM = appSettingsVM,

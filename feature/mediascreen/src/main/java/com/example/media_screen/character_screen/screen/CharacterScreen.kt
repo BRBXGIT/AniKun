@@ -14,12 +14,17 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.example.data.remote.models.profile_models.user_favorites_response.Favourites
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.theme.mColors
 import com.example.media_screen.character_screen.sections.CharacterHeader
@@ -27,13 +32,16 @@ import com.example.media_screen.character_screen.sections.CharacterScreenTopBar
 import com.example.media_screen.character_screen.sections.DescriptionSection
 import com.example.media_screen.character_screen.sections.FavoritesCountSection
 import com.example.media_screen.character_screen.sections.SeriesLRSection
+import com.example.media_screen.media_screen.screen.MediaFavoritesScreensSharedVM
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CharacterScreen(
+    userFavorites: Favourites?,
     characterId: Int,
     navController: NavController,
-    viewModel: CharacterScreenVM
+    viewModel: CharacterScreenVM,
+    favoritesScreenSharedVM: MediaFavoritesScreensSharedVM
 ) {
     //Get and collect character details
     val characterDetails = viewModel.characterDetails.collectAsStateWithLifecycle().value
@@ -44,13 +52,23 @@ fun CharacterScreen(
         }
     }
 
+    var isCharacterInFavorites by rememberSaveable { mutableStateOf(false) }
+    isCharacterInFavorites = if(userFavorites != null) {
+        checkIsCharacterInFavorites(userFavorites, characterId)
+    } else {
+        false
+    }
+
     val topBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
         topBar = {
             CharacterScreenTopBar(
                 onNavIconClick = { navController.navigateUp() },
-                onFavoriteIconClick = {  },
-                scrollBehavior = topBarScrollBehavior
+                onFavoriteIconClick = {
+                    favoritesScreenSharedVM.toggleFavorite("CHARACTER", characterId)
+                },
+                scrollBehavior = topBarScrollBehavior,
+                isFavorite = isCharacterInFavorites
             )
         },
         modifier = Modifier
@@ -123,4 +141,15 @@ fun CharacterScreen(
             }
         }
     }
+}
+
+private fun checkIsCharacterInFavorites(
+    userFavorites: Favourites,
+    characterId: Int
+): Boolean {
+    userFavorites.characters.nodes.forEach { character ->
+        if(character.id == characterId) return true
+    }
+
+    return false
 }

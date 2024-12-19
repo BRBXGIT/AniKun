@@ -10,6 +10,7 @@ interface FavoritesScreenRepo {
     suspend fun toggleFavorite(
         animeId: Int,
         mangaId: Int,
+        characterId: Int,
         mediaType: String,
         accessToken: String
     ): ToggleFavoriteResponse
