@@ -17,6 +17,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.data.remote.models.profile_models.user_favorites_response.Favourites
+import com.example.data.remote.models.profile_models.user_favorites_response.Node
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.theme.mColors
 import com.example.media_screen.media_screen.screen.MediaFavoritesScreensSharedVM
@@ -60,6 +61,7 @@ fun FavoritesScreen(
 
             val filteredAnime = filterAnimeList(query, userFavorites.anime.nodes)
             val filteredManga = filterMangaList(query, userFavorites.manga.nodes)
+            val filteredCharacters = filterCharacterList(query, userFavorites.characters.nodes)
 
             FavoritesScreenSearchBar(
                 placeHolderText = "Find favorite",
@@ -68,6 +70,7 @@ fun FavoritesScreen(
                 navController = navController,
                 favoriteAnimeByQuery = filteredAnime,
                 favoriteMangaByQuery = filteredManga,
+                favoriteCharactersByQuery = filteredCharacters
             )
         }
 
@@ -111,6 +114,12 @@ private fun filterMangaList(query: String, items: List<MangaListMedia>): List<Ma
         } else {
             item.title.romaji.contains(query, ignoreCase = true) || levenshteinDistance(item.title.romaji.lowercase(), query.lowercase()) <= 2
         }
+    }
+}
+
+private fun filterCharacterList(query: String, items: List<Node>): List<Node> {
+    return items.filter { item ->
+        item.name.full.contains(query, ignoreCase = true) || levenshteinDistance(item.name.full.lowercase(), query.lowercase()) <= 2
     }
 }
 

@@ -5,10 +5,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,15 +31,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.FilterQuality
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import coil.compose.SubcomposeAsyncImage
+import coil.request.ImageRequest
+import coil.size.Size
+import com.example.data.remote.models.profile_models.user_favorites_response.Node
+import com.example.designsystem.animated_shimmer.AnimatedShimmer
 import com.example.designsystem.icons.AniKunIcons
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes
 import com.example.designsystem.theme.mTypography
+import com.example.media_screen.character_screen.navigation.CharacterScreenRoute
 import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
@@ -47,6 +60,7 @@ fun FavoritesScreenSearchBar(
     onSearchClick: (String) -> Unit,
     favoriteMangaByQuery: List<MangaListMedia>,
     favoriteAnimeByQuery: List<AnimeListMedia>,
+    favoriteCharactersByQuery: List<Node>,
     onExpandChange: () -> Unit,
     placeHolderText: String,
 ) {
@@ -158,12 +172,40 @@ fun FavoritesScreenSearchBar(
                     )
                 }
             }
+
+            if(favoriteCharactersByQuery.isNotEmpty()) {
+                item {
+                    Text(
+                        text = "Characters: ",
+                        style = mTypography.bodyLarge.copy(
+                            color = mColors.primary
+                        ),
+                        modifier = Modifier.padding(start = 16.dp)
+                    )
+                }
+
+                items(favoriteCharactersByQuery) { character ->
+                    SearchFavoriteCharacterItem(
+                        character = character,
+                        onItemClick = {
+                            navController.navigate(CharacterScreenRoute(character.id))
+                            onExpandChange()
+                        }
+                    )
+                }
+
+                item {
+                    Spacer(
+                        modifier = Modifier.height(0.dp)
+                    )
+                }
+            }
         }
     }
 }
 
 @Composable
-fun SearchFavoriteItem(
+private fun SearchFavoriteItem(
     onItemClick: () -> Unit,
     mangaMedia: MangaListMedia? = null,
     animeMedia: AnimeListMedia? = null,
@@ -221,6 +263,61 @@ fun SearchFavoriteItem(
                     )
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun SearchFavoriteCharacterItem(
+    character: Node,
+    onItemClick: () -> Unit
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .clip(mShapes.small)
+            .clickable { onItemClick() }
+            .padding(8.dp)
+    ) {
+        Icon(
+            painter = painterResource(id = AniKunIcons.Magnifier),
+            contentDescription = null
+        )
+
+        SubcomposeAsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(character.image.large)
+                .crossfade(500)
+                .size(Size.ORIGINAL)
+                .build(),
+            contentDescription = null,
+            modifier = Modifier
+                .size(32.dp)
+                .clip(CircleShape),
+            filterQuality = FilterQuality.Low,
+            contentScale = ContentScale.Crop,
+            loading = { AnimatedShimmer(24.dp, 24.dp) }
+        )
+
+        Column(
+            verticalArrangement = Arrangement.spacedBy(2.dp)
+        ) {
+            Text(
+                text = character.name.full,
+                style = mTypography.labelLarge,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+
+            Text(
+                text = character.name.native,
+                style = mTypography.labelMedium.copy(
+                    color = mColors.primary
+                )
+            )
         }
     }
 }
