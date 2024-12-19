@@ -1,6 +1,5 @@
 package com.example.media_screen.media_screen.screen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.common.dispatchers.AniKunDispatchers
@@ -64,8 +63,6 @@ class MediaFavoritesScreensSharedVM @Inject constructor(
     }
 
     fun toggleFavorite(mediaType: String, mediaId: Int) {
-        Log.d("CCCC", mediaType)
-
         viewModelScope.launch(dispatcherIo) {
             try {
                 commonRepository.getAniKunUser().collect { aniKunUser ->
@@ -82,20 +79,8 @@ class MediaFavoritesScreensSharedVM @Inject constructor(
                     }
                 }
             } catch(e: Exception) {
-                Log.d("CCCC", e.message.toString())
                 _userFavoritesException.value = e.message.toString()
             }
         }
-    }
-
-    private val _chosenContentType = MutableStateFlow(false)
-    val chosenContentType = _chosenContentType.stateIn(
-        viewModelScope,
-        SharingStarted.Lazily,
-        false
-    )
-
-    fun setContentType(contentType: Boolean) {
-        _chosenContentType.value = contentType
     }
 }

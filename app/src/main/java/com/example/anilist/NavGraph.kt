@@ -75,7 +75,6 @@ fun NavGraph(
     //UserFavoritesScreen
     mediaFavoritesScreensSharedVM.fetchUserFavorites(aniListUser.data.viewer.name)
     val userFavorites = mediaFavoritesScreensSharedVM.userFavorites.collectAsStateWithLifecycle().value
-    val chosenFavoritesScreenContentType = mediaFavoritesScreensSharedVM.chosenContentType.collectAsStateWithLifecycle().value
     val favoritesException = mediaFavoritesScreensSharedVM.userFavoritesException.collectAsStateWithLifecycle().value
 
     NavHost(
@@ -105,7 +104,6 @@ fun NavGraph(
                 navController = navController,
                 userFavorites = userFavorites,
                 mediaFavoritesScreensSharedVM = mediaFavoritesScreensSharedVM,
-                chosenContentType = chosenFavoritesScreenContentType,
                 favoritesException = favoritesException
             )
 

@@ -1,24 +1,15 @@
 package com.example.navbarscreens.profile_screen.sections
 
-import android.annotation.SuppressLint
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabPosition
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,17 +19,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.debugInspectorInfo
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import androidx.navigation.NavController
 import com.example.data.remote.models.profile_models.user_anime_list_response.UserAnimeListsResponse
 import com.example.data.remote.models.profile_models.user_manga_list_response.UserMangaListsResponse
+import com.example.designsystem.custom_modifiers.customTabIndicatorOffset
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.theme.mColors
 import kotlinx.coroutines.launch
@@ -192,28 +179,4 @@ fun UserMediaPager(
             )
         }
     }
-}
-
-@SuppressLint("UseOfNonLambdaOffsetOverload")
-private fun Modifier.customTabIndicatorOffset(
-    currentTabPosition: TabPosition,
-    width: Dp
-): Modifier = composed(
-    inspectorInfo = debugInspectorInfo {
-        name = "tabIndicatorOffset"
-        value = currentTabPosition
-    }
-) {
-    val currentTabWidth by animateDpAsState(
-        targetValue = currentTabPosition.width,
-        animationSpec = tween(durationMillis = 250, easing = FastOutSlowInEasing), label = ""
-    )
-    val indicatorOffset by animateDpAsState(
-        targetValue = currentTabPosition.left,
-        animationSpec = tween(durationMillis = 250, easing = FastOutSlowInEasing), label = ""
-    )
-    fillMaxWidth()
-        .wrapContentSize(Alignment.BottomStart)
-        .width(width)
-        .offset(x = max(0.dp, currentTabWidth - width) / 2 + indicatorOffset)
 }

@@ -49,7 +49,8 @@ fun ProfileScreen(
                 onSearchClick = { isSearching = true },
                 chosenContent = chosenContentType,
                 onContentClick = { viewModel.setContentType(it) },
-                onSettingsClick = { navController.navigate(SettingsScreenRoute) }
+                onSettingsClick = { navController.navigate(SettingsScreenRoute) },
+                fromUserListsScreen = true
             )
         },
         bottomBar = { NavBar(navController) },

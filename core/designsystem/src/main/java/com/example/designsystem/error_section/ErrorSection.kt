@@ -40,7 +40,11 @@ fun ErrorSection(
             )
 
             Text(
-                text = errorText,
+                text = if(errorText == "HTTP 429 ") {
+                    "${errorText}, please give AniList a little rest :), try in 2-3 minutes"
+                } else {
+                    errorText
+                },
                 style = mTypography.bodyMedium.copy(
                     lineBreak = LineBreak.Paragraph
                 ),

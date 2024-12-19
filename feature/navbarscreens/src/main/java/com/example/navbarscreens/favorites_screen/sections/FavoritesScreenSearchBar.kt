@@ -49,7 +49,6 @@ fun FavoritesScreenSearchBar(
     favoriteAnimeByQuery: List<AnimeListMedia>,
     onExpandChange: () -> Unit,
     placeHolderText: String,
-    chosenContentType: Boolean,
 ) {
     var query by rememberSaveable { mutableStateOf("") }
 
@@ -102,9 +101,19 @@ fun FavoritesScreenSearchBar(
         onExpandedChange = { onExpandChange() },
     ) {
         LazyColumn(
-            contentPadding = PaddingValues(bottom = 16.dp)
+            contentPadding = PaddingValues(vertical = 16.dp)
         ) {
-            if(!chosenContentType) {
+            if(favoriteAnimeByQuery.isNotEmpty()) {
+                item {
+                    Text(
+                        text = "Anime: ",
+                        style = mTypography.bodyLarge.copy(
+                            color = mColors.primary
+                        ),
+                        modifier = Modifier.padding(start = 16.dp)
+                    )
+                }
+
                 items(favoriteAnimeByQuery) { anime ->
                     SearchFavoriteItem(
                         onItemClick = {
@@ -120,7 +129,19 @@ fun FavoritesScreenSearchBar(
                         animeMedia = anime
                     )
                 }
-            } else {
+            }
+
+            if(favoriteMangaByQuery.isNotEmpty()) {
+                item {
+                    Text(
+                        text = "Manga: ",
+                        style = mTypography.bodyLarge.copy(
+                            color = mColors.primary
+                        ),
+                        modifier = Modifier.padding(start = 16.dp)
+                    )
+                }
+
                 items(favoriteMangaByQuery) { manga ->
                     SearchFavoriteItem(
                         onItemClick = {

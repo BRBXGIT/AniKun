@@ -41,12 +41,13 @@ fun NavBarScreensTopBar(
     onSettingsClick: () -> Unit,
     userAvatar: String? = null, //Only for profile screen
     userName: String? = null, //Only for profile screen
-    chosenContent: Boolean? = null, //Only for favorites and profile screen
-    onContentClick: (contentType: Boolean) -> Unit = {} //Only for favorites and profile screen
+    chosenContent: Boolean? = null, //Only for profile screen
+    onContentClick: (contentType: Boolean) -> Unit = {}, //Only for profile screen
+    fromUserListsScreen: Boolean? = null //Only for favorites and profile screen
 ) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
-            scrolledContainerColor = if(userName != null) mColors.background else mColors.surfaceContainer
+            scrolledContainerColor = if(fromUserListsScreen != null) mColors.background else mColors.surfaceContainer
         ),
         title = {
             if(userName != null) {

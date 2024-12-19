@@ -16,13 +16,11 @@ fun NavGraphBuilder.favoritesScreen(
     favoritesException: String?,
     userFavorites: Favourites,
     mediaFavoritesScreensSharedVM: MediaFavoritesScreensSharedVM,
-    chosenContentType: Boolean
 ) = composable<FavoritesScreenRoute> {
     FavoritesScreen(
         navController = navController,
         userFavorites = userFavorites,
         viewModel = mediaFavoritesScreensSharedVM,
-        chosenContentType = chosenContentType,
         favoritesException = favoritesException
     )
 }

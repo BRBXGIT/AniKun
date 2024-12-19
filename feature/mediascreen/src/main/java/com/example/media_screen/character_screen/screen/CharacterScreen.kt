@@ -71,11 +71,7 @@ fun CharacterScreen(
 
         if(characterDetails.exception != null) {
             ErrorSection(
-                errorText = if(characterDetails.exception == "HTTP 429 ") {
-                    "${characterDetails.exception}, please give AniList a little rest :), try in 2-3 minutes"
-                } else {
-                    characterDetails.exception.toString()
-                },
+                errorText = characterDetails.exception!!,
                 modifier = Modifier.fillMaxSize()
             )
         }
@@ -103,8 +99,10 @@ fun CharacterScreen(
                         )
                     }
 
-                    item {
-                        DescriptionSection(character.description)
+                    if(character.description != null) {
+                        item {
+                            DescriptionSection(character.description!!)
+                        }
                     }
 
                     item {

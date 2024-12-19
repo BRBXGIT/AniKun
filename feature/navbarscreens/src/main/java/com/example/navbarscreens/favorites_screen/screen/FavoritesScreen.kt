@@ -22,9 +22,8 @@ import com.example.designsystem.theme.mColors
 import com.example.media_screen.media_screen.screen.MediaFavoritesScreensSharedVM
 import com.example.navbarscreens.common.navbar.NavBar
 import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
-import com.example.navbarscreens.favorites_screen.sections.FavoriteAnimeLCSection
-import com.example.navbarscreens.favorites_screen.sections.FavoriteMangaLVGSection
 import com.example.navbarscreens.favorites_screen.sections.FavoritesScreenSearchBar
+import com.example.navbarscreens.favorites_screen.sections.UserFavoritesPager
 import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
@@ -36,9 +35,8 @@ fun FavoritesScreen(
     userFavorites: Favourites,
     favoritesException: String?,
     viewModel: MediaFavoritesScreensSharedVM,
-    chosenContentType: Boolean
 ) {
-    val topBarScrollBehaviour = TopAppBarDefaults.pinnedScrollBehavior()
+    val topBarScrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     var isSearching by rememberSaveable { mutableStateOf(false) }
     Scaffold(
@@ -47,9 +45,8 @@ fun FavoritesScreen(
                 text = "Favorites",
                 scrollBehavior = topBarScrollBehaviour,
                 onSearchClick = { isSearching = true },
-                chosenContent = chosenContentType,
-                onContentClick = { viewModel.setContentType(it) },
-                onSettingsClick = { navController.navigate(SettingsScreenRoute) }
+                onSettingsClick = { navController.navigate(SettingsScreenRoute) },
+                fromUserListsScreen = true
             )
         },
         bottomBar = { NavBar(navController) },
@@ -65,11 +62,10 @@ fun FavoritesScreen(
             val filteredManga = filterMangaList(query, userFavorites.manga.nodes)
 
             FavoritesScreenSearchBar(
-                placeHolderText = if(!chosenContentType) "Find favorite anime" else "Find favorite manga",
+                placeHolderText = "Find favorite",
                 onExpandChange = { isSearching = false },
                 onSearchClick = { viewModel.setQuery(it) },
                 navController = navController,
-                chosenContentType = chosenContentType,
                 favoriteAnimeByQuery = filteredAnime,
                 favoriteMangaByQuery = filteredManga,
             )
@@ -81,20 +77,15 @@ fun FavoritesScreen(
                 .padding(innerPadding)
         ) {
             if(favoritesException == null) {
-                if(!chosenContentType) {
-                    FavoriteAnimeLCSection(
-                        favoriteAnime = userFavorites.anime.nodes,
-                        navController = navController
-                    )
-                } else {
-                    FavoriteMangaLVGSection(
-                        favoriteManga = userFavorites.manga.nodes,
-                        navController = navController
-                    )
-                }
+                UserFavoritesPager(
+                    userFavoriteAnime = userFavorites.anime.nodes,
+                    userFavoriteManga = userFavorites.manga.nodes,
+                    userFavoriteCharacters = userFavorites.characters.nodes,
+                    navController = navController
+                )
             } else {
                 ErrorSection(
-                    errorText = favoritesException.toString(),
+                    errorText = favoritesException,
                     modifier = Modifier.fillMaxSize()
                 )
             }

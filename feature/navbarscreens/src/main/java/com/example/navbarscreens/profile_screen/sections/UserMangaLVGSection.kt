@@ -1,20 +1,15 @@
 package com.example.navbarscreens.profile_screen.sections
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.manga_card.MangaCard
 import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
 import com.example.data.remote.models.profile_models.user_manga_list_response.Entry as MangaListEntry

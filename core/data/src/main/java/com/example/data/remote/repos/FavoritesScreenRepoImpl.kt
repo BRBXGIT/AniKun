@@ -86,8 +86,8 @@ class FavoritesScreenRepoImpl @Inject constructor(
         accessToken: String
     ): ToggleFavoriteResponse {
         val query = """
-            mutation (${"$"}animeId: Int, ${"$"}mangaId: Int) {
-              ToggleFavourite(animeId: ${"$"}animeId, mangaId: ${"$"}mangaId) {
+            mutation (${"$"}animeId: Int, ${"$"}mangaId: Int, ${"$"}toggleFavouriteCharacterId2: Int) {
+              ToggleFavourite(animeId: ${"$"}animeId, mangaId: ${"$"}mangaId, characterId: ${"$"}toggleFavouriteCharacterId2) {
                 anime {
                   nodes {
                     id
