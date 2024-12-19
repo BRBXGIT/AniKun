@@ -104,14 +104,13 @@ fun CharacterScreen(
                     }
 
                     item {
-                        DescriptionSection(
-                            description = character.description
-                        )
+                        DescriptionSection(character.description)
                     }
 
                     item {
                         SeriesLRSection(
                             series = character.media.nodes,
+                            navController = navController
                         )
                     }
 

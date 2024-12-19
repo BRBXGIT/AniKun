@@ -19,7 +19,7 @@ data class Media(
     val season: String?,
     val seasonYear: Int,
     val bannerImage: String?,
-    val source: String,
+    val source: String?,
     val startDate: StartDate,
     val status: String,
     val studios: Studios,

@@ -1,6 +1,7 @@
 package com.example.media_screen.character_screen.sections
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
@@ -31,10 +33,12 @@ import com.example.designsystem.animated_shimmer.AnimatedShimmer
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes
 import com.example.designsystem.theme.mTypography
+import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
 
 @Composable
 fun SeriesLRSection(
     series: List<Node>,
+    navController: NavController
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),
@@ -58,7 +62,15 @@ fun SeriesLRSection(
                 SeriesItem(
                     image = item.coverImage.large,
                     type = item.type,
-                    title = if(item.title.english != null) item.title.english!! else item.title.romaji
+                    title = if(item.title.english != null) item.title.english!! else item.title.romaji,
+                    onItemClick = {
+                        navController.navigate(
+                            MediaDetailsScreenRoute(
+                                mediaId = item.id,
+                                mediaType = item.type
+                            )
+                        )
+                    }
                 )
             }
         }
@@ -69,12 +81,14 @@ fun SeriesLRSection(
 private fun SeriesItem(
     image: String,
     type: String,
-    title: String
+    title: String,
+    onItemClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .clip(mShapes.small)
             .width(100.dp)
+            .clickable { onItemClick() }
     ) {
         Box(
             modifier = Modifier.size(100.dp, 130.dp)

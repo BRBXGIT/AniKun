@@ -28,7 +28,7 @@ fun InfoSection(
     episodes: Int,
     chapters: Int?,
     episodeDuration: Int,
-    source: String,
+    source: String?,
     status: String,
     startDate: StartDate,
     endDate: EndDate,
@@ -74,7 +74,7 @@ fun InfoSection(
             if(format != "MANGA") {
                 InfoRow("Episode duration", episodeDuration.toString())
             }
-            InfoRow("Source", source)
+            InfoRow("Source", source ?: "?")
             InfoRow("Status", status)
             InfoRow("Start date", "${formatDate(startDate.day.toString())}.${formatDate(startDate.month.toString())}.${startDate.year}")
             val formattedEndDate = "${formatDate(endDate.day.toString())}.${formatDate(endDate.month.toString())}.${endDate.year}"

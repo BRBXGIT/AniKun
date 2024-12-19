@@ -49,6 +49,18 @@ class FavoritesScreenRepoImpl @Inject constructor(
                       genres
                     }
                   }
+                  characters {
+                    nodes {
+                      name {
+                        full
+                        native
+                      }
+                      image {
+                        large
+                      }
+                      id
+                    }
+                  }
                 }
               }
             }
@@ -106,6 +118,18 @@ class FavoritesScreenRepoImpl @Inject constructor(
                       romaji
                       english
                     }
+                  }
+                }
+                characters {
+                  nodes {
+                    name {
+                      full
+                      native
+                    }
+                    image {
+                      large
+                    }
+                    id
                   }
                 }
               }
