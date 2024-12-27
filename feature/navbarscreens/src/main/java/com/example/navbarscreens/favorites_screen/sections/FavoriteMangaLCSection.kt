@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
-import com.example.designsystem.manga_card.MangaCard
+import com.example.designsystem.media_cards.MangaCard
 import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
 
 @Composable
@@ -33,7 +33,7 @@ fun FavoriteMangaLVGSection(
             MangaCard(
                 manga = manga,
                 index = index,
-                onCardClick = {
+                onMangaClick = {
                     navController.navigate(
                         MediaDetailsScreenRoute(
                             mediaId = manga.id,

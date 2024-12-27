@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.data.remote.models.profile_models.user_favorites_response.Node
@@ -95,7 +96,9 @@ fun UserFavoritesPager(
                     .clip(mShapes.small),
                 text = {
                     Text(
-                        text = type
+                        text = type,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
             )

@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.data.remote.models.profile_models.user_anime_list_response.Entry
-import com.example.designsystem.anime_card.AnimeCard
+import com.example.designsystem.media_cards.AnimeCard
 import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
 
 @Composable

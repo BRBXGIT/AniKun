@@ -20,7 +20,7 @@ import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
 import com.example.data.remote.models.character_info_response.Name
-import com.example.designsystem.animated_shimmer.AnimatedShimmer
+import com.example.designsystem.media_cards.AnimatedShimmer
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes
 import com.example.designsystem.theme.mTypography

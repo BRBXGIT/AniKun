@@ -43,7 +43,7 @@ import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
 import com.example.data.remote.models.profile_models.user_favorites_response.Node
-import com.example.designsystem.animated_shimmer.AnimatedShimmer
+import com.example.designsystem.media_cards.AnimatedShimmer
 import com.example.designsystem.icons.AniKunIcons
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes

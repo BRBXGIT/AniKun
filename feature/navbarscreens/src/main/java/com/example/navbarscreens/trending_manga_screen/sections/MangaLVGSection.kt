@@ -24,7 +24,7 @@ import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.example.designsystem.error_section.ErrorSection
-import com.example.designsystem.manga_card.MangaCard
+import com.example.designsystem.media_cards.MangaCard
 import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
 import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
 
@@ -63,7 +63,7 @@ fun MangaLVGSection(
                     MangaCard(
                         manga = currentManga!!,
                         index = index,
-                        onCardClick = {
+                        onMangaClick = {
                             navController.navigate(
                                 MediaDetailsScreenRoute(
                                     mediaId = currentManga.id,

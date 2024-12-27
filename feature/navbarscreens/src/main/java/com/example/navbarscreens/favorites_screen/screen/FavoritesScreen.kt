@@ -21,8 +21,8 @@ import com.example.data.remote.models.profile_models.user_favorites_response.Nod
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.theme.mColors
 import com.example.media_screen.media_screen.screen.MediaFavoritesScreensSharedVM
-import com.example.navbarscreens.common.navbar.NavBar
-import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
+import com.example.navbarscreens.common.bars.NavBar
+import com.example.navbarscreens.common.bars.NavBarScreensTopBar
 import com.example.navbarscreens.favorites_screen.sections.FavoritesScreenSearchBar
 import com.example.navbarscreens.favorites_screen.sections.UserFavoritesPager
 import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute

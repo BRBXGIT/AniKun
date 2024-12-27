@@ -21,8 +21,8 @@ import com.example.data.remote.models.profile_models.user_data_response.AniListU
 import com.example.data.remote.models.profile_models.user_manga_list_response.UserMangaListsResponse
 import com.example.designsystem.theme.mColors
 import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
-import com.example.navbarscreens.common.navbar.NavBar
-import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
+import com.example.navbarscreens.common.bars.NavBar
+import com.example.navbarscreens.common.bars.NavBarScreensTopBar
 import com.example.navbarscreens.profile_screen.sections.ProfileScreenSearchBar
 import com.example.navbarscreens.profile_screen.sections.UserMediaPager
 import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute

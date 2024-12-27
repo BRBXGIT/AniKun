@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.designsystem.manga_card.MangaCard
+import com.example.designsystem.media_cards.MangaCard
 import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
 import com.example.data.remote.models.profile_models.user_manga_list_response.Entry as MangaListEntry
 
@@ -33,7 +33,7 @@ fun UserMangaLVGSection(
             MangaCard(
                 manga = manga.media,
                 index = index,
-                onCardClick = {
+                onMangaClick = {
                     navController.navigate(
                         MediaDetailsScreenRoute(
                             mediaId = manga.media.id,

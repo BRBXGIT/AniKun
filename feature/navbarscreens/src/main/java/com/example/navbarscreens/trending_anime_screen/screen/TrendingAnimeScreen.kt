@@ -18,9 +18,9 @@ import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.designsystem.theme.mColors
-import com.example.navbarscreens.common.navbar.NavBar
-import com.example.navbarscreens.common.search_bar.MediaListsScreensSearchBar
-import com.example.navbarscreens.common.topbar.NavBarScreensTopBar
+import com.example.navbarscreens.common.bars.NavBar
+import com.example.navbarscreens.common.bars.MediaListsScreensSearchBar
+import com.example.navbarscreens.common.bars.NavBarScreensTopBar
 import com.example.navbarscreens.trending_anime_screen.sections.AnimeLCSection
 import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
