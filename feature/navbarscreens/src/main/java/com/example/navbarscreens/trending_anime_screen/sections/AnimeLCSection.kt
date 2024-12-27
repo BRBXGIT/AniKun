@@ -15,16 +15,19 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import com.example.common.check_functions.checkIsMediaInUserList
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.media_cards.AnimeCard
 import com.example.designsystem.media_cards.MediaLongClickBS
 import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
+import com.example.data.remote.models.profile_models.user_anime_list_response.Lists as UserAnimeLists
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AnimeLCSection(
     anime: LazyPagingItems<AnimeListMedia>,
+    userAnimeLists: List<UserAnimeLists>?,
     navController: NavController
 ) {
     var errorText by rememberSaveable { mutableStateOf("") }
@@ -48,17 +51,6 @@ fun AnimeLCSection(
 
                     currentAnime?.let {
                         var bsOpened by rememberSaveable { mutableStateOf(false) }
-                        if(bsOpened) {
-                            MediaLongClickBS(
-                                onDismissRequest = { bsOpened = false },
-                                title = if(currentAnime.title.english != null) currentAnime.title.english!! else currentAnime.title.romaji,
-                                episodes = currentAnime.episodes,
-                                averageScore = currentAnime.averageScore,
-                                onListClick = {  },
-                                mediaType = currentAnime.type,
-                                currentList = ""
-                            )
-                        }
 
                         AnimeCard(
                             anime = currentAnime,
@@ -73,6 +65,25 @@ fun AnimeLCSection(
                             },
                             onAnimeLongClick = { bsOpened = true }
                         )
+
+                        if(bsOpened) {
+                            var userListType by rememberSaveable { mutableStateOf("") }
+                            userListType = if(userAnimeLists != null) {
+                                checkIsMediaInUserList(emptyList(), userAnimeLists, currentAnime.id)
+                            } else {
+                                "Error :("
+                            }
+
+                            MediaLongClickBS(
+                                onDismissRequest = { bsOpened = false },
+                                title = if(currentAnime.title.english != null) currentAnime.title.english!! else currentAnime.title.romaji,
+                                episodes = currentAnime.episodes,
+                                averageScore = currentAnime.averageScore,
+                                onListClick = {  },
+                                mediaType = currentAnime.type,
+                                currentList = userListType
+                            )
+                        }
                     }
                 }
             } else {

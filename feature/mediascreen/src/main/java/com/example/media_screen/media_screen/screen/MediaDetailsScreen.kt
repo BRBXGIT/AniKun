@@ -24,6 +24,8 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.example.common.check_functions.checkIsMediaInFavorites
+import com.example.common.check_functions.checkIsMediaInUserList
 import com.example.data.remote.models.profile_models.user_favorites_response.Favourites
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.theme.mColors
@@ -211,38 +213,4 @@ fun MediaDetailsScreen(
             }
         }
     }
-}
-
-private fun checkIsMediaInUserList(
-    userMangaLists: List<UserMangaLists>,
-    userAnimeLists: List<UserAnimeLists>,
-    mediaId: Int
-): String {
-    userAnimeLists.forEach { list ->
-        list.entries.forEach { entry ->
-            if(entry.media.id == mediaId) return list.name
-        }
-    }
-
-    userMangaLists.forEach { list ->
-        list.entries.forEach { entry ->
-            if(entry.media.id == mediaId) return list.name
-        }
-    }
-
-    return "Not in list"
-}
-
-private fun checkIsMediaInFavorites(
-    userFavorites: Favourites,
-    mediaId: Int
-): Boolean {
-    userFavorites.anime.nodes.forEach { anime ->
-        if(mediaId == anime.id) return true
-    }
-    userFavorites.manga.nodes.forEach { manga ->
-        if(mediaId == manga.id) return true
-    }
-
-    return false
 }
