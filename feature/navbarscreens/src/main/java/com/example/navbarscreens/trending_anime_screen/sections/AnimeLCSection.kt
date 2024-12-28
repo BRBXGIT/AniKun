@@ -20,6 +20,7 @@ import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.media_cards.AnimeCard
 import com.example.designsystem.media_cards.MediaLongClickBS
 import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
+import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.data.remote.models.profile_models.user_anime_list_response.Lists as UserAnimeLists
 
@@ -28,7 +29,8 @@ import com.example.data.remote.models.profile_models.user_anime_list_response.Li
 fun AnimeLCSection(
     anime: LazyPagingItems<AnimeListMedia>,
     userAnimeLists: List<UserAnimeLists>?,
-    navController: NavController
+    navController: NavController,
+    profileScreensSharedVM: MediaProfileScreensSharedVM
 ) {
     var errorText by rememberSaveable { mutableStateOf("") }
     LaunchedEffect(anime.loadState.refresh) {
@@ -50,7 +52,7 @@ fun AnimeLCSection(
                     val currentAnime = anime[index]
 
                     currentAnime?.let {
-                        var bsOpened by rememberSaveable { mutableStateOf(false) }
+                        var addToListBSOpen by rememberSaveable { mutableStateOf(false) }
 
                         AnimeCard(
                             anime = currentAnime,
@@ -63,10 +65,10 @@ fun AnimeLCSection(
                                     )
                                 )
                             },
-                            onAnimeLongClick = { bsOpened = true }
+                            onAnimeLongClick = { addToListBSOpen = true }
                         )
 
-                        if(bsOpened) {
+                        if(addToListBSOpen) {
                             var userListType by rememberSaveable { mutableStateOf("") }
                             userListType = if(userAnimeLists != null) {
                                 checkIsMediaInUserList(emptyList(), userAnimeLists, currentAnime.id)
@@ -75,11 +77,14 @@ fun AnimeLCSection(
                             }
 
                             MediaLongClickBS(
-                                onDismissRequest = { bsOpened = false },
+                                onDismissRequest = { addToListBSOpen = false },
                                 title = if(currentAnime.title.english != null) currentAnime.title.english!! else currentAnime.title.romaji,
                                 episodes = currentAnime.episodes,
                                 averageScore = currentAnime.averageScore,
-                                onListClick = {  },
+                                onListClick = { listType ->
+                                    addToListBSOpen = false
+                                    profileScreensSharedVM.changeMediaListType(currentAnime.id, listType, currentAnime.type)
+                                },
                                 mediaType = currentAnime.type,
                                 currentList = userListType
                             )

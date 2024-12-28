@@ -92,7 +92,8 @@ fun NavGraph(
                 navController = navController,
                 trendingAnimeScreenVM = trendingAnimeScreenVM,
                 trendingAnime = trendingAnime,
-                userAnimeLists = if(userAnimeLists.data != null) userAnimeLists.data!!.mediaListCollection.lists else null
+                userAnimeLists = if(userAnimeLists.data != null) userAnimeLists.data!!.mediaListCollection.lists else null,
+                profileScreensSharedVM = mediaProfileScreensSharedVM
             )
 
             trendingMangaScreen(

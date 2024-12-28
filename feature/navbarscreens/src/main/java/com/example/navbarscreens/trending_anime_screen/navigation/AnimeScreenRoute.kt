@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.paging.compose.LazyPagingItems
+import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import com.example.navbarscreens.trending_anime_screen.screen.TrendingAnimeScreen
 import com.example.navbarscreens.trending_anime_screen.screen.TrendingAnimeScreenVM
 import kotlinx.serialization.Serializable
@@ -17,12 +18,14 @@ fun NavGraphBuilder.trendingAnimeScreen(
     navController: NavController,
     trendingAnime: LazyPagingItems<AnimeListMedia>,
     trendingAnimeScreenVM: TrendingAnimeScreenVM,
-    userAnimeLists: List<UserAnimeLists>?
+    userAnimeLists: List<UserAnimeLists>?,
+    profileScreensSharedVM: MediaProfileScreensSharedVM
 ) = composable<AnimeScreenRoute> {
     TrendingAnimeScreen(
         navController = navController,
         viewModel = trendingAnimeScreenVM,
         trendingAnime = trendingAnime,
-        userAnimeLists = userAnimeLists
+        userAnimeLists = userAnimeLists,
+        profileScreensSharedVM = profileScreensSharedVM
     )
 }

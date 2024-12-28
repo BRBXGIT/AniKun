@@ -96,7 +96,7 @@ fun MediaLongClickBS(
             HorizontalDivider(thickness = 1.dp)
 
             LazyColumn(
-                verticalArrangement = Arrangement.SpaceBetween
+                verticalArrangement = Arrangement.SpaceBetween,
             ) {
                 if(mediaType == "ANIME") {
                     items(animeListTypes) { type ->
