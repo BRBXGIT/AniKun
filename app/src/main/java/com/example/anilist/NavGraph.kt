@@ -99,7 +99,9 @@ fun NavGraph(
             trendingMangaScreen(
                 navController = navController,
                 trendingMangaScreenVM = trendingMangaScreenVM,
-                trendingManga = trendingManga
+                trendingManga = trendingManga,
+                userMangaLists = if(userMangaLists.data != null) userMangaLists.data!!.mediaListCollection.lists else null,
+                profileScreensSharedVM = mediaProfileScreensSharedVM
             )
 
             favoritesScreen(

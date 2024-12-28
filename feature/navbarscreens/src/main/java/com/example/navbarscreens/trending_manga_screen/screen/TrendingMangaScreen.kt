@@ -18,19 +18,23 @@ import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.designsystem.theme.mColors
-import com.example.navbarscreens.common.bars.NavBar
+import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import com.example.navbarscreens.common.bars.MediaListsScreensSearchBar
+import com.example.navbarscreens.common.bars.NavBar
 import com.example.navbarscreens.common.bars.NavBarScreensTopBar
 import com.example.navbarscreens.trending_manga_screen.sections.MangaLVGSection
 import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute
 import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
+import com.example.data.remote.models.profile_models.user_manga_list_response.Lists as UserMangaLists
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MangaScreen(
     navController: NavController,
     viewModel: TrendingMangaScreenVM,
-    trendingManga: LazyPagingItems<MangaListMedia>
+    trendingManga: LazyPagingItems<MangaListMedia>,
+    userMangaLists: List<UserMangaLists>?,
+    profileScreensSharedVM: MediaProfileScreensSharedVM
 ) {
     val topBarScrollBehaviour = TopAppBarDefaults.pinnedScrollBehavior()
 
@@ -69,7 +73,9 @@ fun MangaScreen(
         ) {
             MangaLVGSection(
                 manga = trendingManga,
-                navController = navController
+                navController = navController,
+                userMangaLists = userMangaLists,
+                profileScreensSharedVM = profileScreensSharedVM
             )
         }
     }

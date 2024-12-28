@@ -38,11 +38,11 @@ data class ListType(
 fun MediaLongClickBS(
     onDismissRequest: () -> Unit,
     title: String,
-    episodes: Int,
+    episodes: Int? = null,
     averageScore: Int,
     onListClick: (String) -> Unit,
     mediaType: String,
-    currentList: String
+    currentList: String,
 ) {
     val animeListTypes = listOf(
         ListType("Watching", Utils.CURRENT_LIST_TYPE),
@@ -83,8 +83,9 @@ fun MediaLongClickBS(
                     overflow = TextOverflow.Ellipsis
                 )
 
+                val episodesText = if(episodes != null) "$episodes Episodes" else "Manga"
                 Text(
-                    text = "$episodes Episodes • ${averageScore.toString().take(1)}.${averageScore.toString().takeLast(1)}★",
+                    text = "$episodesText • ${averageScore.toString().take(1)}.${averageScore.toString().takeLast(1)}★",
                     style = mTypography.bodyMedium.copy(
                         color = mColors.secondary,
                     ),

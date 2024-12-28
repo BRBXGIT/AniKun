@@ -23,16 +23,22 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import com.example.common.check_functions.checkIsMediaInUserList
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.media_cards.MangaCard
+import com.example.designsystem.media_cards.MediaLongClickBS
 import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
+import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
+import com.example.data.remote.models.profile_models.user_manga_list_response.Lists as UserMangaLists
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MangaLVGSection(
     manga: LazyPagingItems<MangaListMedia>,
-    navController: NavController
+    navController: NavController,
+    userMangaLists: List<UserMangaLists>?,
+    profileScreensSharedVM: MediaProfileScreensSharedVM
 ) {
     var errorText by rememberSaveable { mutableStateOf("") }
     LaunchedEffect(manga.loadState.refresh) {
@@ -60,18 +66,44 @@ fun MangaLVGSection(
                 items(manga.itemCount) { index ->
                     val currentManga = manga[index]
 
-                    MangaCard(
-                        manga = currentManga!!,
-                        index = index,
-                        onMangaClick = {
-                            navController.navigate(
-                                MediaDetailsScreenRoute(
-                                    mediaId = currentManga.id,
-                                    mediaType = currentManga.type
+                    currentManga?.let {
+                        var addToListBSOpen by rememberSaveable { mutableStateOf(false) }
+
+                        MangaCard(
+                            manga = currentManga,
+                            index = index,
+                            onMangaClick = {
+                                navController.navigate(
+                                    MediaDetailsScreenRoute(
+                                        mediaId = currentManga.id,
+                                        mediaType = currentManga.type
+                                    )
                                 )
+                            },
+                            onMangaLongClick = { addToListBSOpen = true }
+                        )
+
+                        if(addToListBSOpen) {
+                            var userListType by rememberSaveable { mutableStateOf("") }
+                            userListType = if(userMangaLists != null) {
+                                checkIsMediaInUserList(userMangaLists, emptyList(), currentManga.id)
+                            } else {
+                                "Error :("
+                            }
+
+                            MediaLongClickBS(
+                                onDismissRequest = { addToListBSOpen = false },
+                                title = if(currentManga.title.english != null) currentManga.title.english!! else currentManga.title.romaji,
+                                averageScore = currentManga.averageScore,
+                                onListClick = { listType ->
+                                    addToListBSOpen = false
+                                    profileScreensSharedVM.changeMediaListType(currentManga.id, listType, currentManga.type)
+                                },
+                                mediaType = currentManga.type,
+                                currentList = userListType
                             )
                         }
-                    )
+                    }
                 }
             }
         } else {
