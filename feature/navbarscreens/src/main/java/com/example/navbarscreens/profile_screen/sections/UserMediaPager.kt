@@ -30,6 +30,7 @@ import com.example.designsystem.custom_modifiers.customTabIndicatorOffset
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes
+import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import kotlinx.coroutines.launch
 
 @Composable
@@ -37,7 +38,8 @@ fun UserMediaPager(
     userAnime: UserAnimeListsResponse,
     userManga: UserMangaListsResponse,
     chosenContentType: Boolean,
-    navController: NavController
+    navController: NavController,
+    profileScreensSharedVM: MediaProfileScreensSharedVM
 ) {
     var selectedType by rememberSaveable { mutableIntStateOf(0) }
     val animationScope = rememberCoroutineScope()
@@ -103,7 +105,9 @@ fun UserMediaPager(
             HorizontalPager(state = pagerState) { page ->
                 UserAnimeLCSection(
                     animeList = userAnime.data!!.mediaListCollection.lists[page].entries,
-                    navController = navController
+                    navController = navController,
+                    userAnimeLists = userAnime.data!!.mediaListCollection.lists,
+                    profileScreensSharedVM = profileScreensSharedVM
                 )
             }
         } else {
@@ -175,7 +179,9 @@ fun UserMediaPager(
             HorizontalPager(state = pagerState) { page ->
                 UserMangaLVGSection(
                     mangaList = userManga.data!!.mediaListCollection.lists[page].entries,
-                    navController = navController
+                    navController = navController,
+                    profileScreensSharedVM = profileScreensSharedVM,
+                    userMangaLists = userManga.data!!.mediaListCollection.lists
                 )
             }
         } else {

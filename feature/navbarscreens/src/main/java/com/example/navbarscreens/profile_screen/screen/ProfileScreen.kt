@@ -35,7 +35,7 @@ fun ProfileScreen(
     aniListUser: AniListUser,
     chosenContentType: Boolean,
     userAnimeLists: UserAnimeListsResponse,
-    userMangaLists: UserMangaListsResponse
+    userMangaLists: UserMangaListsResponse,
 ) {
     val topBarScrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -80,7 +80,8 @@ fun ProfileScreen(
                 chosenContentType = chosenContentType,
                 userAnime = userAnimeLists,
                 userManga = userMangaLists,
-                navController = navController
+                navController = navController,
+                profileScreensSharedVM = viewModel
             )
         }
     }

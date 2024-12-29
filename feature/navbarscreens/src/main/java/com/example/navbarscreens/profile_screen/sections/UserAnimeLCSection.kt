@@ -47,11 +47,7 @@ fun UserAnimeLCSection(
 
             if(addToListBSOpen) {
                 var userListType by rememberSaveable { mutableStateOf("") }
-                userListType = if(userAnimeLists != null) {
-                    checkIsMediaInUserList(emptyList(), userAnimeLists, anime.media.id)
-                } else {
-                    "Error :("
-                }
+                userListType = checkIsMediaInUserList(emptyList(), userAnimeLists, anime.media.id)
 
                 MediaLongClickBS(
                     onDismissRequest = { addToListBSOpen = false },
