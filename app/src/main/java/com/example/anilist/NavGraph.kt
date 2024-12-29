@@ -108,7 +108,10 @@ fun NavGraph(
                 navController = navController,
                 userFavorites = userFavorites,
                 mediaFavoritesScreensSharedVM = mediaFavoritesScreensSharedVM,
-                favoritesException = favoritesException
+                favoritesException = favoritesException,
+                userMangaLists = if(userMangaLists.data != null) userMangaLists.data!!.mediaListCollection.lists else null,
+                userAnimeLists = if(userAnimeLists.data != null) userAnimeLists.data!!.mediaListCollection.lists else null,
+                profileScreensSharedVM = mediaProfileScreensSharedVM
             )
 
             profileScreen(

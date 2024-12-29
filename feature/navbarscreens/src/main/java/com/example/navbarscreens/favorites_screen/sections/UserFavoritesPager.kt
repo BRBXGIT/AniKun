@@ -28,15 +28,21 @@ import com.example.data.remote.models.profile_models.user_favorites_response.Nod
 import com.example.designsystem.custom_modifiers.customTabIndicatorOffset
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes
+import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import kotlinx.coroutines.launch
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
+import com.example.data.remote.models.profile_models.user_anime_list_response.Lists as UserAnimeLists
+import com.example.data.remote.models.profile_models.user_manga_list_response.Lists as UserMangaLists
 
 @Composable
 fun UserFavoritesPager(
     userFavoriteAnime: List<AnimeListMedia>,
     userFavoriteManga: List<MangaListMedia>,
     userFavoriteCharacters: List<Node>,
+    userMangaLists: List<UserMangaLists>?,
+    userAnimeLists: List<UserAnimeLists>?,
+    profileScreensSharedVM: MediaProfileScreensSharedVM,
     navController: NavController
 ) {
     var selectedType by rememberSaveable { mutableIntStateOf(0) }
@@ -107,8 +113,8 @@ fun UserFavoritesPager(
 
     HorizontalPager(state = pagerState) { page ->
         when(page) {
-            0 -> FavoriteAnimeLCSection(userFavoriteAnime, navController)
-            1 -> FavoriteMangaLVGSection(userFavoriteManga, navController)
+            0 -> FavoriteAnimeLCSection(userFavoriteAnime, navController, userAnimeLists, profileScreensSharedVM)
+            1 -> FavoriteMangaLVGSection(userFavoriteManga, navController, userMangaLists, profileScreensSharedVM)
             2 -> FavoriteCharacterLVGSection(userFavoriteCharacters, navController)
         }
     }

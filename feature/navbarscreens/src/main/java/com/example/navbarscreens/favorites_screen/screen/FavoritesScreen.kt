@@ -21,6 +21,7 @@ import com.example.data.remote.models.profile_models.user_favorites_response.Nod
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.theme.mColors
 import com.example.media_screen.media_screen.screen.MediaFavoritesScreensSharedVM
+import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import com.example.navbarscreens.common.bars.NavBar
 import com.example.navbarscreens.common.bars.NavBarScreensTopBar
 import com.example.navbarscreens.favorites_screen.sections.FavoritesScreenSearchBar
@@ -28,6 +29,8 @@ import com.example.navbarscreens.favorites_screen.sections.UserFavoritesPager
 import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
+import com.example.data.remote.models.profile_models.user_anime_list_response.Lists as UserAnimeLists
+import com.example.data.remote.models.profile_models.user_manga_list_response.Lists as UserMangaLists
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,6 +39,9 @@ fun FavoritesScreen(
     userFavorites: Favourites,
     favoritesException: String?,
     viewModel: MediaFavoritesScreensSharedVM,
+    userMangaLists: List<UserMangaLists>?,
+    userAnimeLists: List<UserAnimeLists>?,
+    profileScreensSharedVM: MediaProfileScreensSharedVM,
 ) {
     val topBarScrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -84,7 +90,10 @@ fun FavoritesScreen(
                     userFavoriteAnime = userFavorites.anime.nodes,
                     userFavoriteManga = userFavorites.manga.nodes,
                     userFavoriteCharacters = userFavorites.characters.nodes,
-                    navController = navController
+                    navController = navController,
+                    userMangaLists = userMangaLists,
+                    userAnimeLists = userAnimeLists,
+                    profileScreensSharedVM = profileScreensSharedVM
                 )
             } else {
                 ErrorSection(
