@@ -34,6 +34,7 @@ import com.example.media_screen.media_screen.sections.CharactersLRSection
 import com.example.media_screen.media_screen.sections.DescriptionSection
 import com.example.media_screen.media_screen.sections.GenresLRSection
 import com.example.media_screen.media_screen.sections.InfoSection
+import com.example.media_screen.media_screen.sections.LinksSection
 import com.example.media_screen.media_screen.sections.MediaHeader
 import com.example.media_screen.media_screen.sections.MediaScreenTopBar
 import com.example.media_screen.media_screen.sections.RecommendationsLRSection
@@ -198,6 +199,10 @@ fun MediaDetailsScreen(
                             recommendations = media.recommendations,
                             navController = navController
                         )
+                    }
+
+                    item {
+                        LinksSection(media.externalLinks)
                     }
 
                     item {
