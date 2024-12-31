@@ -4,12 +4,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,6 +21,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.paging.LoadState
@@ -39,25 +42,29 @@ fun MediaListByGenreBS(
     viewModel: MediaScreenVM,
     mediaType: String,
     navController: NavController,
-    onDismissRequest: () -> Unit
+    onDismissRequest: () -> Unit,
+    topPadding: Dp,
 ) {
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
         shape = mShapes.small,
+        modifier = Modifier.padding(top = topPadding)
     ) {
         if(mediaType == "ANIME") {
             val animeByGenre = viewModel.animeByGenre.collectAsLazyPagingItems()
 
             AnimeLC(
                 anime = animeByGenre,
-                navController = navController
+                navController = navController,
+                onDismissRequest = onDismissRequest,
             )
         } else {
             val mangaByGenre = viewModel.mangaByGenre.collectAsLazyPagingItems()
 
             MangaLVG(
                 manga = mangaByGenre,
-                navController = navController
+                navController = navController,
+                onDismissRequest = onDismissRequest,
             )
         }
     }
@@ -66,7 +73,8 @@ fun MediaListByGenreBS(
 @Composable
 private fun AnimeLC(
     anime: LazyPagingItems<AnimeListMedia>,
-    navController: NavController
+    navController: NavController,
+    onDismissRequest: () -> Unit
 ) {
     var errorText by rememberSaveable { mutableStateOf("") }
     LaunchedEffect(anime.loadState.refresh) {
@@ -75,8 +83,11 @@ private fun AnimeLC(
         }
     }
 
+    HorizontalDivider(thickness = 1.dp)
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(vertical = 16.dp)
     ) {
         if(errorText.isBlank()) {
             items(anime.itemCount) { index ->
@@ -89,6 +100,7 @@ private fun AnimeLC(
                         anime = currentAnime,
                         index = index,
                         onAnimeClick = {
+                            onDismissRequest()
                             navController.navigate(
                                 MediaDetailsScreenRoute(
                                     mediaId = currentAnime.id,
@@ -109,12 +121,15 @@ private fun AnimeLC(
             }
         }
     }
+
+    HorizontalDivider(thickness = 1.dp)
 }
 
 @Composable
 private fun MangaLVG(
     manga: LazyPagingItems<MangaListMedia>,
-    navController: NavController
+    navController: NavController,
+    onDismissRequest: () -> Unit,
 ) {
     var errorText by rememberSaveable { mutableStateOf("") }
     LaunchedEffect(manga.loadState.refresh) {
@@ -122,6 +137,8 @@ private fun MangaLVG(
             errorText = (manga.loadState.refresh as LoadState.Error).error.message.toString()
         }
     }
+
+    HorizontalDivider(thickness = 1.dp)
 
     if(errorText.isBlank()) {
         LazyVerticalGrid(
@@ -144,6 +161,7 @@ private fun MangaLVG(
                         manga = currentManga,
                         index = index,
                         onMangaClick = {
+                            onDismissRequest()
                             navController.navigate(
                                 MediaDetailsScreenRoute(
                                     mediaId = currentManga.id,
@@ -169,4 +187,6 @@ private fun MangaLVG(
             )
         }
     }
+
+    HorizontalDivider(thickness = 1.dp)
 }

@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.designsystem.theme.mColors
@@ -29,7 +30,8 @@ fun GenresLRSection(
     genres: List<String>,
     viewModel: MediaScreenVM,
     mediaType: String,
-    navController: NavController
+    navController: NavController,
+    topPadding: Dp
 ) {
     var mediaByGenreBSOpen by rememberSaveable { mutableStateOf(false) }
     if(mediaByGenreBSOpen) {
@@ -37,7 +39,8 @@ fun GenresLRSection(
             viewModel = viewModel,
             mediaType = mediaType,
             navController = navController,
-            onDismissRequest = { mediaByGenreBSOpen = false }
+            onDismissRequest = { mediaByGenreBSOpen = false },
+            topPadding = topPadding,
         )
     }
 

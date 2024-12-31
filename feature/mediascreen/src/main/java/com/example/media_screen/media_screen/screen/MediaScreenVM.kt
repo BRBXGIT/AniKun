@@ -47,19 +47,19 @@ class MediaScreenVM @Inject constructor(
         }
     }
 
-    private val genre = MutableStateFlow("")
+    private val _genre = MutableStateFlow("")
     fun setGenre(userGenre: String) {
-        genre.value = userGenre
+        _genre.value = userGenre
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val animeByGenre = genre
+    val animeByGenre = _genre
         .flatMapLatest { genre->
             repository.getAnimeByGenre(genre).cachedIn(viewModelScope)
         }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val mangaByGenre = genre
+    val mangaByGenre = _genre
         .flatMapLatest { genre->
             repository.getMangaByGenre(genre).cachedIn(viewModelScope)
         }

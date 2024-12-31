@@ -43,7 +43,7 @@ class MangaListsPS(
                 pageInfo {
                   hasNextPage
                 }
-                media(${"$"}genre: String, type: MANGA) {
+                media(genre: ${"$"}genre, type: MANGA) {
                   type
                   id
                   title {

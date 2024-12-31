@@ -163,7 +163,8 @@ fun MediaDetailsScreen(
                             genres = media.genres,
                             viewModel = viewModel,
                             mediaType = mediaType,
-                            navController = navController
+                            navController = navController,
+                            topPadding = innerPadding.calculateTopPadding()
                         )
                     }
 
