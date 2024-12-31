@@ -60,7 +60,7 @@ dependencies {
     //Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
-    //Paging impl
+    //Paging
     implementation(libs.androidx.paging.compose)
     //Coil
     implementation(libs.coil.compose)

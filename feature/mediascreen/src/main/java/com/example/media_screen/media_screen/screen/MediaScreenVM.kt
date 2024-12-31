@@ -2,6 +2,7 @@ package com.example.media_screen.media_screen.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.example.common.dispatchers.AniKunDispatchers
 import com.example.common.dispatchers.Dispatcher
 import com.example.data.remote.models.media_details_models.media_details_response.MediaDetailsResponse
@@ -9,8 +10,10 @@ import com.example.data.remote.repos.CommonRepoImpl
 import com.example.data.remote.repos.MediaDetailsScreenRepoImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -45,4 +48,29 @@ class MediaScreenVM @Inject constructor(
             }
         }
     }
+
+    private val _mediaType = MutableStateFlow("")
+    val mediaType = _mediaType.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5_000),
+        ""
+    )
+    fun setMediaType(type: String) {
+        _mediaType.value = type
+    }
+
+    private val genre = MutableStateFlow("")
+    fun setGenre(userGenre: String) {
+        genre.value = userGenre
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val mediaByGenre = genre
+        .flatMapLatest { genre->
+            if(_mediaType.value == "ANIME") {
+                repository.getAnimeByGenre(genre).cachedIn(viewModelScope)
+            } else {
+                repository.getMangaByGenre(genre).cachedIn(viewModelScope)
+            }
+        }
 }

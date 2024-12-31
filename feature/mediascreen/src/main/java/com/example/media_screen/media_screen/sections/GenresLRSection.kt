@@ -1,6 +1,7 @@
 package com.example.media_screen.media_screen.sections
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes
@@ -26,20 +28,23 @@ fun GenresLRSection(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(genres) { genre ->
-            GenreBox(genre)
+            GenreBox(genre, {})
         }
     }
 }
 
 @Composable
 private fun GenreBox(
-    genre: String
+    genre: String,
+    onClick: () -> Unit
 ) {
     Box(
-        modifier = Modifier.background(
-            color = mColors.secondaryContainer,
-            shape = mShapes.extraSmall
-        ),
+        modifier = Modifier
+            .clip(mShapes.extraSmall)
+            .background(mColors.secondaryContainer)
+            .clickable {
+                onClick()
+            },
         contentAlignment = Alignment.Center
     ) {
         Text(

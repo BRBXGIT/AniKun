@@ -63,4 +63,6 @@ dependencies {
     implementation(libs.coil.compose)
     //Haze
     implementation(libs.haze.materials)
+    //Paging
+    implementation(libs.androidx.paging.compose)
 }
