@@ -6,7 +6,6 @@ import androidx.paging.cachedIn
 import com.example.common.dispatchers.AniKunDispatchers
 import com.example.common.dispatchers.Dispatcher
 import com.example.data.remote.models.media_details_models.media_details_response.MediaDetailsResponse
-import com.example.data.remote.repos.CommonRepoImpl
 import com.example.data.remote.repos.MediaDetailsScreenRepoImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -21,7 +20,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MediaScreenVM @Inject constructor(
     private val repository: MediaDetailsScreenRepoImpl,
-    private val commonRepository: CommonRepoImpl,
     @Dispatcher(AniKunDispatchers.IO) private val dispatcherIo: CoroutineDispatcher
 ): ViewModel() {
 
@@ -49,28 +47,20 @@ class MediaScreenVM @Inject constructor(
         }
     }
 
-    private val _mediaType = MutableStateFlow("")
-    val mediaType = _mediaType.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(5_000),
-        ""
-    )
-    fun setMediaType(type: String) {
-        _mediaType.value = type
-    }
-
     private val genre = MutableStateFlow("")
     fun setGenre(userGenre: String) {
         genre.value = userGenre
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val mediaByGenre = genre
+    val animeByGenre = genre
         .flatMapLatest { genre->
-            if(_mediaType.value == "ANIME") {
-                repository.getAnimeByGenre(genre).cachedIn(viewModelScope)
-            } else {
-                repository.getMangaByGenre(genre).cachedIn(viewModelScope)
-            }
+            repository.getAnimeByGenre(genre).cachedIn(viewModelScope)
+        }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val mangaByGenre = genre
+        .flatMapLatest { genre->
+            repository.getMangaByGenre(genre).cachedIn(viewModelScope)
         }
 }

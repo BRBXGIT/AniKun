@@ -64,12 +64,6 @@ fun MediaDetailsScreen(
             viewModel.fetchMediaDetailsById(mediaId)
         }
     }
-    val type = viewModel.mediaType.collectAsStateWithLifecycle().value
-    LaunchedEffect(type) {
-        if(type == "") {
-            viewModel.setMediaType(mediaType)
-        }
-    }
     var userListType by rememberSaveable { mutableStateOf("") }
     userListType = if((userAnimeLists != null) and (userMangaLists != null)) {
         checkIsMediaInUserList(userMangaLists!!, userAnimeLists!!, mediaId)
@@ -165,7 +159,12 @@ fun MediaDetailsScreen(
                     }
 
                     item {
-                        GenresLRSection(media.genres)
+                        GenresLRSection(
+                            genres = media.genres,
+                            viewModel = viewModel,
+                            mediaType = mediaType,
+                            navController = navController
+                        )
                     }
 
                     item {

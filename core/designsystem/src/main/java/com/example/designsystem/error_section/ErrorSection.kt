@@ -3,6 +3,7 @@ package com.example.designsystem.error_section
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +27,7 @@ fun ErrorSection(
 ) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.error_animation))
     Box(
-        modifier = modifier,
+        modifier = modifier.padding(horizontal = 16.dp),
         contentAlignment = Alignment.Center
     ) {
         Column(
