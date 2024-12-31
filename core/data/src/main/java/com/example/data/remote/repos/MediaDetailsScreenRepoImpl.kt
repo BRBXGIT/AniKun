@@ -1,11 +1,19 @@
 package com.example.data.remote.repos
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.example.data.remote.api_instance.AniListApiInstance
 import com.example.data.remote.models.common_models.common_request.CommonRequest
 import com.example.data.remote.models.media_details_models.media_details_response.MediaDetailsResponse
+import com.example.data.remote.paging.AnimeListsPS
+import com.example.data.remote.paging.MangaListsPS
 import com.example.data.repos.MediaDetailsScreenRepo
 import com.google.gson.Gson
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
+import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
 
 class MediaDetailsScreenRepoImpl @Inject constructor(
     private val apiInstance: AniListApiInstance
@@ -128,5 +136,19 @@ class MediaDetailsScreenRepoImpl @Inject constructor(
                 variables = jsonVariables
             )
         )
+    }
+
+    override suspend fun getMangaByGenre(genre: String): Flow<PagingData<MangaListMedia>> {
+        return Pager(
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            pagingSourceFactory = { MangaListsPS(apiInstance, genre) }
+        ).flow
+    }
+
+    override suspend fun getAnimeByGenre(genre: String): Flow<PagingData<AnimeListMedia>> {
+        return Pager(
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            pagingSourceFactory = { AnimeListsPS(apiInstance, genre) }
+        ).flow
     }
 }

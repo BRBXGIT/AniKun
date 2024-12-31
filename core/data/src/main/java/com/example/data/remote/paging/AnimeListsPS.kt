@@ -10,7 +10,8 @@ import java.io.IOException
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 
 class AnimeListsPS(
-    private val apiInstance: AniListApiInstance
+    private val apiInstance: AniListApiInstance,
+    private val genre: String? = null
 ): PagingSource<Int, AnimeListMedia>() {
 
     private val query = """
@@ -20,6 +21,31 @@ class AnimeListsPS(
                   hasNextPage
                 }
                 media(sort: TRENDING_DESC, type: ANIME) {
+                  type
+                  id
+                  episodes
+                  title {
+                    english
+                    romaji
+                  }
+                  coverImage {
+                    large
+                  }
+                  description
+                  genres
+                  averageScore
+                }
+              }
+            }
+    """.trimIndent()
+
+    private val queryWithGenre = """
+        query (${"$"}page: Int, ${"$"}perPage: Int, ${"$"}genre: String) {
+              Page(page: ${"$"}page, perPage: ${"$"}perPage) {
+                pageInfo {
+                  hasNextPage
+                }
+                media(genre: ${"$"}genre, type: ANIME) {
                   type
                   id
                   episodes
@@ -50,12 +76,21 @@ class AnimeListsPS(
             "page" to startPage,
             "perPage" to perPage
         )
-        val jsonVariables = Gson().toJson(variables)
+        val genreVariables = mapOf(
+            "page" to startPage,
+            "perPage" to perPage,
+            "genre" to genre
+        )
+        val jsonVariables = if(genre != null) {
+            Gson().toJson(genreVariables)
+        } else {
+            Gson().toJson(variables)
+        }
 
         return try {
-            val anime = apiInstance.getTrendingAnimeList(
+            val anime = apiInstance.getAnimeList(
                 CommonRequest(
-                    query = query,
+                    query = if(genre != null) queryWithGenre else query,
                     variables = jsonVariables
                 )
             )

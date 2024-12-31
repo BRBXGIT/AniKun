@@ -4,13 +4,14 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.data.remote.api_instance.AniListApiInstance
 import com.example.data.remote.models.common_models.common_request.CommonRequest
-import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
 import com.google.gson.Gson
 import retrofit2.HttpException
 import java.io.IOException
+import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
 
 class MangaListsPS(
-    private val apiInstance: AniListApiInstance
+    private val apiInstance: AniListApiInstance,
+    private val genre: String? = null
 ): PagingSource<Int, MangaListMedia>() {
 
     private val query = """
@@ -20,6 +21,29 @@ class MangaListsPS(
                   hasNextPage
                 }
                 media(sort: TRENDING_DESC, type: MANGA) {
+                  type
+                  id
+                  title {
+                    english
+                    romaji
+                  }
+                  coverImage {
+                    large
+                  }
+                  genres
+                  averageScore
+                }
+              }
+            }
+    """.trimIndent()
+
+    private val queryWithGenre = """
+        query (${"$"}page: Int, ${"$"}perPage: Int, ${"$"}genre: String) {
+              Page(page: ${"$"}page, perPage: ${"$"}perPage) {
+                pageInfo {
+                  hasNextPage
+                }
+                media(${"$"}genre: String, type: MANGA) {
                   type
                   id
                   title {
@@ -48,13 +72,22 @@ class MangaListsPS(
             "page" to startPage,
             "perPage" to perPage,
         )
+        val genreVariables = mapOf(
+            "page" to startPage,
+            "perPage" to perPage,
+            "genre" to genre
+        )
 
-        val jsonVariables = Gson().toJson(variables)
+        val jsonVariables = if(genre != null) {
+            Gson().toJson(genreVariables)
+        } else {
+            Gson().toJson(variables)
+        }
 
         return try {
-            val manga = apiInstance.getTrendingMangaList(
+            val manga = apiInstance.getMangaList(
                 CommonRequest(
-                    query = query,
+                    query = if(genre != null) queryWithGenre else query,
                     variables = jsonVariables
                 )
             )

@@ -20,12 +20,12 @@ import retrofit2.http.POST
 interface AniListApiInstance {
 
     @POST(".")
-    suspend fun getTrendingAnimeList(
+    suspend fun getAnimeList(
         @Body body: CommonRequest
     ): AnimeListResponse
 
     @POST(".")
-    suspend fun getTrendingMangaList(
+    suspend fun getMangaList(
         @Body body: CommonRequest
     ): MangaListsResponse
 
