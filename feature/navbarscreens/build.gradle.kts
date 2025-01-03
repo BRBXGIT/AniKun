@@ -48,6 +48,7 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":feature:mediascreen"))
     implementation(project(":feature:settingsscreen"))
+    implementation(project(":feature:userscreen"))
 
     //Material 3
     implementation(libs.androidx.material3)

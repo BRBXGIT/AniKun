@@ -13,6 +13,7 @@ import com.example.data.remote.models.profile_models.user_by_query_response.User
 import com.example.data.remote.models.profile_models.user_data_response.AniListUser
 import com.example.data.remote.models.profile_models.user_favorites_response.UserFavoritesResponse
 import com.example.data.remote.models.profile_models.user_manga_list_response.UserMangaListsResponse
+import com.example.data.remote.models.user_by_query_details_response.UserByQueryDetailsResponse
 import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -81,4 +82,9 @@ interface AniListApiInstance {
     suspend fun getCharacterDetails(
         @Body body: CommonRequest
     ): CharacterDetailsResponse
+
+    @POST(".")
+    suspend fun getUserByQueryDetails(
+        @Body body: CommonRequest
+    ): UserByQueryDetailsResponse
 }

@@ -65,6 +65,7 @@ dependencies {
     implementation(project(":feature:auth"))
     implementation(project(":core:data"))
     implementation(project(":feature:settingsscreen"))
+    implementation(project(":feature:userscreen"))
 
     //Compose
     implementation(libs.androidx.activity.compose)

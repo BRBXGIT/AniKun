@@ -28,6 +28,7 @@ import com.example.navbarscreens.trending_anime_screen.screen.TrendingAnimeScree
 import com.example.navbarscreens.trending_manga_screen.navigation.trendingMangaScreen
 import com.example.navbarscreens.trending_manga_screen.screen.TrendingMangaScreenVM
 import com.example.settingsscreen.settings_screen.navigation.settingsScreen
+import com.example.userscreen.user_screen.navigation.userScreen
 
 @Composable
 fun NavGraph(
@@ -148,5 +149,7 @@ fun NavGraph(
             appSettingsVM = appSettingsVM,
             navController = navController
         )
+
+        userScreen()
     }
 }

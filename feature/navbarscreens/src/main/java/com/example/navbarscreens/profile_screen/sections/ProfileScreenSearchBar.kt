@@ -38,11 +38,12 @@ import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
 import com.example.data.remote.models.profile_models.user_by_query_response.UserByQueryResponse
-import com.example.designsystem.media_cards.AnimatedShimmer
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.icons.AniKunIcons
+import com.example.designsystem.media_cards.AnimatedShimmer
 import com.example.designsystem.theme.mShapes
 import com.example.designsystem.theme.mTypography
+import com.example.userscreen.user_screen.navigation.UserScreenRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -104,7 +105,15 @@ fun ProfileScreenSearchBar(
         onExpandedChange = { onExpandChange() },
     ) {
         if(userByQuery.exception == null) {
-            SearchUserItem(userByQuery)
+            SearchUserItem(
+                userByQuery = userByQuery,
+                onClick = {
+                    navController.navigate(
+                        UserScreenRoute(userByQuery.data.user.name)
+                    )
+                    onExpandChange()
+                }
+            )
         } else {
             if(userByQuery.exception != "HTTP 404 ") {
                 ErrorSection(
@@ -118,7 +127,8 @@ fun ProfileScreenSearchBar(
 
 @Composable
 private fun SearchUserItem(
-    userByQuery: UserByQueryResponse
+    userByQuery: UserByQueryResponse,
+    onClick: () -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -127,7 +137,7 @@ private fun SearchUserItem(
             .fillMaxWidth()
             .padding(8.dp)
             .clip(mShapes.small)
-            .clickable {  }
+            .clickable { onClick() }
             .padding(8.dp)
     ) {
         Icon(
