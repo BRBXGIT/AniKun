@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/feature/mediascreen" />
             <option value="$PROJECT_DIR$/feature/navbarscreens" />
             <option value="$PROJECT_DIR$/feature/settingsscreen" />
+            <option value="$PROJECT_DIR$/feature/userscreen" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

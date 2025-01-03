@@ -97,34 +97,36 @@ fun InfoSection(
 
         HorizontalDivider(thickness = 1.dp)
 
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = "Studios",
-                style = mTypography.labelLarge
-            )
-
-            Column(
-                horizontalAlignment = Alignment.End,
+        if(format != "MANGA") {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
             ) {
-                studios.nodes.forEach { studio ->
-                    Text(
-                        text = studio.name,
-                        style = mTypography.labelLarge.copy(
-                            color = mColors.primary
-                        ),
-                        textAlign = TextAlign.End,
-                        softWrap = true,
-                        modifier = Modifier
-                            .padding(2.dp)
-                            .clip(mShapes.extraSmall)
-                            .clickable {
-                                clipboardManager.setText(AnnotatedString(studio.name))
-                            }
-                            .padding(2.dp)
-                    )
+                Text(
+                    text = "Studios",
+                    style = mTypography.labelLarge
+                )
+
+                Column(
+                    horizontalAlignment = Alignment.End,
+                ) {
+                    studios.nodes.forEach { studio ->
+                        Text(
+                            text = studio.name,
+                            style = mTypography.labelLarge.copy(
+                                color = mColors.primary
+                            ),
+                            textAlign = TextAlign.End,
+                            softWrap = true,
+                            modifier = Modifier
+                                .padding(2.dp)
+                                .clip(mShapes.extraSmall)
+                                .clickable {
+                                    clipboardManager.setText(AnnotatedString(studio.name))
+                                }
+                                .padding(2.dp)
+                        )
+                    }
                 }
             }
         }

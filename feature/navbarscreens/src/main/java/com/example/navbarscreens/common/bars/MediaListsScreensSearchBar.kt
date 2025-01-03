@@ -93,15 +93,6 @@ fun MediaListsScreensSearchBar(
                                 )
                             }
                         }
-
-                        IconButton(
-                            onClick = {  }
-                        ) {
-                            Icon(
-                                painter = painterResource(id = AniKunIcons.Filters),
-                                contentDescription = null
-                            )
-                        }
                     }
                 },
                 keyboardActions = KeyboardActions(

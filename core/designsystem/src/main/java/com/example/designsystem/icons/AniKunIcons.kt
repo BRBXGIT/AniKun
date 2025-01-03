@@ -24,5 +24,4 @@ object AniKunIcons {
     val MedalFilled = R.drawable.ic_medal_filled
     val CheckCircle = R.drawable.ic_check_circle
     val ArrowRight = R.drawable.ic_arrow_right
-    val Filters = R.drawable.ic_filters
 }

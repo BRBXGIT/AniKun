@@ -208,7 +208,8 @@ fun MediaDetailsScreen(
                     }
 
                     item {
-                        LinksSection(media.externalLinks)
+                        val links = media.externalLinks.distinctBy { it.site }
+                        LinksSection(links)
                     }
 
                     item {

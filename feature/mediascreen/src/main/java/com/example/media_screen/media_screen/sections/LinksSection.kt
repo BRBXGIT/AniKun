@@ -93,20 +93,22 @@ private fun LinkPreview(
             .clickable { onClick() }
             .padding(4.dp)
     ) {
-        SubcomposeAsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(link.icon)
-                .crossfade(500)
-                .size(Size.ORIGINAL)
-                .build(),
-            contentDescription = null,
-            modifier = Modifier
-                .size(20.dp)
-                .clip(mShapes.small),
-            filterQuality = FilterQuality.Low,
-            contentScale = ContentScale.Crop,
-            loading = { AnimatedShimmer(20.dp, 20.dp) }
-        )
+        if(link.icon != null) {
+            SubcomposeAsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(link.icon)
+                    .crossfade(500)
+                    .size(Size.ORIGINAL)
+                    .build(),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(20.dp)
+                    .clip(mShapes.small),
+                filterQuality = FilterQuality.Low,
+                contentScale = ContentScale.Crop,
+                loading = { AnimatedShimmer(20.dp, 20.dp) }
+            )
+        }
 
         Text(
             text = link.site,
