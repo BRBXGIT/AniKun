@@ -150,6 +150,11 @@ fun NavGraph(
             navController = navController
         )
 
-        userScreen(navController)
+        userScreen(
+            navController = navController,
+            profileScreensSharedVM = mediaProfileScreensSharedVM,
+            userMangaLists = if(userMangaLists.data != null) userMangaLists.data!!.mediaListCollection.lists else null,
+            userAnimeLists = if(userAnimeLists.data != null) userAnimeLists.data!!.mediaListCollection.lists else null
+        )
     }
 }
