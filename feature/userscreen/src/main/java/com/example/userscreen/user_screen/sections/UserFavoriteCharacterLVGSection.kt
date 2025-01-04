@@ -2,12 +2,15 @@ package com.example.userscreen.user_screen.sections
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.data.remote.models.profile_models.user_favorites_response.Node
@@ -17,7 +20,8 @@ import com.example.media_screen.character_screen.navigation.CharacterScreenRoute
 @Composable
 fun UserFavoriteCharacterLVGSection(
     favoriteCharacters: List<Node>,
-    navController: NavController
+    navController: NavController,
+    bottomPadding: Dp
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -36,6 +40,19 @@ fun UserFavoriteCharacterLVGSection(
                 onCardClick = {
                     navController.navigate(CharacterScreenRoute(character.id))
                 }
+            )
+        }
+
+        //Use two items cause of grid
+        item {
+            Spacer(
+                modifier = Modifier.height(bottomPadding)
+            )
+        }
+
+        item {
+            Spacer(
+                modifier = Modifier.height(bottomPadding)
             )
         }
     }

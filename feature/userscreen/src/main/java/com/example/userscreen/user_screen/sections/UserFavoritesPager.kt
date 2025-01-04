@@ -22,6 +22,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.data.remote.models.profile_models.user_favorites_response.Node
@@ -42,7 +43,8 @@ fun UserFavoritesPager(
     userMangaLists: List<Lists>?,
     userAnimeLists: List<com.example.data.remote.models.profile_models.user_anime_list_response.Lists>?,
     profileScreensSharedVM: MediaProfileScreensSharedVM,
-    navController: NavController
+    navController: NavController,
+    bottomPadding: Dp
 ) {
     var selectedType by rememberSaveable { mutableIntStateOf(0) }
     val animationScope = rememberCoroutineScope()
@@ -112,9 +114,9 @@ fun UserFavoritesPager(
 
     HorizontalPager(state = pagerState) { page ->
         when(page) {
-            0 -> UserFavoriteAnimeLCSection(userFavoriteAnime, navController, userAnimeLists, profileScreensSharedVM)
-            1 -> UserFavoriteMangaLVGSection(userFavoriteManga, navController, userMangaLists, profileScreensSharedVM)
-            2 -> UserFavoriteCharacterLVGSection(userFavoriteCharacters, navController)
+            0 -> UserFavoriteAnimeLCSection(userFavoriteAnime, navController, userAnimeLists, profileScreensSharedVM, bottomPadding)
+            1 -> UserFavoriteMangaLVGSection(userFavoriteManga, navController, userMangaLists, profileScreensSharedVM, bottomPadding)
+            2 -> UserFavoriteCharacterLVGSection(userFavoriteCharacters, navController, bottomPadding)
         }
     }
 }

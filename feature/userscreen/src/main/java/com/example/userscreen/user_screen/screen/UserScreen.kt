@@ -14,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.designsystem.container_with_sb.ContainerWithScrollBehavior
@@ -50,7 +51,9 @@ fun UserScreen(
         topBar = {
             UserScreenTopBar(
                 scrollBehavior = topAppBarScrollBehavior,
-                onNavIconClick = { navController.navigateUp() }
+                onNavIconClick = { navController.navigateUp() },
+                userName = userDetails.data?.user?.name,
+                containerScrollBehavior = containerScrollBehavior
             )
         },
         modifier = Modifier
@@ -82,20 +85,20 @@ fun UserScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(innerPadding),
+                        .padding(top = innerPadding.calculateTopPadding()),
                 ) {
                     ContainerWithScrollBehavior(
                         scrollBehavior = containerScrollBehavior
                     ) {
                         UserHeader(
-                            userName = userData.user.name,
                             avatar = userData.user.avatar.large,
                             totalAnime = userData.user.statistics.anime.count,
                             minutesWatched = userData.user.statistics.anime.minutesWatched,
                             episodesWatched = userData.user.statistics.anime.episodesWatched,
                             totalManga = userData.user.statistics.manga.count,
                             chaptersRead = userData.user.statistics.manga.chaptersRead,
-                            volumesRead = userData.user.statistics.manga.volumesRead
+                            volumesRead = userData.user.statistics.manga.volumesRead,
+                            modifier = Modifier.padding(vertical = 8.dp)
                         )
                     }
 
@@ -106,7 +109,8 @@ fun UserScreen(
                         userMangaLists = userMangaLists,
                         userAnimeLists = userAnimeLists,
                         profileScreensSharedVM = profileScreensSharedVM,
-                        navController = navController
+                        navController = navController,
+                        bottomPadding = innerPadding.calculateBottomPadding()
                     )
                 }
             }
