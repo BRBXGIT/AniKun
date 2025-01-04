@@ -8,29 +8,18 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.FilterQuality
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.SubcomposeAsyncImage
-import coil.request.ImageRequest
-import coil.size.Size
-import com.example.designsystem.media_cards.AnimatedShimmer
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes
 import com.example.designsystem.theme.mTypography
 
 @Composable
 fun UserHeader(
-    modifier: Modifier,
-    avatar: String,
     totalAnime: Int,
     minutesWatched: Int,
     episodesWatched: Int,
@@ -38,40 +27,32 @@ fun UserHeader(
     chaptersRead: Int,
     volumesRead: Int
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = modifier
+    Box(
+        modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
+            .padding(
+                vertical = 8.dp,
+                horizontal = 16.dp
+            ),
+        contentAlignment = Alignment.Center
     ) {
-        SubcomposeAsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(avatar)
-                .crossfade(500)
-                .size(Size.ORIGINAL)
-                .build(),
-            contentDescription = null,
-            modifier = Modifier
-                .size(84.dp, 84.dp)
-                .clip(mShapes.small),
-            filterQuality = FilterQuality.Low,
-            contentScale = ContentScale.Crop,
-            loading = { AnimatedShimmer(84.dp, 84.dp) }
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            val totalWatchingTime = minutesWatched.toDouble() / 1440
+            UserInfoBox(
+                totalMedia = totalAnime,
+                totalWatchingTime = totalWatchingTime,
+                totalEpisodes = episodesWatched
+            )
 
-        val totalWatchingTime = minutesWatched.toDouble() / 1440
-        UserInfoBox(
-            totalMedia = totalAnime,
-            totalWatchingTime = totalWatchingTime,
-            totalEpisodes = episodesWatched
-        )
-
-        UserInfoBox(
-            totalMedia = totalManga,
-            totalChapters = chaptersRead,
-            volumesRead = volumesRead
-        )
+            UserInfoBox(
+                totalMedia = totalManga,
+                totalChapters = chaptersRead,
+                volumesRead = volumesRead
+            )
+        }
     }
 }
 

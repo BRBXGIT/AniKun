@@ -14,7 +14,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.designsystem.container_with_sb.ContainerWithScrollBehavior
@@ -53,7 +52,8 @@ fun UserScreen(
                 scrollBehavior = topAppBarScrollBehavior,
                 onNavIconClick = { navController.navigateUp() },
                 userName = userDetails.data?.user?.name,
-                containerScrollBehavior = containerScrollBehavior
+                containerScrollBehavior = containerScrollBehavior,
+                avatar = userDetails.data?.user?.avatar?.large
             )
         },
         modifier = Modifier
@@ -91,14 +91,12 @@ fun UserScreen(
                         scrollBehavior = containerScrollBehavior
                     ) {
                         UserHeader(
-                            avatar = userData.user.avatar.large,
                             totalAnime = userData.user.statistics.anime.count,
                             minutesWatched = userData.user.statistics.anime.minutesWatched,
                             episodesWatched = userData.user.statistics.anime.episodesWatched,
                             totalManga = userData.user.statistics.manga.count,
                             chaptersRead = userData.user.statistics.manga.chaptersRead,
                             volumesRead = userData.user.statistics.manga.volumesRead,
-                            modifier = Modifier.padding(vertical = 8.dp)
                         )
                     }
 
