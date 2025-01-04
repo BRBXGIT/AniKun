@@ -99,7 +99,6 @@ class MediaProfileScreensSharedVM @Inject constructor(
         UserAnimeListsResponse()
     )
     fun fetchUserAnimeLists(userName: String) {
-        Log.d("CCCC", "Fethced manga")
         viewModelScope.launch(dispatcherIo) {
             try {
                 _userAnimeLists.value = repository.getUserAnimeLists(userName)

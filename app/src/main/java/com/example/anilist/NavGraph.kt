@@ -150,6 +150,6 @@ fun NavGraph(
             navController = navController
         )
 
-        userScreen()
+        userScreen(navController)
     }
 }

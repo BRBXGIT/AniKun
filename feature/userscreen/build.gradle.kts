@@ -46,6 +46,7 @@ dependencies {
     implementation(project(":core:designsystem"))
     implementation(project(":feature:mediascreen"))
     implementation(project(":core:data"))
+    implementation(project(":core:common"))
 
     //Compose
     implementation(libs.androidx.activity.compose)
