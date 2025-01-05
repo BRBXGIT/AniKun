@@ -118,7 +118,6 @@ class MediaProfileScreensSharedVM @Inject constructor(
         UserMangaListsResponse()
     )
     fun fetchUserMangaLists(userName: String) {
-        Log.d("CCCC", "Fethced manga")
         viewModelScope.launch(dispatcherIo) {
             try {
                 _userMangaLists.value = repository.getUserMangaLists(userName)

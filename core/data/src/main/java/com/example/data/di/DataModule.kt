@@ -6,22 +6,6 @@ import com.example.data.local.data_store.AppDataStore
 import com.example.data.local.user_db.UserDao
 import com.example.data.local.user_db.UserDb
 import com.example.data.remote.api_instance.AniListApiInstance
-import com.example.data.remote.repos.AnimeScreenRepoImpl
-import com.example.data.remote.repos.AuthRepoImpl
-import com.example.data.remote.repos.CharacterScreenRepoImpl
-import com.example.data.remote.repos.CommonRepoImpl
-import com.example.data.remote.repos.FavoritesScreenRepoImpl
-import com.example.data.remote.repos.MangaScreenRepoImpl
-import com.example.data.remote.repos.MediaDetailsScreenRepoImpl
-import com.example.data.remote.repos.ProfileScreenRepoImpl
-import com.example.data.repos.AnimeScreenRepo
-import com.example.data.repos.AuthRepo
-import com.example.data.repos.CharacterScreenRepo
-import com.example.data.repos.CommonRepo
-import com.example.data.repos.FavoritesScreenRepo
-import com.example.data.repos.MangaScreenRepo
-import com.example.data.repos.MediaDetailsScreenRepo
-import com.example.data.repos.ProfileScreenRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -60,53 +44,5 @@ object DataModule {
     @Singleton
     fun provideThemeDataStore(@ApplicationContext context: Context): AppDataStore {
         return AppDataStore(context)
-    }
-
-    @Provides
-    @Singleton
-    fun provideAuthRepo(userDao: UserDao): AuthRepo {
-        return AuthRepoImpl(userDao)
-    }
-
-    @Provides
-    @Singleton
-    fun provideAnimeScreenRepo(apiInstance: AniListApiInstance): AnimeScreenRepo {
-        return AnimeScreenRepoImpl(apiInstance)
-    }
-
-    @Provides
-    @Singleton
-    fun provideMangaScreenRepo(apiInstance: AniListApiInstance): MangaScreenRepo {
-        return MangaScreenRepoImpl(apiInstance)
-    }
-
-    @Provides
-    @Singleton
-    fun provideProfileScreenRepo(apiInstance: AniListApiInstance): ProfileScreenRepo {
-        return ProfileScreenRepoImpl(apiInstance)
-    }
-
-    @Provides
-    @Singleton
-    fun provideCommonRepo(apiInstance: AniListApiInstance, userDao: UserDao): CommonRepo {
-        return CommonRepoImpl(apiInstance, userDao)
-    }
-
-    @Provides
-    @Singleton
-    fun provideMediaDetailsScreenRepo(apiInstance: AniListApiInstance): MediaDetailsScreenRepo {
-        return MediaDetailsScreenRepoImpl(apiInstance)
-    }
-
-    @Provides
-    @Singleton
-    fun provideFavoritesScreenRepo(apiInstance: AniListApiInstance): FavoritesScreenRepo {
-        return FavoritesScreenRepoImpl(apiInstance)
-    }
-
-    @Provides
-    @Singleton
-    fun provideCharacterScreenRepo(apiInstance: AniListApiInstance): CharacterScreenRepo {
-        return CharacterScreenRepoImpl(apiInstance)
     }
 }
