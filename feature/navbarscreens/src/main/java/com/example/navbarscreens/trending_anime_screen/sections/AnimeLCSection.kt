@@ -19,6 +19,9 @@ import com.example.common.check_functions.checkIsMediaInUserList
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.media_cards.AnimeCard
 import com.example.designsystem.media_cards.MediaLongClickBS
+import com.example.designsystem.snackbars.SnackbarAction
+import com.example.designsystem.snackbars.SnackbarController
+import com.example.designsystem.snackbars.SnackbarEvent
 import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
 import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
@@ -36,6 +39,15 @@ fun AnimeLCSection(
     LaunchedEffect(anime.loadState.refresh) {
         if(anime.loadState.refresh is LoadState.Error) {
             errorText = (anime.loadState.refresh as LoadState.Error).error.message.toString()
+            SnackbarController.sendEvent(
+                SnackbarEvent(
+                    message = "Something wrong :(",
+                    action = SnackbarAction(
+                        name = "Refresh",
+                        action = { anime.refresh() }
+                    )
+                )
+            )
         }
     }
 
@@ -47,7 +59,7 @@ fun AnimeLCSection(
         LazyColumn(
             modifier = Modifier.fillMaxSize()
         ) {
-            if(errorText.isBlank()) {
+            if(anime.loadState.refresh !is LoadState.Error) {
                 items(anime.itemCount) { index ->
                     val currentAnime = anime[index]
 

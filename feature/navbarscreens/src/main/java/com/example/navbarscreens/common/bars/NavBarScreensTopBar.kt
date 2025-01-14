@@ -90,7 +90,7 @@ fun NavBarScreensTopBar(
                 onClick = { onSettingsClick() }
             ) {
                 Icon(
-                    painter = painterResource(id = AniKunIcons.Settings),
+                    painter = painterResource(id = AniKunIcons.Pallet),
                     contentDescription = null
                 )
             }

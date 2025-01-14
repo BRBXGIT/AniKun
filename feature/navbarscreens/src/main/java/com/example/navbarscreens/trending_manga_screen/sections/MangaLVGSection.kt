@@ -27,6 +27,9 @@ import com.example.common.check_functions.checkIsMediaInUserList
 import com.example.designsystem.error_section.ErrorSection
 import com.example.designsystem.media_cards.MangaCard
 import com.example.designsystem.media_cards.MediaLongClickBS
+import com.example.designsystem.snackbars.SnackbarAction
+import com.example.designsystem.snackbars.SnackbarController
+import com.example.designsystem.snackbars.SnackbarEvent
 import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
 import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
@@ -44,6 +47,15 @@ fun MangaLVGSection(
     LaunchedEffect(manga.loadState.refresh) {
         if(manga.loadState.refresh is LoadState.Error) {
             errorText = (manga.loadState.refresh as LoadState.Error).error.message.toString()
+            SnackbarController.sendEvent(
+                SnackbarEvent(
+                    message = "Something wrong :(",
+                    action = SnackbarAction(
+                        name = "Refresh",
+                        action = { manga.refresh() }
+                    )
+                )
+            )
         }
     }
 
@@ -52,7 +64,7 @@ fun MangaLVGSection(
         onRefresh = { manga.refresh() },
         modifier = Modifier.fillMaxWidth()
     ) {
-        if(errorText.isBlank()) {
+        if(manga.loadState.refresh !is LoadState.Error) {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 contentPadding = PaddingValues(

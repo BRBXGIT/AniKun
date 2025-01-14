@@ -5,7 +5,7 @@ import com.example.designsystem.R
 object AniKunIcons {
     val Cat = R.drawable.ic_cat
     val CatFilled = R.drawable.ic_cat_filled
-    val Settings = R.drawable.ic_settings
+    val Pallet = R.drawable.ic_pallet
     val Magnifier = R.drawable.ic_magnifier
     val NavigationArrowLeft = R.drawable.ic_arrow_left_filled
     val BackspaceFilled = R.drawable.ic_backspace_filled

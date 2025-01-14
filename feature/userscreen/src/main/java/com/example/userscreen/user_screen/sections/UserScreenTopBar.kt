@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -39,7 +40,6 @@ import coil.size.Size
 import com.example.designsystem.icons.AniKunIcons
 import com.example.designsystem.media_cards.AnimatedShimmer
 import com.example.designsystem.theme.mColors
-import com.example.designsystem.theme.mShapes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -105,11 +105,11 @@ fun UserScreenTopBar(
                                 .build(),
                             contentDescription = null,
                             modifier = Modifier
-                                .size(26.dp, 26.dp)
-                                .clip(mShapes.small),
+                                .size(30.dp, 30.dp)
+                                .clip(CircleShape),
                             filterQuality = FilterQuality.Low,
                             contentScale = ContentScale.Crop,
-                            loading = { AnimatedShimmer(26.dp, 26.dp) }
+                            loading = { AnimatedShimmer(30.dp, 30.dp) }
                         )
 
                         Text(text = name)
