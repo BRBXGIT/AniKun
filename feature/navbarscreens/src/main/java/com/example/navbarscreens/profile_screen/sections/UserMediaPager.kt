@@ -119,19 +119,21 @@ fun UserMediaPager(
             }
         } else {
             var isRefreshing by rememberSaveable { mutableStateOf(false) }
-            LaunchedEffect(Unit) {
-                SnackbarController.sendEvent(
-                    SnackbarEvent(
-                        message = "Something went wrong :(",
-                        action = SnackbarAction(
-                            name = "Refresh",
-                            action = {
-                                isRefreshing = true
-                                profileScreensSharedVM.refreshAniListUser()
-                            }
+            if((userAnime.exception != null) and (userAnime.exception != "HTTP 404 ")) {
+                LaunchedEffect(Unit) {
+                    SnackbarController.sendEvent(
+                        SnackbarEvent(
+                            message = "Something went wrong :(",
+                            action = SnackbarAction(
+                                name = "Refresh",
+                                action = {
+                                    isRefreshing = true
+                                    profileScreensSharedVM.refreshAniListUser()
+                                }
+                            )
                         )
                     )
-                )
+                }
             }
 
             PullToRefreshBox(
@@ -225,19 +227,21 @@ fun UserMediaPager(
             }
         } else {
             var isRefreshing by rememberSaveable { mutableStateOf(false) }
-            LaunchedEffect(Unit) {
-                SnackbarController.sendEvent(
-                    SnackbarEvent(
-                        message = "Something went wrong :(",
-                        action = SnackbarAction(
-                            name = "Refresh",
-                            action = {
-                                isRefreshing = true
-                                profileScreensSharedVM.refreshAniListUser()
-                            }
+            if((userManga.exception != null) and (userManga.exception != "HTTP 404 ")) {
+                LaunchedEffect(Unit) {
+                    SnackbarController.sendEvent(
+                        SnackbarEvent(
+                            message = "Something went wrong :(",
+                            action = SnackbarAction(
+                                name = "Refresh",
+                                action = {
+                                    isRefreshing = true
+                                    profileScreensSharedVM.refreshAniListUser()
+                                }
+                            )
                         )
                     )
-                )
+                }
             }
 
             PullToRefreshBox(
