@@ -41,7 +41,7 @@ fun AnimeLCSection(
             errorText = (anime.loadState.refresh as LoadState.Error).error.message.toString()
             SnackbarController.sendEvent(
                 SnackbarEvent(
-                    message = "Something wrong :(",
+                    message = "Something went wrong :(",
                     action = SnackbarAction(
                         name = "Refresh",
                         action = { anime.refresh() }

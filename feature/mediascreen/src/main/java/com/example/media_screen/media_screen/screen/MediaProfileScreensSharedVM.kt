@@ -29,30 +29,36 @@ class MediaProfileScreensSharedVM @Inject constructor(
     @Dispatcher(AniKunDispatchers.IO) private val dispatcherIo: CoroutineDispatcher
 ): ViewModel() {
 
+    private var refreshTrigger = MutableStateFlow(0)
     private val aniKunUser = commonRepository.getAniKunUser()
-
     @OptIn(ExperimentalCoroutinesApi::class)
-    val aniListUser = aniKunUser.flatMapLatest { aniKunUser ->
-        flow {
-            try {
-                emit(
-                    repository.getAniListUser(
-                        accessToken = "Bearer ${aniKunUser[0].accessToken}"
+    val aniListUser = refreshTrigger.flatMapLatest {
+        aniKunUser.flatMapLatest { aniKunUser ->
+            flow {
+                try {
+                    emit(
+                        repository.getAniListUser(
+                            accessToken = "Bearer ${aniKunUser[0].accessToken}"
+                        )
                     )
-                )
-            } catch(e: Exception) {
-                emit(
-                    AniListUser(
-                        exception = e.message.toString()
+                } catch(e: Exception) {
+                    emit(
+                        AniListUser(
+                            exception = e.message.toString()
+                        )
                     )
-                )
+                }
             }
-        }
-    }.stateIn(
-        viewModelScope,
-        SharingStarted.Lazily,
-        AniListUser()
-    )
+        }.stateIn(
+            viewModelScope,
+            SharingStarted.Lazily,
+            AniListUser()
+        )
+    }
+    fun refreshAniListUser() {
+        refreshTrigger.value += 1
+        Log.d("CCCC", refreshTrigger.value.toString())
+    }
 
     private val _chosenContentType = MutableStateFlow(false)
     val chosenContentType = _chosenContentType.stateIn(

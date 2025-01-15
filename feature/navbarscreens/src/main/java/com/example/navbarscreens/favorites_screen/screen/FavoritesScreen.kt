@@ -1,15 +1,24 @@
 package com.example.navbarscreens.favorites_screen.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -19,6 +28,10 @@ import androidx.navigation.NavController
 import com.example.data.remote.models.profile_models.user_favorites_response.Favourites
 import com.example.data.remote.models.profile_models.user_favorites_response.Node
 import com.example.designsystem.error_section.ErrorSection
+import com.example.designsystem.snackbars.ObserveAsEvents
+import com.example.designsystem.snackbars.SnackbarAction
+import com.example.designsystem.snackbars.SnackbarController
+import com.example.designsystem.snackbars.SnackbarEvent
 import com.example.designsystem.theme.mColors
 import com.example.media_screen.media_screen.screen.MediaFavoritesScreensSharedVM
 import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
@@ -27,6 +40,7 @@ import com.example.navbarscreens.common.bars.NavBarScreensTopBar
 import com.example.navbarscreens.favorites_screen.sections.FavoritesScreenSearchBar
 import com.example.navbarscreens.favorites_screen.sections.UserFavoritesPager
 import com.example.settingsscreen.settings_screen.navigation.SettingsScreenRoute
+import kotlinx.coroutines.launch
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
 import com.example.data.remote.models.profile_models.user_anime_list_response.Lists as UserAnimeLists
@@ -43,10 +57,29 @@ fun FavoritesScreen(
     userAnimeLists: List<UserAnimeLists>?,
     profileScreensSharedVM: MediaProfileScreensSharedVM,
 ) {
-    val topBarScrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    ObserveAsEvents(flow = SnackbarController.events, snackbarHostState) { event ->
+        scope.launch {
+            snackbarHostState.currentSnackbarData?.dismiss()
 
+            val result = snackbarHostState.showSnackbar(
+                message = event.message,
+                actionLabel = event.action?.name,
+                duration = SnackbarDuration.Indefinite,
+                withDismissAction = true
+            )
+
+            if(result == SnackbarResult.ActionPerformed) {
+                event.action?.action?.invoke()
+            }
+        }
+    }
+
+    val topBarScrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
     var isSearching by rememberSaveable { mutableStateOf(false) }
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             NavBarScreensTopBar(
                 text = "Favorites",
@@ -96,10 +129,37 @@ fun FavoritesScreen(
                     profileScreensSharedVM = profileScreensSharedVM
                 )
             } else {
-                ErrorSection(
-                    errorText = favoritesException,
-                    modifier = Modifier.fillMaxSize()
-                )
+                var isRefreshing by rememberSaveable { mutableStateOf(false) }
+                LaunchedEffect(Unit) {
+                    SnackbarController.sendEvent(
+                        SnackbarEvent(
+                            message = "Something went wrong :(",
+                            action = SnackbarAction(
+                                name = "Refresh",
+                                action = {
+                                    isRefreshing = true
+                                    profileScreensSharedVM.refreshAniListUser()
+                                }
+                            )
+                        )
+                    )
+                }
+
+                PullToRefreshBox(
+                    isRefreshing = isRefreshing,
+                    onRefresh = {  }
+                ) {
+                    if(favoritesException != "HTTP 404 ") {
+                        ErrorSection(
+                            errorText = favoritesException,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    } else {
+                        Box(
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+                }
             }
         }
     }

@@ -8,14 +8,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -28,11 +31,15 @@ import com.example.data.remote.models.profile_models.user_anime_list_response.Us
 import com.example.data.remote.models.profile_models.user_manga_list_response.UserMangaListsResponse
 import com.example.designsystem.custom_modifiers.customTabIndicatorOffset
 import com.example.designsystem.error_section.ErrorSection
+import com.example.designsystem.snackbars.SnackbarAction
+import com.example.designsystem.snackbars.SnackbarController
+import com.example.designsystem.snackbars.SnackbarEvent
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes
 import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserMediaPager(
     userAnime: UserAnimeListsResponse,
@@ -45,7 +52,7 @@ fun UserMediaPager(
     val animationScope = rememberCoroutineScope()
 
     if(!chosenContentType) {
-        if(userAnime.exception == null) {
+        if(userAnime.data != null) {
             val pagerState = rememberPagerState(
                 pageCount = { userAnime.data!!.mediaListCollection.lists.size }
             )
@@ -111,6 +118,38 @@ fun UserMediaPager(
                 )
             }
         } else {
+            var isRefreshing by rememberSaveable { mutableStateOf(false) }
+            LaunchedEffect(Unit) {
+                SnackbarController.sendEvent(
+                    SnackbarEvent(
+                        message = "Something went wrong :(",
+                        action = SnackbarAction(
+                            name = "Refresh",
+                            action = {
+                                isRefreshing = true
+                                profileScreensSharedVM.refreshAniListUser()
+                            }
+                        )
+                    )
+                )
+            }
+
+            PullToRefreshBox(
+                isRefreshing = isRefreshing,
+                onRefresh = {  }
+            ) {
+                if(userAnime.exception != "HTTP 404 ") {
+                    ErrorSection(
+                        errorText = userAnime.exception.toString(),
+                        modifier = Modifier.fillMaxSize()
+                    )
+                } else {
+                    Box(
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+            }
+
             ErrorSection(
                 errorText = userAnime.exception.toString(),
                 modifier = Modifier.fillMaxSize()
@@ -119,7 +158,7 @@ fun UserMediaPager(
     }
 
     if(chosenContentType) {
-        if(userManga.exception == null) {
+        if(userManga.data != null) {
             val pagerState = rememberPagerState(
                 pageCount = { userManga.data!!.mediaListCollection.lists.size }
             )
@@ -185,6 +224,38 @@ fun UserMediaPager(
                 )
             }
         } else {
+            var isRefreshing by rememberSaveable { mutableStateOf(false) }
+            LaunchedEffect(Unit) {
+                SnackbarController.sendEvent(
+                    SnackbarEvent(
+                        message = "Something went wrong :(",
+                        action = SnackbarAction(
+                            name = "Refresh",
+                            action = {
+                                isRefreshing = true
+                                profileScreensSharedVM.refreshAniListUser()
+                            }
+                        )
+                    )
+                )
+            }
+
+            PullToRefreshBox(
+                isRefreshing = isRefreshing,
+                onRefresh = {  }
+            ) {
+                if(userManga.exception != "HTTP 404 ") {
+                    ErrorSection(
+                        errorText = userManga.exception.toString(),
+                        modifier = Modifier.fillMaxSize()
+                    )
+                } else {
+                    Box(
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+            }
+
             ErrorSection(
                 errorText = userManga.exception.toString(),
                 modifier = Modifier.fillMaxSize()
