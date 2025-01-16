@@ -48,7 +48,12 @@ fun MangaCard(
             )
     ) {
         Box(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    color = mColors.surfaceVariant,
+                    shape = mShapes.small
+                )
         ) {
             SubcomposeAsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)

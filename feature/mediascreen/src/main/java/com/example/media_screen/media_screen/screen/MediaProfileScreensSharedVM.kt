@@ -1,6 +1,5 @@
 package com.example.media_screen.media_screen.screen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.common.dispatchers.AniKunDispatchers
@@ -11,6 +10,8 @@ import com.example.data.remote.models.profile_models.user_data_response.AniListU
 import com.example.data.remote.models.profile_models.user_manga_list_response.UserMangaListsResponse
 import com.example.data.remote.repos.CommonRepoImpl
 import com.example.data.remote.repos.ProfileScreenRepoImpl
+import com.example.designsystem.snackbars.SnackbarController
+import com.example.designsystem.snackbars.SnackbarEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -57,7 +58,6 @@ class MediaProfileScreensSharedVM @Inject constructor(
     }
     fun refreshAniListUser() {
         refreshTrigger.value += 1
-        Log.d("CCCC", refreshTrigger.value.toString())
     }
 
     private val _chosenContentType = MutableStateFlow(false)
@@ -154,7 +154,11 @@ class MediaProfileScreensSharedVM @Inject constructor(
                         }
                     }
                 } catch(e: Exception) {
-                    Log.d("CCCC", e.message.toString())
+                    SnackbarController.sendEvent(
+                        SnackbarEvent(
+                            message = "Something went wrong :("
+                        )
+                    )
                 }
             }
         }

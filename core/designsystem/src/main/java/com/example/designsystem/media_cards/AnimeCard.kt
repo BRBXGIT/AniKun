@@ -1,8 +1,10 @@
 package com.example.designsystem.media_cards
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -48,20 +50,29 @@ fun AnimeCard(
             )
             .padding(8.dp)
     ) {
-        SubcomposeAsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(anime.coverImage.large)
-                .crossfade(500)
-                .size(Size.ORIGINAL)
-                .build(),
-            contentDescription = null,
+        Box(
             modifier = Modifier
                 .size(100.dp, 130.dp)
-                .clip(mShapes.small),
-            filterQuality = FilterQuality.Low,
-            contentScale = ContentScale.Crop,
-            loading = { if(index <= 6) AnimatedShimmer(100.dp, 130.dp) }
-        )
+                .background(
+                    color = mColors.surfaceVariant,
+                    shape = mShapes.small
+                )
+        ) {
+            SubcomposeAsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(anime.coverImage.large)
+                    .crossfade(500)
+                    .size(Size.ORIGINAL)
+                    .build(),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(100.dp, 130.dp)
+                    .clip(mShapes.small),
+                filterQuality = FilterQuality.Low,
+                contentScale = ContentScale.Crop,
+                loading = { if(index <= 6) AnimatedShimmer(100.dp, 130.dp) }
+            )
+        }
 
         Column(
             verticalArrangement = Arrangement.spacedBy(6.dp)

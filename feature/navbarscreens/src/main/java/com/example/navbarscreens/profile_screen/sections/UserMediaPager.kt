@@ -23,6 +23,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -119,7 +120,7 @@ fun UserMediaPager(
             }
         } else {
             var isRefreshing by rememberSaveable { mutableStateOf(false) }
-            if((userAnime.exception != null) and (userAnime.exception != "HTTP 404 ")) {
+            if(userAnime.exception != "HTTP 404 ") {
                 LaunchedEffect(Unit) {
                     SnackbarController.sendEvent(
                         SnackbarEvent(
@@ -136,26 +137,22 @@ fun UserMediaPager(
                 }
             }
 
-            PullToRefreshBox(
-                isRefreshing = isRefreshing,
-                onRefresh = {  }
-            ) {
-                if(userAnime.exception != "HTTP 404 ") {
-                    ErrorSection(
-                        errorText = userAnime.exception.toString(),
-                        modifier = Modifier.fillMaxSize()
-                    )
-                } else {
-                    Box(
-                        modifier = Modifier.fillMaxSize()
-                    )
+            if(userAnime.exception != "HTTP 404 ") {
+                ErrorSection(
+                    errorText = userAnime.exception.toString(),
+                    modifier = Modifier.fillMaxSize()
+                )
+            } else {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.TopCenter
+                ) {
+                    PullToRefreshBox(
+                        isRefreshing = true,
+                        onRefresh = {  }
+                    ) { }
                 }
             }
-
-            ErrorSection(
-                errorText = userAnime.exception.toString(),
-                modifier = Modifier.fillMaxSize()
-            )
         }
     }
 
@@ -227,7 +224,7 @@ fun UserMediaPager(
             }
         } else {
             var isRefreshing by rememberSaveable { mutableStateOf(false) }
-            if((userManga.exception != null) and (userManga.exception != "HTTP 404 ")) {
+            if(userManga.exception != "HTTP 404 ") {
                 LaunchedEffect(Unit) {
                     SnackbarController.sendEvent(
                         SnackbarEvent(
@@ -244,26 +241,24 @@ fun UserMediaPager(
                 }
             }
 
-            PullToRefreshBox(
-                isRefreshing = isRefreshing,
-                onRefresh = {  }
-            ) {
-                if(userManga.exception != "HTTP 404 ") {
-                    ErrorSection(
-                        errorText = userManga.exception.toString(),
-                        modifier = Modifier.fillMaxSize()
-                    )
-                } else {
-                    Box(
-                        modifier = Modifier.fillMaxSize()
-                    )
+            if(userManga.exception != "HTTP 404 ") {
+                ErrorSection(
+                    errorText = userManga.exception.toString(),
+                    modifier = Modifier.fillMaxSize()
+                )
+            } else {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.TopCenter
+                ) {
+                    PullToRefreshBox(
+                        isRefreshing = true,
+                        onRefresh = {  }
+                    ) {
+
+                    }
                 }
             }
-
-            ErrorSection(
-                errorText = userManga.exception.toString(),
-                modifier = Modifier.fillMaxSize()
-            )
         }
     }
 }

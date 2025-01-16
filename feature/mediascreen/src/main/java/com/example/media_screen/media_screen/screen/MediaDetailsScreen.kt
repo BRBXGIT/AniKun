@@ -196,20 +196,26 @@ fun MediaDetailsScreen(
                         )
                     }
 
-                    item {
-                        TagsSection(media.tags)
+                    if(media.tags.isNotEmpty()) {
+                        item {
+                            TagsSection(media.tags)
+                        }
                     }
 
-                    item {
-                        RecommendationsLRSection(
-                            recommendations = media.recommendations,
-                            navController = navController
-                        )
+                    if(media.recommendations.nodes.isNotEmpty()) {
+                        item {
+                            RecommendationsLRSection(
+                                recommendations = media.recommendations,
+                                navController = navController
+                            )
+                        }
                     }
 
-                    item {
-                        val links = media.externalLinks.distinctBy { it.site }
-                        LinksSection(links)
+                    if(media.externalLinks.isNotEmpty()) {
+                        item {
+                            val links = media.externalLinks.distinctBy { it.site }
+                            LinksSection(links)
+                        }
                     }
 
                     item {
