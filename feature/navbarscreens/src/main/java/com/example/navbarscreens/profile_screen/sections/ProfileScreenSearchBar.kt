@@ -104,7 +104,7 @@ fun ProfileScreenSearchBar(
         expanded = true,
         onExpandedChange = { onExpandChange() },
     ) {
-        if(userByQuery.exception == null) {
+        if((userByQuery.exception == null) and (userByQuery.data.user.name != "")) {
             SearchUserItem(
                 userByQuery = userByQuery,
                 onClick = {
@@ -115,7 +115,7 @@ fun ProfileScreenSearchBar(
                 }
             )
         } else {
-            if(userByQuery.exception != "HTTP 404 ") {
+            if((userByQuery.exception != "HTTP 404 ") and (userByQuery.exception != null)) {
                 ErrorSection(
                     errorText = userByQuery.exception.toString(),
                     modifier = Modifier.fillMaxSize()

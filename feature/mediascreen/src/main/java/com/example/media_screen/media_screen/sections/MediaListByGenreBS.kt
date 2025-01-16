@@ -13,10 +13,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -33,6 +35,8 @@ import com.example.designsystem.media_cards.MangaCard
 import com.example.designsystem.theme.mShapes
 import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
 import com.example.media_screen.media_screen.screen.MediaScreenVM
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
 
@@ -50,22 +54,48 @@ fun MediaListByGenreBS(
         shape = mShapes.small,
         modifier = Modifier.padding(top = topPadding)
     ) {
+        //Simple hack to deceive user :)
+        val refreshScope = rememberCoroutineScope()
+        var isRefreshing by rememberSaveable { mutableStateOf(false) }
+
         if(mediaType == "ANIME") {
             val animeByGenre = viewModel.animeByGenre.collectAsLazyPagingItems()
 
-            AnimeLC(
-                anime = animeByGenre,
-                navController = navController,
-                onDismissRequest = onDismissRequest,
-            )
+            PullToRefreshBox(
+                isRefreshing = (animeByGenre.loadState.refresh is LoadState.Loading) or (isRefreshing),
+                onRefresh = {
+                    refreshScope.launch {
+                        isRefreshing = true
+                        delay(1500)
+                        isRefreshing = false
+                    }
+                }
+            ) {
+                AnimeLC(
+                    anime = animeByGenre,
+                    navController = navController,
+                    onDismissRequest = onDismissRequest,
+                )
+            }
         } else {
             val mangaByGenre = viewModel.mangaByGenre.collectAsLazyPagingItems()
 
-            MangaLVG(
-                manga = mangaByGenre,
-                navController = navController,
-                onDismissRequest = onDismissRequest,
-            )
+            PullToRefreshBox(
+                isRefreshing = (mangaByGenre.loadState.refresh is LoadState.Loading) or (isRefreshing),
+                onRefresh = {
+                    refreshScope.launch {
+                        isRefreshing = true
+                        delay(1500)
+                        isRefreshing = false
+                    }
+                },
+            ) {
+                MangaLVG(
+                    manga = mangaByGenre,
+                    navController = navController,
+                    onDismissRequest = onDismissRequest,
+                )
+            }
         }
     }
 }
