@@ -3,6 +3,7 @@ package com.example.designsystem.icons
 import com.example.designsystem.R
 
 object AniKunIcons {
+    val AniListColored = R.drawable.ic_anilist_colored
     val Cat = R.drawable.ic_cat
     val CatFilled = R.drawable.ic_cat_filled
     val Settings = R.drawable.ic_settings
@@ -24,4 +25,7 @@ object AniKunIcons {
     val MedalFilled = R.drawable.ic_medal_filled
     val CheckCircle = R.drawable.ic_check_circle
     val ArrowRight = R.drawable.ic_arrow_right
+    val GitHubColored = R.drawable.ic_github_colored
+    val TelegramColored = R.drawable.ic_telegram_colored
+    val GmailColored = R.drawable.ic_gmail_colored
 }
