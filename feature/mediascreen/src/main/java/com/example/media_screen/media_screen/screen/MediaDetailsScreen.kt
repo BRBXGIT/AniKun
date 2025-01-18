@@ -68,7 +68,7 @@ fun MediaDetailsScreen(
     userListType = if((userAnimeLists != null) and (userMangaLists != null)) {
         checkIsMediaInUserList(userMangaLists!!, userAnimeLists!!, mediaId)
     } else {
-        "Error :("
+        "Loading..."
     }
     var isMediaInFavorites by rememberSaveable { mutableStateOf(false) }
     isMediaInFavorites = if(userFavorites != null) {

@@ -35,7 +35,7 @@ fun AddToListBS(
     onDismissRequest: () -> Unit,
     mediaType: String,
     onListClick: (listType: String) -> Unit,
-    currentList: String
+    currentList: String?
 ) {
     val animeListTypes = listOf(
         ListType("Watching", Utils.CURRENT_LIST_TYPE),
@@ -94,7 +94,7 @@ fun ListItem(
     modifier: Modifier,
     onListClick: () -> Unit,
     type: String,
-    currentList: String
+    currentList: String?
 ) {
     Row(
         modifier = modifier
