@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,17 +26,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.auth.utils.AuthUtils
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes
 import com.example.navbarscreens.common.navigation.NavBarScreensRoute
 
 @Composable
 fun AuthScreen(
+    accessToken: String,
     navController: NavController,
     viewModel: AuthScreenVM,
     prefs: SharedPreferences,
     context: Context = LocalContext.current
 ) {
+    Log.d("CCCC", accessToken)
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -60,7 +65,7 @@ fun AuthScreen(
                         context.startActivity(
                             Intent(
                                 Intent.ACTION_VIEW,
-                                Uri.parse("https://anilist.co/api/v2/oauth/authorize?client_id=22328&response_type=token")
+                                Uri.parse("https://anilist.co/api/v2/oauth/authorize?client_id=${AuthUtils.CLIENT_ID}&response_type=token")
                             )
                         )
                     },

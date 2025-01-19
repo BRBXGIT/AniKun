@@ -100,7 +100,12 @@ fun UserMediaPager(
                         },
                         modifier = Modifier
                             .padding(horizontal = 8.dp)
-                            .clip(mShapes.small),
+                            .clip(
+                                RoundedCornerShape(
+                                    topStart = 8.dp,
+                                    topEnd = 8.dp
+                                )
+                            ),
                         text = {
                             Text(
                                 text = list.name

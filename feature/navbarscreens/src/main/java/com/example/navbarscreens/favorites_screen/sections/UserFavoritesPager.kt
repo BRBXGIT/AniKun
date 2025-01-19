@@ -28,7 +28,6 @@ import androidx.navigation.NavController
 import com.example.data.remote.models.profile_models.user_favorites_response.Node
 import com.example.designsystem.custom_modifiers.customTabIndicatorOffset
 import com.example.designsystem.theme.mColors
-import com.example.designsystem.theme.mShapes
 import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import kotlinx.coroutines.launch
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
@@ -101,7 +100,12 @@ fun UserFavoritesPager(
                 },
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
-                    .clip(mShapes.small),
+                    .clip(
+                        RoundedCornerShape(
+                            topStart = 8.dp,
+                            topEnd = 8.dp
+                        )
+                    ),
                 text = {
                     Text(
                         text = type,
