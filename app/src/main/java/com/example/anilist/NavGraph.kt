@@ -60,7 +60,6 @@ fun NavGraph(
         initialValue = UserAnimeListsResponse()
     ).value
     LaunchedEffect(userAnimeLists, aniListUser) {
-        Log.d("CCCC", aniListUser.data.viewer.name)
         if((userAnimeLists.data == null) and (userAnimeLists.exception == null) and (aniListUser.data.viewer.name != "")) {
             Log.d("CCCC", aniListUser.data.viewer.name)
             mediaProfileScreensSharedVM.fetchUserAnimeLists(aniListUser.data.viewer.name)
@@ -86,7 +85,7 @@ fun NavGraph(
         startDestination = if(isUserLoggedIn) {
             NavBarScreensRoute
         } else {
-            AuthScreenRoute
+            AuthScreenRoute()
         }
     ) {
         navigation<NavBarScreensRoute>(
@@ -130,7 +129,7 @@ fun NavGraph(
 
         authScreen(
             navController = navController,
-            prefs = prefs
+            prefs = prefs,
         )
 
         mediaDetailsScreen(

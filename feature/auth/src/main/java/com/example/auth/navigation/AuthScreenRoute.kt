@@ -5,6 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.navDeepLink
 import androidx.navigation.toRoute
 import com.example.auth.screen.AuthScreen
 import com.example.auth.screen.AuthScreenVM
@@ -17,8 +18,12 @@ data class AuthScreenRoute(
 
 fun NavGraphBuilder.authScreen(
     navController: NavController,
-    prefs: SharedPreferences
-) = composable<AuthScreenRoute> {
+    prefs: SharedPreferences,
+) = composable<AuthScreenRoute>(
+    deepLinks = listOf(
+        navDeepLink<AuthScreenRoute>(basePath = "https://anilist.co/api/v2/oauth/accessToken")
+    )
+) {
     val authScreenVM = hiltViewModel<AuthScreenVM>()
     val accessToken = it.toRoute<AuthScreenRoute>().accessToken
 
