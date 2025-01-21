@@ -1,8 +1,9 @@
 package com.example.auth.screen
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
-import android.util.Log
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,7 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
@@ -28,6 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.auth.R
+import com.example.auth.utils.AuthUtils
 import com.example.designsystem.icons.AniKunIcons
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes
@@ -35,16 +36,12 @@ import com.example.designsystem.theme.mTypography
 
 @Composable
 fun AuthScreen(
-    accessToken: String,
+    accessToken: String?,
     navController: NavController,
     viewModel: AuthScreenVM,
     prefs: SharedPreferences,
     context: Context = LocalContext.current
 ) {
-    LaunchedEffect(accessToken) {
-        Log.d("CCCC", accessToken)
-    }
-
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -65,7 +62,8 @@ fun AuthScreen(
                 )
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(top = 8.dp)
             ) {
                 Text(
                     text = "AniKun",
@@ -82,12 +80,24 @@ fun AuthScreen(
                 )
             }
 
+            Text(
+                text = accessToken.toString(),
+                modifier = Modifier.align(Alignment.Center)
+            )
+
             Button(
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFA3C9FE),
                     contentColor = Color(0xFF00315C)
                 ),
-                onClick = {  },
+                onClick = {
+                    context.startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://anilist.co/api/v2/oauth/authorize?client_id=${AuthUtils.CLIENT_ID}&response_type=token")
+                        )
+                    )
+                },
                 shape = mShapes.small,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)

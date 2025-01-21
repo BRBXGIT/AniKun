@@ -9,11 +9,13 @@ import androidx.navigation.navDeepLink
 import androidx.navigation.toRoute
 import com.example.auth.screen.AuthScreen
 import com.example.auth.screen.AuthScreenVM
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class AuthScreenRoute(
-    val accessToken: String = ""
+    @SerialName("access_token")
+    val accessToken: String? = null
 )
 
 fun NavGraphBuilder.authScreen(
@@ -21,7 +23,7 @@ fun NavGraphBuilder.authScreen(
     prefs: SharedPreferences,
 ) = composable<AuthScreenRoute>(
     deepLinks = listOf(
-        navDeepLink<AuthScreenRoute>(basePath = "https://anilist.co/api/v2/oauth/accessToken")
+        navDeepLink { uriPattern = "http://ani-kun.com/#{access_token}" }
     )
 ) {
     val authScreenVM = hiltViewModel<AuthScreenVM>()
