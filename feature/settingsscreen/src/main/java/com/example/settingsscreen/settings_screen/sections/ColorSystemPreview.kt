@@ -29,11 +29,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.designsystem.theme.darkDaiquiriScheme
 import com.example.designsystem.theme.darkGreenAppleScheme
+import com.example.designsystem.theme.darkLavenderScheme
 import com.example.designsystem.theme.darkSakuraScheme
 import com.example.designsystem.theme.darkScheme
 import com.example.designsystem.theme.darkTacosScheme
 import com.example.designsystem.theme.lightDaiquiriScheme
 import com.example.designsystem.theme.lightGreenAppleScheme
+import com.example.designsystem.theme.lightLavenderScheme
 import com.example.designsystem.theme.lightSakuraScheme
 import com.example.designsystem.theme.lightScheme
 import com.example.designsystem.theme.lightTacosScheme
@@ -115,6 +117,17 @@ fun ColorSystemElements(
             previewName = "Tacos",
             tertiary = darkTacosScheme.tertiary
         ),
+        ColorSystemPreviewColors(
+            secondaryContainer = darkLavenderScheme.secondaryContainer,
+            background = darkLavenderScheme.background,
+            surfaceContainerHighest = darkLavenderScheme.surfaceContainerHighest,
+            secondary = darkLavenderScheme.secondary,
+            onSecondaryContainer = darkLavenderScheme.onSecondaryContainer,
+            primary = darkLavenderScheme.primary,
+            name = "darkLavender",
+            previewName = "Lavender",
+            tertiary = darkLavenderScheme.tertiary
+        ),
     )
 
     val lightColorSystems = listOf(
@@ -172,7 +185,18 @@ fun ColorSystemElements(
             name = "lightTacos",
             previewName = "Tacos",
             tertiary = lightTacosScheme.tertiary
-        )
+        ),
+        ColorSystemPreviewColors(
+            secondaryContainer = lightLavenderScheme.secondaryContainer,
+            background = lightLavenderScheme.background,
+            surfaceContainerHighest = lightLavenderScheme.surfaceContainerHighest,
+            secondary = lightLavenderScheme.secondary,
+            onSecondaryContainer = lightLavenderScheme.onSecondaryContainer,
+            primary = lightLavenderScheme.primary,
+            name = "lightLavender",
+            previewName = "Lavender",
+            tertiary = lightLavenderScheme.tertiary
+        ),
     )
 
     val darkThemeBySystem = isSystemInDarkTheme()
