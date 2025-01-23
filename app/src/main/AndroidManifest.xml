@@ -6,7 +6,7 @@
 
     <application
         android:allowBackup="true"
-        android:name=".AniListApp"
+        android:name=".AniKunApp"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -30,8 +30,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="http" />
-                <data android:host="ani-kun.com" />
+                <data android:scheme="https" />
+                <data android:host="anikun-1e048.web.app" />
             </intent-filter>
         </activity>
     </application>

@@ -23,7 +23,7 @@ fun NavGraphBuilder.authScreen(
     prefs: SharedPreferences,
 ) = composable<AuthScreenRoute>(
     deepLinks = listOf(
-        navDeepLink { uriPattern = "http://ani-kun.com/#{access_token}" }
+        navDeepLink { uriPattern = "https://anikun-1e048.web.app/#{access_token}" }
     )
 ) {
     val authScreenVM = hiltViewModel<AuthScreenVM>()
