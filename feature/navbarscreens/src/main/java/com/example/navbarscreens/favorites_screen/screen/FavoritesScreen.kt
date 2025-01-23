@@ -27,7 +27,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.data.remote.models.profile_models.user_favorites_response.Favourites
 import com.example.data.remote.models.profile_models.user_favorites_response.Node
-import com.example.designsystem.error_section.ErrorSection
+import com.example.designsystem.sections.ErrorSection
 import com.example.designsystem.snackbars.ObserveAsEvents
 import com.example.designsystem.snackbars.SnackbarAction
 import com.example.designsystem.snackbars.SnackbarController

@@ -28,7 +28,7 @@ import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.designsystem.error_section.ErrorSection
+import com.example.designsystem.sections.ErrorSection
 import com.example.designsystem.media_cards.AnimeCard
 import com.example.designsystem.media_cards.MangaCard
 import com.example.designsystem.theme.mShapes

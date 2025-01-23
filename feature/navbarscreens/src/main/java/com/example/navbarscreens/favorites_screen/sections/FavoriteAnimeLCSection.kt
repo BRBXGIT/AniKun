@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import com.example.common.check_functions.checkIsMediaInUserList
 import com.example.designsystem.media_cards.AnimeCard
 import com.example.designsystem.media_cards.MediaLongClickBS
+import com.example.designsystem.sections.EmptyContentSection
 import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
 import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
@@ -28,42 +29,51 @@ fun FavoriteAnimeLCSection(
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
-        itemsIndexed(favoriteAnime) { index, anime ->
-            var addToListBSOpen by rememberSaveable { mutableStateOf(false) }
+        if(favoriteAnime.isNotEmpty()) {
+            itemsIndexed(favoriteAnime) { index, anime ->
+                var addToListBSOpen by rememberSaveable { mutableStateOf(false) }
 
-            AnimeCard(
-                anime = anime,
-                index = index,
-                onAnimeClick = {
-                    navController.navigate(
-                        MediaDetailsScreenRoute(
-                            mediaId = anime.id,
-                            mediaType = anime.type
+                AnimeCard(
+                    anime = anime,
+                    index = index,
+                    onAnimeClick = {
+                        navController.navigate(
+                            MediaDetailsScreenRoute(
+                                mediaId = anime.id,
+                                mediaType = anime.type
+                            )
                         )
-                    )
-                },
-                onAnimeLongClick = { addToListBSOpen = true }
-            )
-
-            if(addToListBSOpen) {
-                var userListType by rememberSaveable { mutableStateOf("") }
-                userListType = if(userAnimeLists != null) {
-                    checkIsMediaInUserList(emptyList(), userAnimeLists, anime.id)
-                } else {
-                    "Error :("
-                }
-
-                MediaLongClickBS(
-                    onDismissRequest = { addToListBSOpen = false },
-                    title = if(anime.title.english != null) anime.title.english!! else anime.title.romaji,
-                    episodes = anime.episodes,
-                    averageScore = anime.averageScore,
-                    onListClick = { listType ->
-                        addToListBSOpen = false
-                        profileScreensSharedVM.changeMediaListType(anime.id, listType, anime.type)
                     },
-                    mediaType = anime.type,
-                    currentList = userListType
+                    onAnimeLongClick = { addToListBSOpen = true }
+                )
+
+                if(addToListBSOpen) {
+                    var userListType by rememberSaveable { mutableStateOf("") }
+                    userListType = if(userAnimeLists != null) {
+                        checkIsMediaInUserList(emptyList(), userAnimeLists, anime.id)
+                    } else {
+                        "Error :("
+                    }
+
+                    MediaLongClickBS(
+                        onDismissRequest = { addToListBSOpen = false },
+                        title = if(anime.title.english != null) anime.title.english!! else anime.title.romaji,
+                        episodes = anime.episodes,
+                        averageScore = anime.averageScore,
+                        onListClick = { listType ->
+                            addToListBSOpen = false
+                            profileScreensSharedVM.changeMediaListType(anime.id, listType, anime.type)
+                        },
+                        mediaType = anime.type,
+                        currentList = userListType
+                    )
+                }
+            }
+        } else {
+            item {
+                EmptyContentSection(
+                    text = "Nothing here",
+                    modifier = Modifier.fillParentMaxSize()
                 )
             }
         }

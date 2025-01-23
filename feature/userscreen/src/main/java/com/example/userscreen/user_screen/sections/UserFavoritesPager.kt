@@ -26,21 +26,23 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.data.remote.models.profile_models.user_favorites_response.Node
-import com.example.data.remote.models.profile_models.user_manga_list_response.Lists
 import com.example.designsystem.custom_modifiers.customTabIndicatorOffset
 import com.example.designsystem.theme.mColors
 import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import kotlinx.coroutines.launch
 import com.example.data.remote.models.anime_list_response.Media as AnimeListMedia
 import com.example.data.remote.models.manga_list_response.Media as MangaListMedia
+import com.example.data.remote.models.profile_models.user_anime_list_response.Lists as UserAnimeLists
+import com.example.data.remote.models.profile_models.user_manga_list_response.Lists as UserMangaLists
 
 @Composable
 fun UserFavoritesPager(
+    userName: String,
     userFavoriteAnime: List<AnimeListMedia>,
     userFavoriteManga: List<MangaListMedia>,
     userFavoriteCharacters: List<Node>,
-    userMangaLists: List<Lists>?,
-    userAnimeLists: List<com.example.data.remote.models.profile_models.user_anime_list_response.Lists>?,
+    userMangaLists: List<UserMangaLists>?,
+    userAnimeLists: List<UserAnimeLists>?,
     profileScreensSharedVM: MediaProfileScreensSharedVM,
     navController: NavController,
     bottomPadding: Dp
@@ -118,9 +120,9 @@ fun UserFavoritesPager(
 
     HorizontalPager(state = pagerState) { page ->
         when(page) {
-            0 -> UserFavoriteAnimeLCSection(userFavoriteAnime, navController, userAnimeLists, profileScreensSharedVM, bottomPadding)
-            1 -> UserFavoriteMangaLVGSection(userFavoriteManga, navController, userMangaLists, profileScreensSharedVM, bottomPadding)
-            2 -> UserFavoriteCharacterLVGSection(userFavoriteCharacters, navController, bottomPadding)
+            0 -> UserFavoriteAnimeLCSection(userName, userFavoriteAnime, navController, userAnimeLists, profileScreensSharedVM, bottomPadding)
+            1 -> UserFavoriteMangaLVGSection(userName, userFavoriteManga, navController, userMangaLists, profileScreensSharedVM, bottomPadding)
+            2 -> UserFavoriteCharacterLVGSection(userName, userFavoriteCharacters, navController, bottomPadding)
         }
     }
 }

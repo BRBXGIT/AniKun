@@ -1,4 +1,4 @@
-package com.example.designsystem.error_section
+package com.example.designsystem.sections
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,11 +21,11 @@ import com.example.designsystem.R
 import com.example.designsystem.theme.mTypography
 
 @Composable
-fun ErrorSection(
-    errorText: String,
+fun EmptyContentSection(
+    text: String,
     modifier: Modifier
 ) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.error_animation))
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.empty_content_animation))
     Box(
         modifier = modifier.padding(horizontal = 16.dp),
         contentAlignment = Alignment.Center
@@ -41,11 +41,7 @@ fun ErrorSection(
             )
 
             Text(
-                text = if(errorText == "HTTP 429 ") {
-                    "${errorText}, please give AniList a little rest :), try in 2-3 minutes"
-                } else {
-                    errorText
-                },
+                text = text,
                 style = mTypography.bodyMedium.copy(
                     lineBreak = LineBreak.Paragraph
                 ),

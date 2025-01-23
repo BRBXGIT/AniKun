@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.data.remote.models.profile_models.user_favorites_response.Favourites
-import com.example.designsystem.error_section.ErrorSection
+import com.example.designsystem.sections.ErrorSection
 import com.example.designsystem.theme.mColors
 import com.example.media_screen.character_screen.sections.CharacterHeader
 import com.example.media_screen.character_screen.sections.CharacterScreenTopBar

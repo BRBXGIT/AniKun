@@ -35,7 +35,7 @@ import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.example.data.remote.models.common_models.media_by_query_response.Media
-import com.example.designsystem.error_section.ErrorSection
+import com.example.designsystem.sections.ErrorSection
 import com.example.designsystem.icons.AniKunIcons
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes

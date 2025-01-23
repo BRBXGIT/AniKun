@@ -17,7 +17,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.designsystem.container_with_sb.ContainerWithScrollBehavior
-import com.example.designsystem.error_section.ErrorSection
+import com.example.designsystem.sections.ErrorSection
 import com.example.designsystem.theme.mColors
 import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import com.example.userscreen.user_screen.sections.UserFavoritesPager
@@ -108,7 +108,8 @@ fun UserScreen(
                         userAnimeLists = userAnimeLists,
                         profileScreensSharedVM = profileScreensSharedVM,
                         navController = navController,
-                        bottomPadding = innerPadding.calculateBottomPadding()
+                        bottomPadding = innerPadding.calculateBottomPadding(),
+                        userName = userName
                     )
                 }
             }

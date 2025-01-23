@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -35,7 +34,6 @@ import com.example.data.remote.models.manga_list_response.Media as MangaListMedi
 import com.example.data.remote.models.profile_models.user_anime_list_response.Lists as UserAnimeLists
 import com.example.data.remote.models.profile_models.user_manga_list_response.Lists as UserMangaLists
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserFavoritesPager(
     userFavoriteAnime: List<AnimeListMedia>,

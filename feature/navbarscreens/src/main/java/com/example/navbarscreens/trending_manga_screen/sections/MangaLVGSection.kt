@@ -24,7 +24,7 @@ import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.example.common.check_functions.checkIsMediaInUserList
-import com.example.designsystem.error_section.ErrorSection
+import com.example.designsystem.sections.ErrorSection
 import com.example.designsystem.media_cards.MangaCard
 import com.example.designsystem.media_cards.MediaLongClickBS
 import com.example.designsystem.snackbars.SnackbarAction

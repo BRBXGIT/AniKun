@@ -27,7 +27,7 @@ import androidx.navigation.NavController
 import com.example.common.check_functions.checkIsMediaInFavorites
 import com.example.common.check_functions.checkIsMediaInUserList
 import com.example.data.remote.models.profile_models.user_favorites_response.Favourites
-import com.example.designsystem.error_section.ErrorSection
+import com.example.designsystem.sections.ErrorSection
 import com.example.designsystem.theme.mColors
 import com.example.media_screen.media_screen.sections.AddToListBS
 import com.example.media_screen.media_screen.sections.CharactersLRSection
