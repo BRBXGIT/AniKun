@@ -22,6 +22,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //Setting theme to avoid bug with post splashscreen theme
         setTheme(R.style.Theme_AniList)
 
         enableEdgeToEdge()
@@ -30,6 +31,7 @@ class MainActivity : ComponentActivity() {
 
         splashScreen.setKeepOnScreenCondition { true }
         CoroutineScope(Dispatchers.Main).launch {
+            //Delay for longer animation
             delay(700)
             splashScreen.setKeepOnScreenCondition { false }
         }

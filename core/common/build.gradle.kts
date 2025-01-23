@@ -38,6 +38,7 @@ android {
 
 dependencies {
 
+    //Modules
     implementation(project(":core:data"))
 
     //Hilt

@@ -565,6 +565,7 @@ fun AniListTheme(
     )
 }
 
+//Create to don't use MaterialTheme.example.example...
 val mColors @Composable get() = MaterialTheme.colorScheme
 val mTypography @Composable get() = MaterialTheme.typography
 val mShapes @Composable get() = MaterialTheme.shapes

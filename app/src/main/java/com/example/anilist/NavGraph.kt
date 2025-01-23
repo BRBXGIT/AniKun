@@ -1,7 +1,6 @@
 package com.example.anilist
 
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -61,7 +60,6 @@ fun NavGraph(
     ).value
     LaunchedEffect(userAnimeLists, aniListUser) {
         if((userAnimeLists.data == null) and (userAnimeLists.exception == null) and (aniListUser.data.viewer.name != "")) {
-            Log.d("CCCC", aniListUser.data.viewer.name)
             mediaProfileScreensSharedVM.fetchUserAnimeLists(aniListUser.data.viewer.name)
         }
     }
