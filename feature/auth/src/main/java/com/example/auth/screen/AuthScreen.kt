@@ -35,6 +35,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.auth.R
@@ -111,7 +112,7 @@ fun AuthScreen(
                 ) {
                     Text(
                         text = "AniKun",
-                        style = mTypography.titleLarge.copy(
+                        style = mTypography.titleMedium.copy(
                             color = Color(0xFFA3C9FE),
                             fontWeight = FontWeight.Bold
                         )
@@ -136,7 +137,7 @@ fun AuthScreen(
                     ) {
                         Text(
                             text = "Hello in AniKun",
-                            style = mTypography.headlineSmall.copy(
+                            style = mTypography.titleMedium.copy(
                                 color = Color(0xffffffff),
                                 fontWeight = FontWeight.Bold
                             )
@@ -148,7 +149,8 @@ fun AuthScreen(
                                     "track, share and experience it",
                             style = mTypography.bodyMedium.copy(
                                 color = Color(0xffffffff)
-                            )
+                            ),
+                            textAlign = TextAlign.Left
                         )
 
                         Spacer(modifier = Modifier.height(16.dp))
