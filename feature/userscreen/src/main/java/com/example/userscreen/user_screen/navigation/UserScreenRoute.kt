@@ -1,5 +1,8 @@
 package com.example.userscreen.user_screen.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -22,7 +25,10 @@ fun NavGraphBuilder.userScreen(
     profileScreensSharedVM: MediaProfileScreensSharedVM,
     userMangaLists: List<UserMangaLists>?,
     userAnimeLists: List<UserAnimeLists>?,
-) = composable<UserScreenRoute> {
+) = composable<UserScreenRoute>(
+    enterTransition = { fadeIn(tween((400))) },
+    exitTransition = { fadeOut(tween(400)) }
+) {
     val userName = it.toRoute<UserScreenRoute>().userName
     val userScreenVM = hiltViewModel<UserScreenVM>()
 

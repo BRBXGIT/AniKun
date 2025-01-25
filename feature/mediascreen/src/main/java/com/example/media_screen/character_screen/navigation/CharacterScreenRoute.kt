@@ -1,5 +1,8 @@
 package com.example.media_screen.character_screen.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -20,7 +23,10 @@ fun NavGraphBuilder.characterScreen(
     navController: NavController,
     favoritesScreenSharedVM: MediaFavoritesScreensSharedVM,
     userFavorites: Favourites?
-) = composable<CharacterScreenRoute> {
+) = composable<CharacterScreenRoute>(
+    enterTransition = { fadeIn(tween((400))) },
+    exitTransition = { fadeOut(tween(400)) }
+) {
     val characterScreenVM = hiltViewModel<CharacterScreenVM>()
     val characterId = it.toRoute<CharacterScreenRoute>().characterId
 

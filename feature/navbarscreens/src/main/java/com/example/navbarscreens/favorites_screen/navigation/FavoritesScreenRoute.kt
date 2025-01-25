@@ -1,5 +1,8 @@
 package com.example.navbarscreens.favorites_screen.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -22,7 +25,10 @@ fun NavGraphBuilder.favoritesScreen(
     userMangaLists: List<UserMangaLists>?,
     userAnimeLists: List<UserAnimeLists>?,
     profileScreensSharedVM: MediaProfileScreensSharedVM,
-) = composable<FavoritesScreenRoute> {
+) = composable<FavoritesScreenRoute>(
+    enterTransition = { fadeIn(tween((400))) },
+    exitTransition = { fadeOut(tween(400)) }
+) {
     FavoritesScreen(
         navController = navController,
         userFavorites = userFavorites,

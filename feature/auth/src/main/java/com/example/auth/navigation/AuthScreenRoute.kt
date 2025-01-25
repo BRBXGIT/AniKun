@@ -1,6 +1,9 @@
 package com.example.auth.navigation
 
 import android.content.SharedPreferences
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -24,7 +27,9 @@ fun NavGraphBuilder.authScreen(
 ) = composable<AuthScreenRoute>(
     deepLinks = listOf(
         navDeepLink { uriPattern = "https://anikun-1e048.web.app/#{access_token}" }
-    )
+    ),
+    enterTransition = { fadeIn(tween(400)) },
+    exitTransition = { fadeOut(tween(400)) }
 ) {
     val authScreenVM = hiltViewModel<AuthScreenVM>()
     val accessToken = it.toRoute<AuthScreenRoute>().accessToken

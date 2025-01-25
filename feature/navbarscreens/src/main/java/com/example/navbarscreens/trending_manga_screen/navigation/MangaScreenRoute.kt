@@ -1,5 +1,8 @@
 package com.example.navbarscreens.trending_manga_screen.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -20,7 +23,10 @@ fun NavGraphBuilder.trendingMangaScreen(
     trendingManga: LazyPagingItems<MangaListMedia>,
     userMangaLists: List<UserMangaLists>?,
     profileScreensSharedVM: MediaProfileScreensSharedVM
-) = composable<MangaScreenRoute> {
+) = composable<MangaScreenRoute>(
+    enterTransition = { fadeIn(tween((400))) },
+    exitTransition = { fadeOut(tween(400)) }
+) {
     MangaScreen(
         viewModel = trendingMangaScreenVM,
         navController = navController,
