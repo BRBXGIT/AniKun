@@ -28,5 +28,5 @@
 - [Lottie](https://github.com/airbnb/lottie/blob/master/android-compose.md)
 - [Paging](https://developer.android.com/jetpack/androidx/releases/paging)
 - [Haze](https://chrisbanes.github.io/haze/latest/)
-### App preview
+## App preview
 https://github.com/user-attachments/assets/a53e1373-f4ad-4b2d-9b93-0770ee43ce4a
