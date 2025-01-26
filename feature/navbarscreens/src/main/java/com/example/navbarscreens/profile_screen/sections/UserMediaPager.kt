@@ -37,7 +37,6 @@ import com.example.designsystem.snackbars.SnackbarAction
 import com.example.designsystem.snackbars.SnackbarController
 import com.example.designsystem.snackbars.SnackbarEvent
 import com.example.designsystem.theme.mColors
-import com.example.designsystem.theme.mShapes
 import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
 import kotlinx.coroutines.launch
 
@@ -218,7 +217,12 @@ fun UserMediaPager(
                             },
                             modifier = Modifier
                                 .padding(horizontal = 8.dp)
-                                .clip(mShapes.small),
+                                .clip(
+                                    RoundedCornerShape(
+                                        topStart = 8.dp,
+                                        topEnd = 8.dp
+                                    )
+                                ),
                             text = {
                                 Text(
                                     text = list.name
