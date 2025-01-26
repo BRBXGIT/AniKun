@@ -6,6 +6,8 @@
 
 ### An unofficial android client for [AniList](https://anilist.co/home)
 
+<img src="docs/app_logo.png"/>
+
 </div>
 
 ## Features
@@ -14,6 +16,7 @@
 - Favorites - Keep track of your favorite anime & manga by adding them to your favorites list.
 - Your Anime and Manga lists - Track anime & manga by adding them to lists.
 - Custom color schemes - 6 custom color schemes
+- Authentication - Authenticate with your [AniList](https://anilist.co/home) account
 ## Libraries
 - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
 - [Navigation](https://developer.android.com/guide/navigation)
