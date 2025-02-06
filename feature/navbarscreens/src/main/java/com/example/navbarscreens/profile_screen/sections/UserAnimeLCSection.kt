@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.common.check_functions.checkIsMediaInUserList
 import com.example.data.remote.models.profile_models.user_anime_list_response.Entry
-import com.example.designsystem.media_cards.AnimeCard
+import com.example.designsystem.media_cards.AnimeProfileScreenCard
 import com.example.designsystem.media_cards.MediaLongClickBS
 import com.example.media_screen.media_screen.navigation.MediaDetailsScreenRoute
 import com.example.media_screen.media_screen.screen.MediaProfileScreensSharedVM
@@ -31,7 +31,7 @@ fun UserAnimeLCSection(
         itemsIndexed(animeList) { index, anime ->
             var addToListBSOpen by rememberSaveable { mutableStateOf(false) }
 
-            AnimeCard(
+            AnimeProfileScreenCard(
                 anime = anime.media,
                 index = index,
                 onAnimeClick = {
@@ -42,7 +42,8 @@ fun UserAnimeLCSection(
                         )
                     )
                 },
-                onAnimeLongClick = { addToListBSOpen = true }
+                onAnimeLongClick = { addToListBSOpen = true },
+                onAddEpisodeClick = {  }
             )
 
             if(addToListBSOpen) {
