@@ -1,5 +1,6 @@
 package com.example.data.repos
 
+import com.example.data.remote.models.add_episode_response.AddAnimeEpisodeResponse
 import com.example.data.remote.models.profile_models.change_list_type_response.ChangeMediaListTypeResponse
 import com.example.data.remote.models.profile_models.user_anime_list_response.UserAnimeListsResponse
 import com.example.data.remote.models.profile_models.user_by_query_response.UserByQueryResponse
@@ -23,4 +24,11 @@ interface ProfileScreenRepo {
         listType: String,
         accessToken: String
     ): ChangeMediaListTypeResponse
+
+    suspend fun addAnimeEpisode(
+        userName: String,
+        animeId: Int,
+        progress: Int,
+        accessToken: String
+    ): AddAnimeEpisodeResponse
 }

@@ -1,6 +1,7 @@
 package com.example.data.remote.repos
 
 import com.example.data.remote.api_instance.AniListApiInstance
+import com.example.data.remote.models.add_episode_response.AddAnimeEpisodeResponse
 import com.example.data.remote.models.common_models.common_request.CommonRequest
 import com.example.data.remote.models.profile_models.change_list_type_response.ChangeMediaListTypeResponse
 import com.example.data.remote.models.profile_models.user_anime_list_response.UserAnimeListsResponse
@@ -46,6 +47,7 @@ class ProfileScreenRepoImpl @Inject constructor(
                 lists {
                   name
                   entries {
+                    progress
                     media {
                       type
                       averageScore
@@ -165,6 +167,35 @@ class ProfileScreenRepoImpl @Inject constructor(
         val jsonVariables = Gson().toJson(variables)
 
         return apiInstance.changeMediaListType(
+            body = CommonRequest(
+                query = query,
+                variables = jsonVariables
+            ),
+            accessToken = accessToken
+        )
+    }
+
+    override suspend fun addAnimeEpisode(
+        userName: String,
+        animeId: Int,
+        progress: Int,
+        accessToken: String
+    ): AddAnimeEpisodeResponse {
+        val query = """
+            mutation(${"$"}mediaId: Int, ${"$"}progress: Int) {
+              SaveMediaListEntry(mediaId: ${"$"}mediaId, progress: ${"$"}progress) {
+                id
+              }
+            }
+        """.trimIndent()
+
+        val variables = mapOf(
+            "mediaId" to animeId,
+            "progress" to progress
+        )
+        val jsonVariables = Gson().toJson(variables)
+
+        return apiInstance.addEpisodeToAnime(
             body = CommonRequest(
                 query = query,
                 variables = jsonVariables

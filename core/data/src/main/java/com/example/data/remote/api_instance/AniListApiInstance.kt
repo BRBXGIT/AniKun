@@ -1,5 +1,6 @@
 package com.example.data.remote.api_instance
 
+import com.example.data.remote.models.add_episode_response.AddAnimeEpisodeResponse
 import com.example.data.remote.models.anime_list_response.AnimeListResponse
 import com.example.data.remote.models.character_info_response.CharacterDetailsResponse
 import com.example.data.remote.models.common_models.common_request.CommonRequest
@@ -87,4 +88,10 @@ interface AniListApiInstance {
     suspend fun getUserByQueryDetails(
         @Body body: CommonRequest
     ): UserByQueryDetailsResponse
+
+    @POST(".")
+    suspend fun addEpisodeToAnime(
+        @Body body: CommonRequest,
+        @Header("Authorization") accessToken: String
+    ): AddAnimeEpisodeResponse
 }

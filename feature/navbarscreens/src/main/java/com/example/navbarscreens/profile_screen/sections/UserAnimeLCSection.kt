@@ -33,6 +33,7 @@ fun UserAnimeLCSection(
 
             AnimeProfileScreenCard(
                 anime = anime.media,
+                progress = animeList[index].progress,
                 index = index,
                 onAnimeClick = {
                     navController.navigate(

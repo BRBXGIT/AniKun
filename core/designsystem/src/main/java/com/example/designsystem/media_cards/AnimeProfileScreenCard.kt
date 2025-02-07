@@ -37,6 +37,7 @@ import com.example.data.remote.models.anime_list_response.Media as AnimeListMedi
 @Composable
 fun AnimeProfileScreenCard(
     anime: AnimeListMedia,
+    progress: Int,
     index: Int,
     onAnimeClick: () -> Unit,
     onAnimeLongClick: () -> Unit = {},
@@ -119,7 +120,7 @@ fun AnimeProfileScreenCard(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
-                text = "10/12",
+                text = "$progress/${anime.episodes}",
                 color = mColors.primary,
                 style = mTypography.bodyMedium
             )
