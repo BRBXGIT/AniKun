@@ -15,10 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import com.example.common.check_functions.checkIsAnimeInUserLists
 import com.example.common.check_functions.checkIsMediaInUserList
-import com.example.designsystem.sections.ErrorSection
 import com.example.designsystem.media_cards.AnimeCard
 import com.example.designsystem.media_cards.MediaLongClickBS
+import com.example.designsystem.sections.ErrorSection
 import com.example.designsystem.snackbars.SnackbarAction
 import com.example.designsystem.snackbars.SnackbarController
 import com.example.designsystem.snackbars.SnackbarEvent
@@ -64,6 +65,7 @@ fun AnimeLCSection(
                     val currentAnime = anime[index]
 
                     currentAnime?.let {
+                        val userListTypeAnimeIn = checkIsAnimeInUserLists(userAnimeLists, currentAnime.id)
                         var addToListBSOpen by rememberSaveable { mutableStateOf(false) }
 
                         AnimeCard(
@@ -77,7 +79,8 @@ fun AnimeLCSection(
                                     )
                                 )
                             },
-                            onAnimeLongClick = { addToListBSOpen = true }
+                            onAnimeLongClick = { addToListBSOpen = true },
+                            listType = userListTypeAnimeIn
                         )
 
                         if(addToListBSOpen) {

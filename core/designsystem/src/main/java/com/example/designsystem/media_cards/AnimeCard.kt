@@ -12,8 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -36,7 +38,8 @@ fun AnimeCard(
     anime: AnimeListMedia,
     index: Int,
     onAnimeClick: () -> Unit,
-    onAnimeLongClick: () -> Unit = {}
+    onAnimeLongClick: () -> Unit = {},
+    listType: String? = null
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -53,10 +56,8 @@ fun AnimeCard(
         Box(
             modifier = Modifier
                 .size(100.dp, 130.dp)
-                .background(
-                    color = mColors.surfaceVariant,
-                    shape = mShapes.small
-                )
+                .clip(mShapes.small)
+                .background(mColors.surfaceVariant)
         ) {
             SubcomposeAsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
@@ -70,15 +71,40 @@ fun AnimeCard(
                     .clip(mShapes.small),
                 filterQuality = FilterQuality.Low,
                 contentScale = ContentScale.Crop,
-                loading = { if(index <= 6) AnimatedShimmer(100.dp, 130.dp) }
+                loading = { if (index <= 6) AnimatedShimmer(100.dp, 130.dp) }
             )
+
+            if(listType != null) {
+                val listColor = when(listType) {
+                    "Completed" -> Color(0xff007c00).copy(alpha = 0.9f)
+                    "Dropped" -> Color(0xffca3433).copy(alpha = 0.9f)
+                    "Rewatching" -> Color(0xff67bef6).copy(alpha = 0.9f)
+                    "Planning" -> Color(0xff0041c1).copy(alpha = 0.9f)
+                    "Paused" -> Color(0xfff7e788).copy(alpha = 0.9f)
+                    else -> Color(0xffbb51b9).copy(alpha = 0.9f)
+                }
+
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth()
+                        .background(color = listColor),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = listType,
+                        style = mTypography.labelSmall,
+                        modifier = Modifier.padding(4.dp)
+                    )
+                }
+            }
         }
 
         Column(
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             Text(
-                text = if(anime.title.english == null) anime.title.romaji else anime.title.english!!,
+                text = if (anime.title.english == null) anime.title.romaji else anime.title.english!!,
                 style = mTypography.bodyLarge.copy(
                     color = mColors.primary,
                     fontWeight = FontWeight.Bold
@@ -88,7 +114,9 @@ fun AnimeCard(
             )
 
             Text(
-                text = "${anime.episodes} Episodes • ${anime.averageScore.toString().take(1)}.${anime.averageScore.toString().takeLast(1)}★",
+                text = "${anime.episodes} Episodes • ${
+                    anime.averageScore.toString().take(1)
+                }.${anime.averageScore.toString().takeLast(1)}★",
                 style = mTypography.bodyMedium.copy(
                     color = mColors.secondary,
                 ),
