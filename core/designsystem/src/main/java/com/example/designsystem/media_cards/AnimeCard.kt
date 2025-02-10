@@ -76,12 +76,12 @@ fun AnimeCard(
 
             if(listType != null) {
                 val listColor = when(listType) {
-                    "Completed" -> Color(0xff007c00).copy(alpha = 0.9f)
-                    "Dropped" -> Color(0xffca3433).copy(alpha = 0.9f)
-                    "Rewatching" -> Color(0xff67bef6).copy(alpha = 0.9f)
-                    "Planning" -> Color(0xff0041c1).copy(alpha = 0.9f)
-                    "Paused" -> Color(0xfff7e788).copy(alpha = 0.9f)
-                    else -> Color(0xffbb51b9).copy(alpha = 0.9f)
+                    "Completed" -> Color(0xff007c00)
+                    "Dropped" -> Color(0xffca3433)
+                    "Rewatching" -> Color(0xff67bef6)
+                    "Planning" -> Color(0xff0041c1)
+                    "Paused" -> Color(0xfff7e788)
+                    else -> Color(0xffbb51b9)
                 }
 
                 Box(

@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -36,7 +37,8 @@ fun MangaCard(
     manga: MangaListMedia,
     index: Int,
     onMangaClick: () -> Unit,
-    onMangaLongClick: () -> Unit = {}
+    onMangaLongClick: () -> Unit = {},
+    listType: String? = null
 ) {
     Card(
         shape = mShapes.small,
@@ -90,31 +92,58 @@ fun MangaCard(
             }
 
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .background(mColors.secondaryContainer)
-                    .padding(8.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                modifier = Modifier.align(Alignment.BottomCenter)
             ) {
-                Text(
-                    text = if(manga.title.english == null) manga.title.romaji else manga.title.english!!,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = mTypography.titleSmall.copy(
-                        fontWeight = FontWeight.Bold
+                if(listType != null) {
+                    val listColor = when(listType) {
+                        "Completed" -> Color(0xff007c00)
+                        "Dropped" -> Color(0xffca3433)
+                        "Rewatching" -> Color(0xff67bef6)
+                        "Planning" -> Color(0xff0041c1)
+                        "Paused" -> Color(0xfff7e788)
+                        else -> Color(0xffbb51b9)
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(color = listColor),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = listType,
+                            style = mTypography.labelSmall,
+                            modifier = Modifier.padding(4.dp)
+                        )
+                    }
+                }
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(mColors.secondaryContainer)
+                        .padding(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = if(manga.title.english == null) manga.title.romaji else manga.title.english!!,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        style = mTypography.titleSmall.copy(
+                            fontWeight = FontWeight.Bold
+                        )
                     )
-                )
 
 
-                Text(
-                    text = manga.genres.toString().replace("[", "").replace("]", ""),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = mTypography.bodySmall.copy(
-                        color = mColors.secondary
+                    Text(
+                        text = manga.genres.toString().replace("[", "").replace("]", ""),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        style = mTypography.bodySmall.copy(
+                            color = mColors.secondary
+                        )
                     )
-                )
+                }
             }
         }
     }

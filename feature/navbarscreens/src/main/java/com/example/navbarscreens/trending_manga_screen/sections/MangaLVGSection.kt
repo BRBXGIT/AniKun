@@ -23,10 +23,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import com.example.common.check_functions.checkIsMangaInUserLists
 import com.example.common.check_functions.checkIsMediaInUserList
-import com.example.designsystem.sections.ErrorSection
 import com.example.designsystem.media_cards.MangaCard
 import com.example.designsystem.media_cards.MediaLongClickBS
+import com.example.designsystem.sections.ErrorSection
 import com.example.designsystem.snackbars.SnackbarAction
 import com.example.designsystem.snackbars.SnackbarController
 import com.example.designsystem.snackbars.SnackbarEvent
@@ -79,6 +80,7 @@ fun MangaLVGSection(
                     val currentManga = manga[index]
 
                     currentManga?.let {
+                        val userListTypeMangaIn = checkIsMangaInUserLists(userMangaLists, currentManga.id)
                         var addToListBSOpen by rememberSaveable { mutableStateOf(false) }
 
                         MangaCard(
@@ -92,7 +94,8 @@ fun MangaLVGSection(
                                     )
                                 )
                             },
-                            onMangaLongClick = { addToListBSOpen = true }
+                            onMangaLongClick = { addToListBSOpen = true },
+                            listType = userListTypeMangaIn
                         )
 
                         if(addToListBSOpen) {

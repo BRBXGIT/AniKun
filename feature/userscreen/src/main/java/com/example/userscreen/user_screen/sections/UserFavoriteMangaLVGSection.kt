@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.common.check_functions.checkIsMangaInUserLists
 import com.example.common.check_functions.checkIsMediaInUserList
 import com.example.data.remote.models.profile_models.user_manga_list_response.Lists
 import com.example.designsystem.media_cards.MangaCard
@@ -47,6 +48,7 @@ fun UserFavoriteMangaLVGSection(
             modifier = Modifier.fillMaxSize()
         ) {
             itemsIndexed(favoriteManga) { index, manga ->
+                val userListTypeMangaIn = checkIsMangaInUserLists(userMangaLists, manga.id)
                 var addToListBSOpen by rememberSaveable { mutableStateOf(false) }
 
                 MangaCard(
@@ -60,7 +62,8 @@ fun UserFavoriteMangaLVGSection(
                             )
                         )
                     },
-                    onMangaLongClick = { addToListBSOpen = true }
+                    onMangaLongClick = { addToListBSOpen = true },
+                    listType = userListTypeMangaIn
                 )
 
                 if(addToListBSOpen) {

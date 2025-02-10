@@ -37,6 +37,19 @@ fun checkIsAnimeInUserLists(
     return null
 }
 
+fun checkIsMangaInUserLists(
+    userMangaLists: List<UserMangaLists>?,
+    mediaId: Int
+): String? {
+    userMangaLists?.forEach { list ->
+        list.entries.forEach { entry ->
+            if(entry.media.id == mediaId) return list.name
+        }
+    }
+
+    return null
+}
+
 fun checkIsMediaInFavorites(
     userFavorites: Favourites,
     mediaId: Int
