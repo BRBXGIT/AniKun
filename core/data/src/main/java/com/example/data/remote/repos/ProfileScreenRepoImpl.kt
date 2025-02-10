@@ -176,7 +176,6 @@ class ProfileScreenRepoImpl @Inject constructor(
     }
 
     override suspend fun addAnimeEpisode(
-        userName: String,
         animeId: Int,
         progress: Int,
         accessToken: String

@@ -163,4 +163,27 @@ class MediaProfileScreensSharedVM @Inject constructor(
             }
         }
     }
+
+    fun addEpisodeToAnime(animeId: Int, progress: Int) {
+        viewModelScope.launch(dispatcherIo) {
+            aniKunUser.collect { aniKunUser ->
+                try {
+                    repository.addAnimeEpisode(
+                        animeId = animeId,
+                        progress = progress,
+                        accessToken = "Bearer ${aniKunUser[0].accessToken}"
+                    )
+                    aniListUser.collect { aniListUser ->
+                        fetchUserAnimeLists(aniListUser.data.viewer.name)
+                    }
+                } catch(e: Exception) {
+                    SnackbarController.sendEvent(
+                        SnackbarEvent(
+                            message = "Something went wrong :("
+                        )
+                    )
+                }
+            }
+        }
+    }
 }

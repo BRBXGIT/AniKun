@@ -44,7 +44,14 @@ fun UserAnimeLCSection(
                     )
                 },
                 onAnimeLongClick = { addToListBSOpen = true },
-                onAddEpisodeClick = {  }
+                onAddEpisodeClick = {
+                    if(animeList[index].progress < anime.media.episodes) {
+                        profileScreensSharedVM.addEpisodeToAnime(
+                            anime.media.id,
+                            animeList[index].progress + 1
+                        )
+                    }
+                }
             )
 
             if(addToListBSOpen) {
