@@ -13,6 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.navigation.NavController
+import com.example.common.check_functions.checkIsAnimeInUserLists
 import com.example.common.check_functions.checkIsMediaInUserList
 import com.example.data.remote.models.anime_list_response.Media
 import com.example.data.remote.models.profile_models.user_anime_list_response.Lists
@@ -36,6 +37,7 @@ fun UserFavoriteAnimeLCSection(
     ) {
         if(favoriteAnime.isNotEmpty()) {
             itemsIndexed(favoriteAnime) { index, anime ->
+                val userListTypeAnimeIn = checkIsAnimeInUserLists(userAnimeLists, anime.id)
                 var addToListBSOpen by rememberSaveable { mutableStateOf(false) }
 
                 AnimeCard(
@@ -49,7 +51,8 @@ fun UserFavoriteAnimeLCSection(
                             )
                         )
                     },
-                    onAnimeLongClick = { addToListBSOpen = true }
+                    onAnimeLongClick = { addToListBSOpen = true },
+                    listType = userListTypeAnimeIn
                 )
 
                 if(addToListBSOpen) {
