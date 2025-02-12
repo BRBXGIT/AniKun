@@ -164,30 +164,32 @@ fun AuthScreen(
                             Spacer(modifier = Modifier.height(16.dp))
                         }
 
-                        Button(
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFFA3C9FE),
-                                contentColor = Color(0xFF00315C)
-                            ),
-                            onClick = {
-                                webViewEnabled = true
-                            },
-                            shape = mShapes.small,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        if(accessToken == null) {
+                            Button(
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFFA3C9FE),
+                                    contentColor = Color(0xFF00315C)
+                                ),
+                                onClick = {
+                                    webViewEnabled = true
+                                },
+                                shape = mShapes.small,
+                                modifier = Modifier.fillMaxWidth()
                             ) {
-                                Icon(
-                                    painter = painterResource(id = AniKunIcons.AniListColored),
-                                    contentDescription = null,
-                                    tint = Color.Unspecified
-                                )
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = AniKunIcons.AniListColored),
+                                        contentDescription = null,
+                                        tint = Color.Unspecified
+                                    )
 
-                                Text(
-                                    text = "Authenticate with AniList"
-                                )
+                                    Text(
+                                        text = "Authenticate with AniList"
+                                    )
+                                }
                             }
                         }
                     }
@@ -196,7 +198,8 @@ fun AuthScreen(
         } else {
             AniListAuthPageWebView(
                 innerPadding = innerPadding,
-                onProgressChange = { pageProgress = it }
+                onProgressChange = { pageProgress = it },
+                navController = navController
             )
         }
     }
