@@ -21,6 +21,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -36,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.auth.R
 import com.example.auth.sections.AniListAuthPageWebView
+import com.example.auth.sections.WebViewTopBar
 import com.example.designsystem.icons.AniKunIcons
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes
@@ -78,14 +80,21 @@ fun AuthScreen(
         }
     }
 
+    var webViewEnabled by rememberSaveable { mutableStateOf(false) }
+    var pageProgress by rememberSaveable { mutableIntStateOf(0) }
     Scaffold(
-        topBar = {  },
+        topBar = {
+            if(webViewEnabled) {
+                WebViewTopBar(
+                    onCloseClick = { webViewEnabled = false },
+                    progress = pageProgress
+                )
+            }
+        },
         modifier = Modifier
             .fillMaxSize()
             .background(mColors.background)
     ) { innerPadding ->
-        var webViewEnabled by rememberSaveable { mutableStateOf(false) }
-
         if(!webViewEnabled) {
             PullToRefreshBox(
                 isRefreshing = isLoading,
@@ -185,7 +194,10 @@ fun AuthScreen(
                 }
             }
         } else {
-            AniListAuthPageWebView(innerPadding)
+            AniListAuthPageWebView(
+                innerPadding = innerPadding,
+                onProgressChange = { pageProgress = it }
+            )
         }
     }
 }

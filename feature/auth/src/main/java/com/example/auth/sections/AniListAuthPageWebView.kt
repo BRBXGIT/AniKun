@@ -2,6 +2,7 @@ package com.example.auth.sections
 
 import android.annotation.SuppressLint
 import android.view.ViewGroup
+import android.webkit.CookieManager
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,7 +22,8 @@ import com.example.auth.utils.AuthUtils
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun AniListAuthPageWebView(
-    innerPadding: PaddingValues
+    innerPadding: PaddingValues,
+    onProgressChange: (Int) -> Unit
 ) {
     val context = LocalContext.current
     val url by rememberSaveable { mutableStateOf("https://anilist.co/api/v2/oauth/authorize?client_id=${AuthUtils.CLIENT_ID}&response_type=token") }
@@ -35,7 +37,29 @@ fun AniListAuthPageWebView(
             )
 
             settings.javaScriptEnabled = true
-            webViewClient = android.webkit.WebViewClient()
+            settings.domStorageEnabled = true
+            settings.databaseEnabled = true
+            settings.setSupportMultipleWindows(true)
+            settings.allowContentAccess = true
+            settings.allowFileAccess = true
+            settings.allowFileAccessFromFileURLs = true
+            settings.allowUniversalAccessFromFileURLs = true
+
+            //OAuth need cookies
+            CookieManager.getInstance().setAcceptCookie(true)
+            CookieManager.getInstance().setAcceptThirdPartyCookies(this, true)
+
+            webViewClient = object : android.webkit.WebViewClient() {
+                override fun onPageFinished(view: android.webkit.WebView?, url: String?) {
+                    super.onPageFinished(view, url)
+                }
+            }
+
+            webChromeClient = object : android.webkit.WebChromeClient() {
+                override fun onProgressChanged(view: android.webkit.WebView?, newProgress: Int) {
+                    onProgressChange(newProgress)
+                }
+            }
 
             loadUrl(url)
         }
@@ -44,7 +68,7 @@ fun AniListAuthPageWebView(
     DisposableEffect(webView) {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if(webView.canGoBack()) {
+                if (webView.canGoBack()) {
                     webView.goBack()
                 }
             }

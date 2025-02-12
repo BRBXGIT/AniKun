@@ -25,6 +25,7 @@ object AniKunIcons {
     val MedalFilled = R.drawable.ic_medal_filled
     val CheckCircle = R.drawable.ic_check_circle
     val ArrowRight = R.drawable.ic_arrow_right
+    val CrossCircle = R.drawable.ic_cross_circle
     val GitHubColored = R.drawable.ic_github_colored
     val TelegramColored = R.drawable.ic_telegram_colored
     val GmailColored = R.drawable.ic_gmail_colored
