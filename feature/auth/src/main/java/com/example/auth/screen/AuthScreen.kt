@@ -1,9 +1,6 @@
 package com.example.auth.screen
 
-import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,14 +29,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.auth.R
-import com.example.auth.utils.AuthUtils
+import com.example.auth.sections.AniListAuthPageWebView
 import com.example.designsystem.icons.AniKunIcons
 import com.example.designsystem.theme.mColors
 import com.example.designsystem.theme.mShapes
@@ -54,7 +50,6 @@ fun AuthScreen(
     navController: NavController,
     viewModel: AuthScreenVM,
     prefs: SharedPreferences,
-    context: Context = LocalContext.current
 ) {
     var parsedAccessToken by rememberSaveable { mutableStateOf("") }
 
@@ -84,111 +79,113 @@ fun AuthScreen(
     }
 
     Scaffold(
+        topBar = {  },
         modifier = Modifier
             .fillMaxSize()
             .background(mColors.background)
     ) { innerPadding ->
-        PullToRefreshBox(
-            isRefreshing = isLoading,
-            onRefresh = {  }
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .paint(
-                        painterResource(id = R.drawable.auth_screen_bg),
-                        contentScale = ContentScale.Crop
-                    )
-                    .padding(
-                        top = innerPadding.calculateTopPadding(),
-                        bottom = innerPadding.calculateBottomPadding(),
-                        start = 16.dp,
-                        end = 16.dp
-                    )
+        var webViewEnabled by rememberSaveable { mutableStateOf(false) }
+
+        if(!webViewEnabled) {
+            PullToRefreshBox(
+                isRefreshing = isLoading,
+                onRefresh = {  }
             ) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                    modifier = Modifier.padding(top = 8.dp)
-                ) {
-                    Text(
-                        text = "AniKun",
-                        style = mTypography.titleMedium.copy(
-                            color = Color(0xFFA3C9FE),
-                            fontWeight = FontWeight.Bold
-                        )
-                    )
-
-                    Text(
-                        text = "Powered by AniList",
-                        style = mTypography.bodyMedium.copy(
-                            color = Color(0xffffffff)
-                        )
-                    )
-                }
-
-                Column(
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.BottomCenter),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                        .fillMaxSize()
+                        .paint(
+                            painterResource(id = R.drawable.auth_screen_bg),
+                            contentScale = ContentScale.Crop
+                        )
+                        .padding(
+                            top = innerPadding.calculateTopPadding(),
+                            bottom = innerPadding.calculateBottomPadding(),
+                            start = 16.dp,
+                            end = 16.dp
+                        )
                 ) {
                     Column(
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                        modifier = Modifier.padding(top = 8.dp)
                     ) {
                         Text(
-                            text = "Hello in AniKun",
+                            text = "AniKun",
                             style = mTypography.titleMedium.copy(
-                                color = Color(0xffffffff),
+                                color = Color(0xFFA3C9FE),
                                 fontWeight = FontWeight.Bold
                             )
                         )
 
                         Text(
-                            text = "AniKun is an unofficial android client for AniList, " +
-                                    "in this app you can't read manga or watch anime, but you can " +
-                                    "track, share and experience it",
+                            text = "Powered by AniList",
                             style = mTypography.bodyMedium.copy(
                                 color = Color(0xffffffff)
-                            ),
-                            textAlign = TextAlign.Left
+                            )
                         )
-
-                        Spacer(modifier = Modifier.height(16.dp))
                     }
 
-                    Button(
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFA3C9FE),
-                            contentColor = Color(0xFF00315C)
-                        ),
-                        onClick = {
-                            context.startActivity(
-                                Intent(
-                                    Intent.ACTION_VIEW,
-                                    Uri.parse("https://anilist.co/api/v2/oauth/authorize?client_id=${AuthUtils.CLIENT_ID}&response_type=token")
-                                )
-                            )
-                        },
-                        shape = mShapes.small,
-                        modifier = Modifier.fillMaxWidth()
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.BottomCenter),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Icon(
-                                painter = painterResource(id = AniKunIcons.AniListColored),
-                                contentDescription = null,
-                                tint = Color.Unspecified
+                            Text(
+                                text = "Hello in AniKun",
+                                style = mTypography.titleMedium.copy(
+                                    color = Color(0xffffffff),
+                                    fontWeight = FontWeight.Bold
+                                )
                             )
 
                             Text(
-                                text = "Authenticate with AniList"
+                                text = "AniKun is an unofficial android client for AniList, " +
+                                        "in this app you can't read manga or watch anime, but you can " +
+                                        "track, share and experience it",
+                                style = mTypography.bodyMedium.copy(
+                                    color = Color(0xffffffff)
+                                ),
+                                textAlign = TextAlign.Left
                             )
+
+                            Spacer(modifier = Modifier.height(16.dp))
+                        }
+
+                        Button(
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFA3C9FE),
+                                contentColor = Color(0xFF00315C)
+                            ),
+                            onClick = {
+                                webViewEnabled = true
+                            },
+                            shape = mShapes.small,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = AniKunIcons.AniListColored),
+                                    contentDescription = null,
+                                    tint = Color.Unspecified
+                                )
+
+                                Text(
+                                    text = "Authenticate with AniList"
+                                )
+                            }
                         }
                     }
                 }
             }
+        } else {
+            AniListAuthPageWebView(innerPadding)
         }
     }
 }
