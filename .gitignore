@@ -1,15 +1,52 @@
+# Idea
+.idea/
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+*.iws
+*.ipr
+/out/
+
+# System files
 .DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Local conf (SDK, NDK)
 local.properties
+
+# Gradle and caches
+.gradle/
+/build/
+*/build/
+
+# Kapt/ksp files
+/app/build/generated/source/kapt/
+/app/build/generated/source/kaptKotlin/
+/app/build/generated/ksp/
+
+# Native build
+.cxx/
+.externalNativeBuild/
+
+# Sensitive data
+*.jks
+*.keystore
+*.p12
+*.key
+*.alias
+keystore.properties
+play-store-credentials.json
+
+# Services configurations(Firebase etc.)
+google-services.json
+agconnect-services.json
+
+# Logs
+*.log
+hs_err_pid*
+
+# Utils caches
+.lint/
